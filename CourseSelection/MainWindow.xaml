@@ -1,0 +1,62 @@
+﻿<Window x:Class="CourseSelection.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseSelection"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+	<DockPanel>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" MinWidth="510"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<ListView x:Name="Combinations" Margin="10,10,10,62
+					  " Grid.Column="1" SelectionChanged="Combinations_SelectionChanged">
+				<ListView.View>
+					<GridView x:Name="CmbView">
+
+					</GridView>
+				</ListView.View>
+			</ListView>
+			<DockPanel Height="30" VerticalAlignment="Top" Margin="0,10,0,0">
+				<Label Content="Course List" FontWeight="Bold" FontSize="15" Height="Auto" VerticalAlignment="Top" />
+				<Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Add This Course" Margin="0" VerticalAlignment="Center" Click="Button_Click_AddCourse">
+				</Button>
+				<TextBox x:Name="Course_TextBox" DockPanel.Dock="Right" Height="Auto" Width="100" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" ToolTip="Enter a course name here"/>
+			</DockPanel>
+			<CheckBox x:Name="IsOpenSectionOnly" Content="Is Open Section Only" Margin="10,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+			</CheckBox>
+			<StackPanel Margin="10,75
+						,0,0" Grid.Column="0" Name="List" Height="Auto" VerticalAlignment="Top" Orientation="Vertical">
+			</StackPanel>
+			<StatusBar Height="22" Grid.ColumnSpan="2" VerticalAlignment="Bottom"
+					   >
+				<TextBlock Text="Complete"/>
+			</StatusBar>
+			<Button Content="Refresh" Margin="10,0,10,32" Grid.Column="1" VerticalAlignment="Bottom" Click="Button_Click_Refresh"/>
+			<Grid Margin="10,0,0,43.5" Height="130" VerticalAlignment="Bottom">
+				<Label Content="M" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+				<Label Content="Tu"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0"/>
+				<Label Content="W"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,52,0,0"/>
+				<Label Content="Th"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,78,0,0"/>
+				<Label Content="F" HorizontalAlignment="Left" Margin="0,104,0,0" VerticalAlignment="Bottom" />
+				<Canvas x:Name="MainCanvas" Margin="40,0,10,0" SizeChanged="MainCanvas_SizeChanged" MinWidth="500">
+					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="13" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="39" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="65" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="91" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="117" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
+
+					<!--<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="13" Width="50"/>
+				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="39" Width="50"/>
+				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="65" Width="50"/>
+				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="91" Width="50"/>
+				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="117" Width="50"/>-->
+				</Canvas>
+			</Grid>
+			<CheckBox x:Name="IsExcludeFC" Content="Exclude Freshman Connection Program" Margin="162,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="True"/>
+		</Grid>
+	</DockPanel>
+</Window>
