@@ -113,6 +113,9 @@ namespace CourseSelection
 			var html = httpClient.GetStringAsync(url).Result;
 			var htmlDocument = new HtmlDocument();
 			htmlDocument.LoadHtml(html);
+
+			string fullName;
+
 			List<HtmlNode> divs = null;
 			try
 			{
@@ -124,6 +127,13 @@ namespace CourseSelection
 					.Descendants("div")
 					.Where(node => node.GetAttributeValue("class", "")
 					.Equals("section delivery-f2f")).ToList();
+
+				fullName = htmlDocument
+					.DocumentNode
+					.Descendants("span")
+					.Where(node => node.GetAttributeValue("class", "") == "course-title")
+					.Single()
+					.InnerText;
 			}
 			catch
 			{
@@ -213,7 +223,7 @@ namespace CourseSelection
 				sections.Add(new Section(courseName, name, classes.ToArray()));
 			}
 
-			ret = new Course(courseName, sections.ToArray());
+			ret = new Course(courseName, fullName, sections.ToArray());
 			return ret;
 		}
 
@@ -249,13 +259,15 @@ namespace CourseSelection
 
 	public class Course
 	{
-		public Course(string name, params Section[] sections)
+		public Course(string name, string fullName, params Section[] sections)
 		{
 			Name = name;
+			FullName = fullName;
 			Sections = new HashSet<Section>(sections);
 		}
 
 		public readonly string Name;
+		public readonly string FullName;
 		public readonly HashSet<Section> Sections;
 	}
 

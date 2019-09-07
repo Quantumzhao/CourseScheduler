@@ -31,7 +31,6 @@ namespace CourseSelection
 		public MainWindow()
 		{
 			InitializeComponent();
-			//InitCanvas();
 
 			GorgeousColors[0] = Color.FromRgb(96, 96, 183);
 			GorgeousColors[1] = Color.FromRgb(96, 183, 145);
@@ -46,47 +45,65 @@ namespace CourseSelection
 			GorgeousColors[9] = Color.FromRgb(128, 128, 128);
 		}
 
-		private void InitCanvas()
-		{
-			double w = MainCanvas.ActualWidth == 0 ? 722 : MainCanvas.ActualWidth;
-
-			for (int i = 6; i <= 23; i++)
-			{
-				Rectangle rectangle = new Rectangle();
-				rectangle.Height = MainCanvas.Height;
-				rectangle.Width = 1;
-				rectangle.StrokeThickness = 1;
-				rectangle.Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-				Canvas.SetTop(rectangle, 0);
-				Canvas.SetLeft(rectangle, 30 + (i - 6) * (w - 40) / 17);
-				MainCanvas.Children.Add(rectangle);
-			}
-		}
-
 		private void Button_Click_AddCourse(object sender, RoutedEventArgs e)
 		{
-			TextBlock textBlock = new TextBlock();
-			string text = Course_TextBox.Text.ToUpper();
-			textBlock.Text = text;
-			if (!courseSet.Add(text)) return;
+			//TextBlock textBlock = new TextBlock();
+			//string text = Course_TextBox.Text.ToUpper();
+			//textBlock.Text = text;
+			//if (!courseSet.Add(text)) return;
 
-			DockPanel dockPanel = new DockPanel();
-			dockPanel.Children.Add(textBlock);
-			dockPanel.Margin = new Thickness(0, 10, 0, 0);
+			//DockPanel dockPanel = new DockPanel();
+			//dockPanel.Children.Add(textBlock);
+			//dockPanel.Margin = new Thickness(0, 10, 0, 0);
 
 
-			Button remove = new Button();
-			remove.Content = "Remove";
-			remove.Click += (button_sender, button_e) => 
+			//Button remove = new Button();
+			//remove.Content = "Remove";
+			//remove.Click += (button_sender, button_e) => 
+			//{
+			//	List.Children.Remove(dockPanel);
+			//	courseSet.Remove(text);
+			//};
+			//dockPanel.Children.Add(remove);
+			//DockPanel.SetDock(remove, Dock.Right);
+			//remove.HorizontalAlignment = HorizontalAlignment.Right;
+
+			//List.Children.Add(dockPanel);
+
+			string courseName = Course_TextBox.Text;
+
+			bool isOpenSectionOnly = IsOpenSectionOnly.IsChecked ?? false;
+			bool isExcludeFC = IsExcludeFC.IsChecked ?? false;
+
+			Course course = new Crawler().GetCourse(courseName,isOpenSectionOnly, isExcludeFC);
+
+			Expander CourseInfo = new Expander();
+			CourseInfo.Margin = new Thickness(10, 10, 10, 0);
+			CourseInfo.Header = courseName;
+
+			var stackPanel = new StackPanel();
 			{
-				List.Children.Remove(dockPanel);
-				courseSet.Remove(text);
-			};
-			dockPanel.Children.Add(remove);
-			DockPanel.SetDock(remove, Dock.Right);
-			remove.HorizontalAlignment = HorizontalAlignment.Right;
+				var subtitle = new TextBlock();
+				{
+					subtitle.Text = course.FullName;
+				}
+				stackPanel.Children.Add(subtitle);
 
-			List.Children.Add(dockPanel);
+				var sectionPanel = new StackPanel();
+				{
+					sectionPanel.Margin = new Thickness(0, 20, 0, 0);
+					foreach (var section in course.Sections)
+					{
+						var sectionInfo = new StackPanel();
+						{
+
+						}
+						sectionPanel.Children.Add(sectionInfo);
+					}
+				}
+				stackPanel.Children.Add(sectionPanel);
+			}
+			CourseInfo.Content = stackPanel;
 		}
 
 		private void Button_Click_Refresh(object sender, RoutedEventArgs e)
