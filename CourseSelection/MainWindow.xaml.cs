@@ -101,9 +101,11 @@ namespace CourseSelection
 			int index = 0;
 			foreach (var course in courseSet)
 			{
+				var result = crawler.GetCourse(course, isOpenSectionOnly, isExcludeFC);
+				if (result == null) return;
 				try
 				{
-					newCourses.Add(crawler.GetCourse(course, isOpenSectionOnly, isExcludeFC));
+					newCourses.Add(result);
 				}
 				catch (Exception)
 				{
@@ -134,13 +136,13 @@ namespace CourseSelection
 			}
 			else
 			{
-				MainCanvas.Children.RemoveRange(5, MainCanvas.Children.Count - 5);
+				MainCanvas.Children.Clear();
 			}
 		}
 
 		private void ScheduleTimeTable(List<Section> sections)
 		{
-			MainCanvas.Children.RemoveRange(5, MainCanvas.Children.Count - 5);
+			MainCanvas.Children.Clear();
 
 			for (int i = 0; i < sections.Count; i++)
 			{
@@ -154,7 +156,7 @@ namespace CourseSelection
 							block.StrokeThickness = 5;
 							block.Stroke = new SolidColorBrush(GorgeousColors[i]);
 							block.Height = 5;
-							Canvas.SetTop(block, 13 + 26 * ((int)weekday.Day - 1));
+							Canvas.SetTop(block, 10.5 + 26 * ((int)weekday.Day - 1));
 
 							/* Suppose a time table of width 24 * 60 
 							 * (which is the total number of minutes in a day)
@@ -165,8 +167,8 @@ namespace CourseSelection
 							 * (and also keep a margin of 30 at the left and 10 at the right)*/
 							double absWidth = timePeriod.SpanInMinute();
 							double absLeft = timePeriod.Start.ToMinute();
-							block.Width = (MainCanvas.ActualWidth - 40) / (17 * 60) * absWidth;
-							Canvas.SetLeft(block, 30 + (MainCanvas.ActualWidth - 40) / (17 * 60) * (absLeft - 360));
+							block.Width = MainCanvas.ActualWidth / (17 * 60) * absWidth;
+							Canvas.SetLeft(block, MainCanvas.ActualWidth / (17 * 60) * (absLeft - 360));
 
 							MainCanvas.Children.Add(block);
 						}
@@ -186,13 +188,13 @@ namespace CourseSelection
 
 		private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			double ratio = (e.NewSize.Width - 40) / (e.PreviousSize.Width - 40);
+			double ratio = e.NewSize.Width / (e.PreviousSize.Width);
 			if (ratio < 0) ratio = 1;
 			foreach (UIElement rectangle in MainCanvas.Children)
 			{
 				if (rectangle is Rectangle)
 				{
-					Canvas.SetLeft(rectangle, 30 + ratio * (Canvas.GetLeft(rectangle) - 30));
+					Canvas.SetLeft(rectangle, ratio * Canvas.GetLeft(rectangle));
 					((Rectangle)rectangle).Width *= ratio;
 				}
 			}

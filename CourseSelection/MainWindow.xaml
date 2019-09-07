@@ -13,7 +13,7 @@
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			<ListView x:Name="Combinations" Margin="10,10,10,62
-					  " Grid.Column="1" SelectionChanged="Combinations_SelectionChanged">
+					  " Grid.Column="1" SelectionChanged="Combinations_SelectionChanged" MinWidth="100">
 				<ListView.View>
 					<GridView x:Name="CmbView">
 
@@ -28,32 +28,84 @@
 			</DockPanel>
 			<CheckBox x:Name="IsOpenSectionOnly" Content="Is Open Section Only" Margin="10,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
 			</CheckBox>
-			<StackPanel Margin="10,75
-						,0,0" Grid.Column="0" Name="List" Height="Auto" VerticalAlignment="Top" Orientation="Vertical">
+			<StackPanel Margin="10,75,0,0" Grid.Column="0" Name="List" Height="Auto" VerticalAlignment="Top" Orientation="Vertical">
 			</StackPanel>
-			<StatusBar Height="22" Grid.ColumnSpan="2" VerticalAlignment="Bottom"
-					   >
+			<StatusBar Height="22" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
 				<TextBlock Text="Complete"/>
 			</StatusBar>
 			<Button Content="Refresh" Margin="10,0,10,32" Grid.Column="1" VerticalAlignment="Bottom" Click="Button_Click_Refresh"/>
-			<Grid Margin="10,0,0,43.5" Height="130" VerticalAlignment="Bottom">
+			<Grid Margin="10,0,0,43.5" Height="130" VerticalAlignment="Bottom" MinWidth="550">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="10"/>
+				</Grid.ColumnDefinitions>
 				<Label Content="M" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 				<Label Content="Tu"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0"/>
 				<Label Content="W"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,52,0,0"/>
 				<Label Content="Th"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,78,0,0"/>
-				<Label Content="F" HorizontalAlignment="Left" Margin="0,104,0,0" VerticalAlignment="Bottom" />
-				<Canvas x:Name="MainCanvas" Margin="40,0,10,0" SizeChanged="MainCanvas_SizeChanged" MinWidth="500">
-					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="13" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
-					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="39" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
-					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="65" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
-					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="91" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
-					<Rectangle Fill="#FFE2E2E2" Height="1" Canvas.Left="0" Canvas.Top="117" Width="{Binding Path=ActualWidth, ElementName=MainCanvas}"/>
+				<Label Content="F" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+				<Label Content="6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,-26,0,0" Grid.ColumnSpan="2" Grid.Column="0" Width="20"/>
+				<Label Content="7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,-26,0,0" Grid.ColumnSpan="2" Grid.Column="1" Width="20"/>
+				<Label Content="8" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,-26,0,0" Grid.ColumnSpan="2" Grid.Column="2" Width="20"/>
+				<Label Content="9" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,-26,0,0" Grid.ColumnSpan="2" Grid.Column="3" Width="20"/>
+				<Label Content="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="4" Width="25"/>
+				<Label Content="11" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="5" Width="25"/>
+				<Label Content="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="6" Width="25"/>
+				<Label Content="13" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="7" Width="25"/>
+				<Label Content="14" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="8" Width="25"/>
+				<Label Content="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="9" Width="25"/>
+				<Label Content="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="10" Width="25"/>
+				<Label Content="17" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="11" Width="25"/>
+				<Label Content="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="12" Width="25"/>
+				<Label Content="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="13" Width="25"/>
+				<Label Content="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="14" Width="25"/>
+				<Label Content="21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="15" Width="25"/>
+				<Label Content="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="16" Width="25"/>
+				<Label Content="23" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="17" Width="25"/>
 
-					<!--<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="13" Width="50"/>
-				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="39" Width="50"/>
-				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="65" Width="50"/>
-				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="91" Width="50"/>
-				<Rectangle Fill="#FFF4F4F5" Height="5" Canvas.Left="30" Stroke="Black" StrokeThickness="5" Canvas.Top="117" Width="50"/>-->
+				<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,13,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+				<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,39,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+				<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,65,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+				<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,91,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+				<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,117,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="4" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="5" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="6" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="7" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="8" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="9" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="10" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="11" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="12" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="13" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="14" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="15" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="16" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="17" HorizontalAlignment="Left" Margin="0,0,0,0"></Rectangle>
+				<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="17" HorizontalAlignment="Right" Margin="0,0,0,0"></Rectangle>
+
+				<Canvas x:Name="MainCanvas" SizeChanged="MainCanvas_SizeChanged" MinWidth="500" Grid.Column="1" Grid.ColumnSpan="17">
 				</Canvas>
 			</Grid>
 			<CheckBox x:Name="IsExcludeFC" Content="Exclude Freshman Connection Program" Margin="162,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="True"/>

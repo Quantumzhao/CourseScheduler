@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using HtmlAgilityPack;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace CourseSelection
 {
@@ -112,14 +113,28 @@ namespace CourseSelection
 			var html = httpClient.GetStringAsync(url).Result;
 			var htmlDocument = new HtmlDocument();
 			htmlDocument.LoadHtml(html);
-			var divs = htmlDocument
-				.DocumentNode
-				.Descendants("div")
-				.Where(node => node.GetAttributeValue("id", "") == courseName)
-				.First()
-				.Descendants("div")
-				.Where(node => node.GetAttributeValue("class", "")
-				.Equals("section delivery-f2f")).ToList();
+			List<HtmlNode> divs = null;
+			try
+			{
+				divs = htmlDocument
+					.DocumentNode
+					.Descendants("div")
+					.Where(node => node.GetAttributeValue("id", "") == courseName)
+					.First()
+					.Descendants("div")
+					.Where(node => node.GetAttributeValue("class", "")
+					.Equals("section delivery-f2f")).ToList();
+			}
+			catch
+			{
+				MessageBox.Show(
+					"Unable to get the course info\nPlease check if there is any typo in course name",
+					"Error",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+				return null;
+			}
 
 			List<Section> sections = new List<Section>();
 			// Enumerate through each section
@@ -143,7 +158,7 @@ namespace CourseSelection
 					.Select(node => node.InnerText)
 					.ToList();
 				string instructor = instructors[0];
-				for (int i = 1; i < instructors.Count; i++)
+				for (int i = 1; i < instructors.Count(); i++)
 				{
 					instructor += ", ";
 					instructor += instructors[i];
@@ -153,6 +168,10 @@ namespace CourseSelection
 				// Enumerate through each class of the section
 				foreach (var row in rows)
 				{
+					HtmlNode dayTimeGroup = row.Descendants("div").First();
+					var enumerator = dayTimeGroup.Descendants("span").GetEnumerator();
+					if (!enumerator.MoveNext()) break;
+
 					var positions = row.Descendants("span");
 					string building = positions
 						.Where(node => node.GetAttributeValue("class", "") == "building-code")
@@ -161,10 +180,6 @@ namespace CourseSelection
 						.Where(node => node.GetAttributeValue("class", "") == "class-room")
 						.Single().InnerText;
 					Location location = new Location(building, room);
-
-					HtmlNode dayTimeGroup = row.Descendants("div").First();
-					var enumerator = dayTimeGroup.Descendants("span").GetEnumerator();
-					if (!enumerator.MoveNext()) break;
 
 					List<DayOfWeek> days = enumerator.Current.InnerText.ToDayOfWeek();
 
