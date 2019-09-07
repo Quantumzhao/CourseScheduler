@@ -70,7 +70,7 @@ namespace CourseSelection
 
 			//List.Children.Add(dockPanel);
 
-			string courseName = Course_TextBox.Text;
+			string courseName = Course_TextBox.Text.ToUpper();
 
 			bool isOpenSectionOnly = IsOpenSectionOnly.IsChecked ?? false;
 			bool isExcludeFC = IsExcludeFC.IsChecked ?? false;
