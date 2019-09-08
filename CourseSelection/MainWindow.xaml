@@ -29,11 +29,15 @@
 				</CheckBox>
 				<CheckBox x:Name="IsExcludeFC" Content="Exclude Freshman Connection Program" Margin="10,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="True" />
 			</WrapPanel>
-			<StackPanel Orientation="Horizontal" Height="Auto" VerticalAlignment="Top" Margin="0,10,0,0" DockPanel.Dock="Top" Visibility="Hidden">
+			<StackPanel Orientation="Horizontal" 
+						Height="Auto" 
+						VerticalAlignment="Top" 
+						Margin="0,10,0,0" 
+						DockPanel.Dock="Top">
 				<TextBlock Text="Exclude these instructors: " Height="Auto" VerticalAlignment="Center"></TextBlock>
 				<ComboBox x:Name="Instructor_ComboBox" Margin="10,0,0,0" IsReadOnly="True" Initialized="Instructor_ComboBox_Initialized" MinWidth="100"/>
 			</StackPanel>
-			<WrapPanel VerticalAlignment="Top" Margin="0,10,0,0" DockPanel.Dock="Top" Visibility="Hidden">
+			<WrapPanel VerticalAlignment="Top" Margin="0,10,0,0" DockPanel.Dock="Top">
 				<Label Background="#FF5975C9" Foreground="White">
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="Prof. Terrible" VerticalAlignment="Center"/>
@@ -41,7 +45,11 @@
 					</StackPanel>
 				</Label>
 			</WrapPanel>
-			<StackPanel Orientation="Horizontal" Height="Auto" VerticalAlignment="Top" Margin="0,10,0,0" DockPanel.Dock="Top" Visibility="Hidden">
+			<StackPanel Orientation="Horizontal" 
+						Height="Auto" 
+						VerticalAlignment="Top" 
+						Margin="0,10,0,0" 
+						DockPanel.Dock="Top">
 				<TextBlock Text="Exclude these TimePeriods: " Height="Auto" VerticalAlignment="Center"></TextBlock>
 				<ComboBox x:Name="Time_ComboBox" Margin="10,0,0,0" IsReadOnly="True" SelectedIndex="0">
 					<ComboBoxItem Content="None" Tag="None"></ComboBoxItem>
@@ -52,7 +60,7 @@
 					<ComboBoxItem Content="Other..."></ComboBoxItem>
 				</ComboBox>
 			</StackPanel>
-			<WrapPanel VerticalAlignment="Top" Margin="0,10,0,0" DockPanel.Dock="Top" Visibility="Hidden">
+			<WrapPanel VerticalAlignment="Top" Margin="0,10,0,0" DockPanel.Dock="Top">
 				<Label Content="Button"/>
 			</WrapPanel>
 			<StackPanel Margin="10,10,0,0" Grid.Column="0" Name="List" Height="Auto" 
