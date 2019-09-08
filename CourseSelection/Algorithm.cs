@@ -4,6 +4,7 @@ using System.Net.Http;
 using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Windows;
+using System.Text;
 
 namespace CourseSelection
 {
@@ -11,7 +12,7 @@ namespace CourseSelection
 	{
 		public static List<List<Section>> GetPossibleCombinations(Course[] dataset)
 		{
-			if (dataset.Length == 0) return null;
+			if (dataset.Length == 0) return new List<List<Section>>();
 
 			List<List<Section>> combinations = new List<List<Section>>();
 			foreach (var section in dataset[0].Sections)
@@ -97,6 +98,60 @@ namespace CourseSelection
 
 			return ret;
 		}
+
+		public static bool AddString(this HashSet<string> set, string s)
+		{
+			foreach (var item in set)
+			{
+				if (item.Equals(s))
+				{
+					return false;
+				}
+			}
+			
+			return set.Add(s); ;
+		}
+
+		public static string Concatenate(this IEnumerable<string> stringList)
+		{
+			var list = stringList.ToArray();
+			StringBuilder stringBuilder = new StringBuilder();
+			for (int i = 0; i < list.Length; i++)
+			{
+				if (i != 0) stringBuilder.Append(',');
+				stringBuilder.Append(list[i]);
+			}
+
+			return stringBuilder.ToString();
+		}
+
+		//public static bool Has(this MainWindow.VMSet<Course> courses, Course newCourse)
+		//{
+		//	if (courses.Where(c => c.Name == newCourse.Name).Count() != 0) return true;
+		//	else return false;
+		//}
+
+		public static bool Has(this HashSet<Course> courses, Course newCourse)
+		{
+			if (courses.Where(c => c.Name == newCourse.Name).Count() != 0) return true;
+			else return false;
+		}
+		public static bool Has(this HashSet<Course> courses, string newCourse)
+		{
+			if (courses.Where(c => c.Name == newCourse).Count() != 0) return true;
+			else return false;
+		}
+		public static Course Get(this HashSet<Course> courses, string newCourse)
+		{
+			try
+			{
+				return courses.Where(c => c.Name == newCourse).Single();
+			}
+			catch
+			{
+				return null;
+			}
+		}
 	}
 
 	public class Crawler
@@ -113,6 +168,9 @@ namespace CourseSelection
 			var html = httpClient.GetStringAsync(url).Result;
 			var htmlDocument = new HtmlDocument();
 			htmlDocument.LoadHtml(html);
+
+			string fullName;
+
 			List<HtmlNode> divs = null;
 			try
 			{
@@ -124,6 +182,13 @@ namespace CourseSelection
 					.Descendants("div")
 					.Where(node => node.GetAttributeValue("class", "")
 					.Equals("section delivery-f2f")).ToList();
+
+				fullName = htmlDocument
+					.DocumentNode
+					.Descendants("span")
+					.Where(node => node.GetAttributeValue("class", "") == "course-title")
+					.Single()
+					.InnerText;
 			}
 			catch
 			{
@@ -213,7 +278,7 @@ namespace CourseSelection
 				sections.Add(new Section(courseName, name, classes.ToArray()));
 			}
 
-			ret = new Course(courseName, sections.ToArray());
+			ret = new Course(courseName, fullName, sections.ToArray());
 			return ret;
 		}
 
@@ -249,14 +314,25 @@ namespace CourseSelection
 
 	public class Course
 	{
-		public Course(string name, params Section[] sections)
+		public Course(string name, string fullName, params Section[] sections)
 		{
 			Name = name;
+			FullName = fullName;
 			Sections = new HashSet<Section>(sections);
+
+			foreach (var section in sections)
+			{
+				foreach (var @class in section.Classes)
+				{
+					Instructors.Add(@class.Value.Instructor);
+				}
+			}
 		}
 
 		public readonly string Name;
+		public readonly string FullName;
 		public readonly HashSet<Section> Sections;
+		public readonly HashSet<string> Instructors = new HashSet<string>();
 	}
 
 	public class Section
