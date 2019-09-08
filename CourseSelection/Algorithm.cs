@@ -97,6 +97,19 @@ namespace CourseSelection
 
 			return ret;
 		}
+
+		public static bool AddString(this HashSet<string> set, string s)
+		{
+			foreach (var item in set)
+			{
+				if (item.Equals(s))
+				{
+					return false;
+				}
+			}
+			
+			return set.Add(s); ;
+		}
 	}
 
 	public class Crawler

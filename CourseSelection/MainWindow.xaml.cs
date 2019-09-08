@@ -24,7 +24,9 @@ namespace CourseSelection
 	public partial class MainWindow : Window
 	{
 		private List<List<Section>> combinations = new List<List<Section>>();
-		private HashSet<string> courseSet = new HashSet<string>();
+		private HashSet<Course> courseSet = new HashSet<Course>();
+		private HashSet<Course> courseCache = new HashSet<Course>();
+		private HashSet<string> instructors = new HashSet<string>();
 
 		public Color[] GorgeousColors = new Color[10];
 
@@ -76,76 +78,145 @@ namespace CourseSelection
 			bool isExcludeFC = IsExcludeFC.IsChecked ?? false;
 
 			Course course = new Crawler().GetCourse(courseName,isOpenSectionOnly, isExcludeFC);
+			courseSet.Add(course);
 
-			Expander CourseInfo = new Expander();
-			CourseInfo.Margin = new Thickness(10, 10, 10, 0);
-			CourseInfo.Header = courseName;
-
-			var stackPanel = new StackPanel();
+			Grid grid = new Grid();
 			{
-				var subtitle = new TextBlock();
-				{
-					subtitle.Text = course.FullName;
-				}
-				stackPanel.Children.Add(subtitle);
+				var col1 = new ColumnDefinition();
+				col1.Width = GridLength.Auto;
+				grid.ColumnDefinitions.Add(col1);
 
-				var sectionPanel = new StackPanel();
+				var col2 = new ColumnDefinition();
+				grid.ColumnDefinitions.Add(col2);
+
+				var col3 = new ColumnDefinition();
+				col3.Width = GridLength.Auto;
+				grid.ColumnDefinitions.Add(col3);
+
+				Label courseInfo = new Label();
 				{
-					sectionPanel.Margin = new Thickness(0, 20, 0, 0);
+					courseInfo.Content = courseName;
+					courseInfo.Foreground = new SolidColorBrush(GorgeousColors[courseSet.Count - 1]);
+					courseInfo.FontWeight = FontWeights.Bold;
+					courseInfo.FontSize = 15;
+					Grid.SetColumn(courseInfo, 0);
+				}
+				grid.Children.Add(courseInfo);
+
+				Label instructor = new Label();
+				List<string> names = new List<string>();
+				{
+					instructor.Name = "instructor";
+					StringBuilder stringBuilder = new StringBuilder();
 					foreach (var section in course.Sections)
 					{
-						var sectionInfo = new StackPanel();
+						foreach (var @class in section.Classes)
 						{
-
+							string tempIns = @class.Value.Instructor;
+							if (instructors.Add(tempIns))
+							{
+								if (stringBuilder.Length != 0)
+								{
+									stringBuilder.Append(", ");
+								}
+								stringBuilder.Append(tempIns);
+								names.Add(tempIns);
+							}
 						}
-						sectionPanel.Children.Add(sectionInfo);
 					}
+					instructor.Content = stringBuilder.ToString();
+					Grid.SetColumn(instructor, 1);
+					instructor.VerticalAlignment = VerticalAlignment.Center;
+					instructor.HorizontalAlignment = HorizontalAlignment.Center;
 				}
-				stackPanel.Children.Add(sectionPanel);
+				grid.Children.Add(instructor);
+
+				Button remove_Button = new Button();
+				{
+					remove_Button.Background = Brushes.Transparent;
+					remove_Button.BorderBrush = Brushes.Transparent;
+
+					remove_Button.Tag = names;
+
+					remove_Button.Content = "";
+					remove_Button.FontFamily = new FontFamily("Segoe MDL2 Assets");
+
+					remove_Button.Width = double.NaN;
+					remove_Button.Height = double.NaN;
+					remove_Button.HorizontalAlignment = HorizontalAlignment.Right;
+					remove_Button.VerticalAlignment = VerticalAlignment.Center;
+
+					remove_Button.Click += (bs, be) =>
+					{
+						List.Children.Remove(grid);
+						courseSet.Remove(course);
+						(remove_Button.Tag as List<string>).ForEach(s => instructors.Remove(s));
+					};
+					Grid.SetColumn(remove_Button, 2);
+				}
+				grid.Children.Add(remove_Button);
 			}
-			CourseInfo.Content = stackPanel;
+			List.Children.Add(grid);
+
+			//Expander CourseInfo = new Expander();
+			//{
+			//	CourseInfo.Margin = new Thickness(10, 10, 10, 0);
+			//	CourseInfo.Header = courseName;
+
+			//	var stackPanel = new StackPanel();
+			//	{
+			//		var subtitle = new TextBlock();
+			//		{
+			//			subtitle.Text = course.FullName;
+			//		}
+			//		stackPanel.Children.Add(subtitle);
+
+			//		ScrollViewer scrollViewer = new ScrollViewer();
+			//		var sectionPanel = new StackPanel();
+			//		{
+			//			sectionPanel.Margin = new Thickness(0, 20, 0, 0);
+			//			foreach (var section in course.Sections)
+			//			{
+			//				var sectionInfo = new StackPanel();
+			//				{
+
+			//				}
+			//				sectionPanel.Children.Add(sectionInfo);
+			//			}
+			//		}
+			//		scrollViewer.Content = sectionPanel;
+			//		stackPanel.Children.Add(scrollViewer);
+			//	}
+			//	CourseInfo.Content = stackPanel;
+			//}
+			//List.Children.Add(CourseInfo);
 		}
 
 		private void Button_Click_Refresh(object sender, RoutedEventArgs e)
 		{
 			CmbView.Columns.Clear();
 
-			List<Course> newCourses = new List<Course>();
-			var crawler = new Crawler();
-			bool isOpenSectionOnly = IsOpenSectionOnly.IsChecked ?? false;
-			bool isExcludeFC = IsExcludeFC.IsChecked ?? true;
+			//List<Course> newCourses = new List<Course>();
+			//var crawler = new Crawler();
+			//bool isOpenSectionOnly = IsOpenSectionOnly.IsChecked ?? false;
+			//bool isExcludeFC = IsExcludeFC.IsChecked ?? true;
 
 			int index = 0;
 			foreach (var course in courseSet)
 			{
-				var result = crawler.GetCourse(course, isOpenSectionOnly, isExcludeFC);
-				if (result == null) return;
-				try
-				{
-					newCourses.Add(result);
-				}
-				catch (Exception)
-				{
-					MessageBox.Show(
-						"Course Initialization Error",
-						"Unable to add a course", 
-						MessageBoxButton.OK, 
-						MessageBoxImage.Error
-					);
-					return;
-				}
-
 				CmbView.Columns.Add(
-					new GridViewColumn() {
-						Header = course,
+					new GridViewColumn()
+					{
+						Header = course.Name,
 						DisplayMemberBinding = new Binding("[" + index.ToString() + "]")
 					}
 				);
 
 				index++;
 			}
-			combinations = Algorithm.GetPossibleCombinations(newCourses.ToArray());
+			combinations = Algorithm.GetPossibleCombinations(courseSet.ToArray());
 			Combinations.ItemsSource = combinations;
+			Count.Content = combinations.Count;
 
 			if (combinations.Count != 0)
 			{
