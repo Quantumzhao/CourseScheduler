@@ -4,6 +4,7 @@ using System.Net.Http;
 using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Windows;
+using System.Text;
 
 namespace CourseSelection
 {
@@ -11,7 +12,7 @@ namespace CourseSelection
 	{
 		public static List<List<Section>> GetPossibleCombinations(Course[] dataset)
 		{
-			if (dataset.Length == 0) return null;
+			if (dataset.Length == 0) return new List<List<Section>>();
 
 			List<List<Section>> combinations = new List<List<Section>>();
 			foreach (var section in dataset[0].Sections)
@@ -109,6 +110,47 @@ namespace CourseSelection
 			}
 			
 			return set.Add(s); ;
+		}
+
+		public static string Concatenate(this IEnumerable<string> stringList)
+		{
+			var list = stringList.ToArray();
+			StringBuilder stringBuilder = new StringBuilder();
+			for (int i = 0; i < list.Length; i++)
+			{
+				if (i != 0) stringBuilder.Append(',');
+				stringBuilder.Append(list[i]);
+			}
+
+			return stringBuilder.ToString();
+		}
+
+		//public static bool Has(this MainWindow.VMSet<Course> courses, Course newCourse)
+		//{
+		//	if (courses.Where(c => c.Name == newCourse.Name).Count() != 0) return true;
+		//	else return false;
+		//}
+
+		public static bool Has(this HashSet<Course> courses, Course newCourse)
+		{
+			if (courses.Where(c => c.Name == newCourse.Name).Count() != 0) return true;
+			else return false;
+		}
+		public static bool Has(this HashSet<Course> courses, string newCourse)
+		{
+			if (courses.Where(c => c.Name == newCourse).Count() != 0) return true;
+			else return false;
+		}
+		public static Course Get(this HashSet<Course> courses, string newCourse)
+		{
+			try
+			{
+				return courses.Where(c => c.Name == newCourse).Single();
+			}
+			catch
+			{
+				return null;
+			}
 		}
 	}
 
@@ -277,11 +319,20 @@ namespace CourseSelection
 			Name = name;
 			FullName = fullName;
 			Sections = new HashSet<Section>(sections);
+
+			foreach (var section in sections)
+			{
+				foreach (var @class in section.Classes)
+				{
+					Instructors.Add(@class.Value.Instructor);
+				}
+			}
 		}
 
 		public readonly string Name;
 		public readonly string FullName;
 		public readonly HashSet<Section> Sections;
+		public readonly HashSet<string> Instructors = new HashSet<string>();
 	}
 
 	public class Section

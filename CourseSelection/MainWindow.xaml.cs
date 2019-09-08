@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Threading;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -15,6 +14,8 @@ using System.Windows.Navigation;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Windows.Controls.Primitives;
 
 namespace CourseSelection
 {
@@ -24,9 +25,9 @@ namespace CourseSelection
 	public partial class MainWindow : Window
 	{
 		private List<List<Section>> combinations = new List<List<Section>>();
-		private HashSet<Course> courseSet = new HashSet<Course>();
+		private VMSet<Course> courseSet = new VMSet<Course>();
 		private HashSet<Course> courseCache = new HashSet<Course>();
-		private HashSet<string> instructors = new HashSet<string>();
+		private VMSet<string> instructors = new VMSet<string>();
 
 		public Color[] GorgeousColors = new Color[10];
 
@@ -45,40 +46,53 @@ namespace CourseSelection
 			GorgeousColors[7] = Color.FromRgb(192, 192, 192);
 			GorgeousColors[8] = Color.FromRgb(160, 160, 160);
 			GorgeousColors[9] = Color.FromRgb(128, 128, 128);
+
+			courseSet.CollectionChanged += (cs, ce) =>
+			{
+				switch (ce.Action)
+				{
+					case NotifyCollectionChangedAction.Add:
+						foreach (var i in (ce.NewItems[0] as Course).Instructors)
+						{
+							instructors.Add(i);
+						}
+						break;
+
+					case NotifyCollectionChangedAction.Remove:
+						foreach (var i in (ce.OldItems[0] as Course).Instructors)
+						{
+							instructors.Remove(i);
+						}
+						break;
+				}
+			};
 		}
 
 		private void Button_Click_AddCourse(object sender, RoutedEventArgs e)
 		{
-			//TextBlock textBlock = new TextBlock();
-			//string text = Course_TextBox.Text.ToUpper();
-			//textBlock.Text = text;
-			//if (!courseSet.Add(text)) return;
-
-			//DockPanel dockPanel = new DockPanel();
-			//dockPanel.Children.Add(textBlock);
-			//dockPanel.Margin = new Thickness(0, 10, 0, 0);
-
-
-			//Button remove = new Button();
-			//remove.Content = "Remove";
-			//remove.Click += (button_sender, button_e) => 
-			//{
-			//	List.Children.Remove(dockPanel);
-			//	courseSet.Remove(text);
-			//};
-			//dockPanel.Children.Add(remove);
-			//DockPanel.SetDock(remove, Dock.Right);
-			//remove.HorizontalAlignment = HorizontalAlignment.Right;
-
-			//List.Children.Add(dockPanel);
+			// init calc
+			(sender as Button).IsEnabled = false;
+			Log.UpdateStatus("Connecting to Testudo...");
 
 			string courseName = Course_TextBox.Text.ToUpper();
 
 			bool isOpenSectionOnly = IsOpenSectionOnly.IsChecked ?? false;
 			bool isExcludeFC = IsExcludeFC.IsChecked ?? false;
 
-			Course course = new Crawler().GetCourse(courseName,isOpenSectionOnly, isExcludeFC);
+			Course course;
+			if (courseCache.Has(courseName))
+			{
+				course = courseCache.Get(courseName);
+			}
+			else
+			{
+				course = new Crawler().GetCourse(courseName,isOpenSectionOnly, isExcludeFC);
+				courseCache.Add(course);
+			}
+
+			if (courseSet.Has(course)) goto Finalize;
 			courseSet.Add(course);
+			ShowSections();
 
 			Grid grid = new Grid();
 			{
@@ -96,35 +110,20 @@ namespace CourseSelection
 				Label courseInfo = new Label();
 				{
 					courseInfo.Content = courseName;
-					courseInfo.Foreground = new SolidColorBrush(GorgeousColors[courseSet.Count - 1]);
+					courseInfo.Foreground = new SolidColorBrush(GetColor(courseName));
 					courseInfo.FontWeight = FontWeights.Bold;
 					courseInfo.FontSize = 15;
 					Grid.SetColumn(courseInfo, 0);
+					courseSet.CollectionChanged += (cs, ce) =>
+					{
+						courseInfo.Foreground = new SolidColorBrush(GetColor(courseName));
+					};
 				}
 				grid.Children.Add(courseInfo);
 
 				Label instructor = new Label();
-				List<string> names = new List<string>();
 				{
-					instructor.Name = "instructor";
-					StringBuilder stringBuilder = new StringBuilder();
-					foreach (var section in course.Sections)
-					{
-						foreach (var @class in section.Classes)
-						{
-							string tempIns = @class.Value.Instructor;
-							if (instructors.Add(tempIns))
-							{
-								if (stringBuilder.Length != 0)
-								{
-									stringBuilder.Append(", ");
-								}
-								stringBuilder.Append(tempIns);
-								names.Add(tempIns);
-							}
-						}
-					}
-					instructor.Content = stringBuilder.ToString();
+					instructor.Content = course.Instructors.Concatenate();
 					Grid.SetColumn(instructor, 1);
 					instructor.VerticalAlignment = VerticalAlignment.Center;
 					instructor.HorizontalAlignment = HorizontalAlignment.Center;
@@ -135,8 +134,6 @@ namespace CourseSelection
 				{
 					remove_Button.Background = Brushes.Transparent;
 					remove_Button.BorderBrush = Brushes.Transparent;
-
-					remove_Button.Tag = names;
 
 					remove_Button.Content = "";
 					remove_Button.FontFamily = new FontFamily("Segoe MDL2 Assets");
@@ -150,7 +147,7 @@ namespace CourseSelection
 					{
 						List.Children.Remove(grid);
 						courseSet.Remove(course);
-						(remove_Button.Tag as List<string>).ForEach(s => instructors.Remove(s));
+						ShowSections();
 					};
 					Grid.SetColumn(remove_Button, 2);
 				}
@@ -158,48 +155,15 @@ namespace CourseSelection
 			}
 			List.Children.Add(grid);
 
-			//Expander CourseInfo = new Expander();
-			//{
-			//	CourseInfo.Margin = new Thickness(10, 10, 10, 0);
-			//	CourseInfo.Header = courseName;
-
-			//	var stackPanel = new StackPanel();
-			//	{
-			//		var subtitle = new TextBlock();
-			//		{
-			//			subtitle.Text = course.FullName;
-			//		}
-			//		stackPanel.Children.Add(subtitle);
-
-			//		ScrollViewer scrollViewer = new ScrollViewer();
-			//		var sectionPanel = new StackPanel();
-			//		{
-			//			sectionPanel.Margin = new Thickness(0, 20, 0, 0);
-			//			foreach (var section in course.Sections)
-			//			{
-			//				var sectionInfo = new StackPanel();
-			//				{
-
-			//				}
-			//				sectionPanel.Children.Add(sectionInfo);
-			//			}
-			//		}
-			//		scrollViewer.Content = sectionPanel;
-			//		stackPanel.Children.Add(scrollViewer);
-			//	}
-			//	CourseInfo.Content = stackPanel;
-			//}
-			//List.Children.Add(CourseInfo);
+			// fin calc
+			Finalize:
+			(sender as Button).IsEnabled = true;
+			Log.UpdateStatus("Complete");
 		}
 
-		private void Button_Click_Refresh(object sender, RoutedEventArgs e)
+		private void ShowSections()
 		{
 			CmbView.Columns.Clear();
-
-			//List<Course> newCourses = new List<Course>();
-			//var crawler = new Crawler();
-			//bool isOpenSectionOnly = IsOpenSectionOnly.IsChecked ?? false;
-			//bool isExcludeFC = IsExcludeFC.IsChecked ?? true;
 
 			int index = 0;
 			foreach (var course in courseSet)
@@ -218,20 +182,20 @@ namespace CourseSelection
 			Combinations.ItemsSource = combinations;
 			Count.Content = combinations.Count;
 
+			MainCanvas.Children.Clear();
 			if (combinations.Count != 0)
 			{
 				ScheduleTimeTable(combinations[0]);
 			}
-			else
-			{
-				MainCanvas.Children.Clear();
-			}
+		}
+
+		private void Button_Click_Refresh(object sender, RoutedEventArgs e)
+		{
 		}
 
 		private void ScheduleTimeTable(List<Section> sections)
 		{
 			MainCanvas.Children.Clear();
-
 			for (int i = 0; i < sections.Count; i++)
 			{
 				foreach (var myClass in sections[i].Classes.Values)
@@ -242,7 +206,7 @@ namespace CourseSelection
 						{
 							Rectangle block = new Rectangle();
 							block.StrokeThickness = 5;
-							block.Stroke = new SolidColorBrush(GorgeousColors[i]);
+							block.Stroke = new SolidColorBrush(GetColor(sections[i].Course));
 							block.Height = 5;
 							Canvas.SetTop(block, 10.5 + 26 * ((int)weekday.Day - 1));
 
@@ -267,11 +231,7 @@ namespace CourseSelection
 
 		private void Combinations_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			try
-			{
-				ScheduleTimeTable(Combinations.SelectedItems[0] as List<Section>);
-			}
-			catch { }
+			ScheduleTimeTable(Combinations.SelectedItems[0] as List<Section>);
 		}
 
 		private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -286,6 +246,96 @@ namespace CourseSelection
 					((Rectangle)rectangle).Width *= ratio;
 				}
 			}
+		}
+
+		private void Instructor_ComboBox_Initialized(object sender, EventArgs e)
+		{
+			(sender as ComboBox).ItemsSource = instructors;
+		}
+
+		private void StatusBar_Initialized(object sender, EventArgs e)
+		{
+			Log.StatusBar = sender as StatusBar;
+		}
+
+		private Color GetColor(string course)
+		{
+			int i = courseSet.IndexOf(courseSet.Get(course));
+			if (i != -1) return GorgeousColors[i];
+			else return new Color();
+		}
+
+		public class VMSet<T> : HashSet<T>, INotifyCollectionChanged
+		{
+			private List<T> indices = new List<T>();
+			public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+			public new bool Add(T newElement)
+			{
+				if (base.Add(newElement))
+				{
+					indices.Add(newElement);
+					CollectionChanged?.Invoke(
+						this,
+						new NotifyCollectionChangedEventArgs(
+							NotifyCollectionChangedAction.Add,
+							newElement
+						)
+					);
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			public new bool Remove(T oldElement)
+			{
+				if (Contains(oldElement))
+				{
+					int index = indices.IndexOf(oldElement);
+					indices.Remove(oldElement);
+					base.Remove(oldElement);
+					CollectionChanged?.Invoke(
+						this,
+						new NotifyCollectionChangedEventArgs(
+							NotifyCollectionChangedAction.Remove,
+							oldElement, index
+						)
+					);
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			public int IndexOf(T element)
+			{
+				if (element != null) return indices.IndexOf(element);
+				else return -1;
+			}
+		}
+	}
+
+	public static class Log
+	{
+		private static StatusBar statusBar;
+		public static StatusBar StatusBar
+		{
+			get => statusBar;
+			set
+			{
+				statusBar = value;
+				Status = StatusBar.FindName("Status") as TextBlock;
+			}
+		}
+		public static TextBlock Status { get; private set; }
+		public static void UpdateStatus(string status)
+		{
+			Status.Text = status;
 		}
 	}
 }
