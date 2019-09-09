@@ -59,19 +59,5 @@ namespace CourseSelection.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;Application xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
-        ///  &lt;VisualElements BackgroundColor=&quot;#E21833&quot;
-        ///                  ShowNameOnSquare150x150Logo=&quot;on&quot;
-        ///                  ForegroundText=&quot;light&quot;/&gt;
-        ///&lt;/Application&gt;
-        ///.
-        /// </summary>
-        internal static string CourseSelection_VisualElementsManifest {
-            get {
-                return ResourceManager.GetString("CourseSelection_VisualElementsManifest", resourceCulture);
-            }
-        }
     }
 }

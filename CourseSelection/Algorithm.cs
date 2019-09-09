@@ -187,8 +187,9 @@ namespace CourseSelection
 					.DocumentNode
 					.Descendants("span")
 					.Where(node => node.GetAttributeValue("class", "") == "course-title")
-					.Single()
+					.First()
 					.InnerText;
+
 			}
 			catch
 			{
