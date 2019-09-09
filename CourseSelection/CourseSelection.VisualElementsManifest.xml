@@ -2,6 +2,5 @@
   <VisualElements BackgroundColor="#E21833"
                   ShowNameOnSquare150x150Logo="on"
                   ForegroundText="light"
-                  Square150x150Logo="Asset 150.png"
                   Square70x70Logo="Asset 70.png"/>
 </Application>
