@@ -28,6 +28,7 @@ namespace CourseSelection
 		private VMSet<Course> courseSet = new VMSet<Course>();
 		private HashSet<Course> courseCache = new HashSet<Course>();
 		private VMSet<string> instructors = new VMSet<string>();
+		private VMSet<string> excludedInstructors = new VMSet<string>();
 
 		public Color[] GorgeousColors = new Color[10];
 
@@ -250,7 +251,74 @@ namespace CourseSelection
 
 		private void Instructor_ComboBox_Initialized(object sender, EventArgs e)
 		{
-			(sender as ComboBox).ItemsSource = instructors;
+			var me = sender as ComboBox;
+
+			me.ItemsSource = instructors;
+			excludedInstructors.CollectionChanged += (cs, ce) =>
+			{
+				switch (ce.Action)
+				{
+					case NotifyCollectionChangedAction.Add:
+						if (me.SelectedItem == null)
+						{
+							break;
+						}
+						Label label = new Label();
+						{
+							label.Margin = new Thickness(0, 0, 10, 0);
+							label.Background = new SolidColorBrush(Color.FromRgb(89, 117, 201));
+							label.Foreground = Brushes.White;
+
+							StackPanel stackPanel = new StackPanel();
+							{
+								stackPanel.Orientation = Orientation.Horizontal;
+
+								TextBlock name = new TextBlock();
+								{
+									name.Text = me.SelectedItem as string;
+								}
+								stackPanel.Children.Add(name);
+
+								Button remove = new Button();
+								{
+									remove.Background = Brushes.Transparent;
+									remove.BorderBrush = Brushes.Transparent;
+									remove.Foreground = Brushes.White;
+
+									remove.Content = "";
+									remove.FontFamily = new FontFamily("Segoe MDL2 Assets");
+
+									remove.Width = double.NaN;
+									remove.Height = double.NaN;
+									remove.VerticalAlignment = VerticalAlignment.Center;
+									remove.Margin = new Thickness(5, 0, 0, 0);
+									remove.Padding = new Thickness(0, 1, 0, 0);
+
+									remove.Click += (bs, be) =>
+									{
+										ExIns_Panel.Children.Remove(label);
+										excludedInstructors.Remove(name.Text);
+									};
+								}
+								stackPanel.Children.Add(remove);
+							}
+							label.Content = stackPanel;
+						}
+						ExIns_Panel.Children.Add(label);
+
+						(me.ItemsSource as VMSet<string>).Remove(me.SelectedItem as string);
+						break;
+
+					case NotifyCollectionChangedAction.Remove:
+						(me.ItemsSource as VMSet<string>).Add(ce.OldItems[0] as string);
+						break;
+				}
+			};
+		}
+
+		private void Instructor_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			excludedInstructors.Add((sender as ComboBox).SelectedItem as string);
 		}
 
 		private void StatusBar_Initialized(object sender, EventArgs e)
