@@ -265,7 +265,7 @@ namespace CourseSelection
 						}
 						Label label = new Label();
 						{
-							label.Margin = new Thickness(0, 0, 10, 0);
+							label.Margin = new Thickness(0, 0, 10, 10);
 							label.Background = new SolidColorBrush(Color.FromRgb(89, 117, 201));
 							label.Foreground = Brushes.White;
 
