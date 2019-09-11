@@ -218,11 +218,21 @@ namespace CourseSelection
 					.Single(node => node.GetAttributeValue("class", "") == "class-days-container")
 					.Elements("div").ToList();
 
-				var instructors = div
-					.Descendants("span")
+				var span = div.Descendants("span");
+
+				var instructors = span
 					.Where(node => node.GetAttributeValue("class", "") == "section-instructor")
 					.Select(node => node.InnerText)
 					.ToList();
+
+				int openSeats = int.Parse(span
+					.Single(node => node.GetAttributeValue("class", "") == "open-seats-count")
+					.InnerText);
+				int waitlist = int.Parse(span
+					.Single(node => node.GetAttributeValue("class", "") == "waitlist-count")
+					.InnerText);
+
+
 				string instructor = instructors[0];
 				for (int i = 1; i < instructors.Count(); i++)
 				{
@@ -276,7 +286,7 @@ namespace CourseSelection
 					classes.Add(className, new Class(instructor, location, weekdays.ToArray()));
 				}
 
-				sections.Add(new Section(courseName, name, classes.ToArray()));
+				sections.Add(new Section(courseName, name, openSeats, waitlist, classes.ToArray()));
 			}
 
 			ret = new Course(courseName, fullName, sections.ToArray());
@@ -338,10 +348,12 @@ namespace CourseSelection
 
 	public class Section
 	{
-		public Section(string course, string name, params KeyValuePair<string, Class>[] classes)
+		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, Class>[] classes)
 		{
 			Course = course;
 			Name = name;
+			OpenSeats = openSeats;
+			WaitList = waitList;
 
 			foreach (var myClass in classes)
 			{
@@ -352,11 +364,10 @@ namespace CourseSelection
 		public readonly Dictionary<string, Class> Classes = new Dictionary<string, Class>();
 		public readonly string Course;
 		public readonly string Name;
+		public readonly int OpenSeats;
+		public readonly int WaitList;
 
-		/* Have not yet been implemented
-		public readonly Location Location;
-		public string Instructor;
-		*/
+		public List<string> Instructor;
 		public bool IsOverlap(Section another)
 		{
 			foreach (var myClass in Classes.Values)
@@ -371,6 +382,10 @@ namespace CourseSelection
 			}
 
 			return false;
+		}
+		public bool IsPossible(List<string> excludedInstructors, bool isOpenSectionOnly)
+		{
+			throw new NotImplementedException();
 		}
 
 		public override string ToString()

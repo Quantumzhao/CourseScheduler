@@ -192,6 +192,9 @@ namespace CourseSelection
 
 		private void Button_Click_Refresh(object sender, RoutedEventArgs e)
 		{
+			combinations = Algorithm.GetPossibleCombinations(courseSet.ToArray());
+			Combinations.ItemsSource = null;
+			Combinations.ItemsSource = combinations;
 		}
 
 		private void ScheduleTimeTable(List<Section> sections)

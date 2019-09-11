@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseSelection", "CourseSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{783984EE-CD90-4520-9D45-86F3FE86244C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUIWindow", "MUIWindow\MUIWindow.csproj", "{73FB2ED8-61F1-4BB4-A3C2-82534EAE0845}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schedule.Code", "Schedule.Code\Schedule.Code.csproj", "{3A8E6744-603D-4D02-847F-07C593C4EE71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{783984EE-CD90-4520-9D45-86F3FE86244C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{783984EE-CD90-4520-9D45-86F3FE86244C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{783984EE-CD90-4520-9D45-86F3FE86244C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73FB2ED8-61F1-4BB4-A3C2-82534EAE0845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73FB2ED8-61F1-4BB4-A3C2-82534EAE0845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73FB2ED8-61F1-4BB4-A3C2-82534EAE0845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73FB2ED8-61F1-4BB4-A3C2-82534EAE0845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
