@@ -1,5 +1,4 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CourseSelection
+namespace CourseSelection.Pages
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for DataSourceSettings.xaml
 	/// </summary>
-	public partial class MainWindow : ModernWindow
+	public partial class DataSourceSettings : UserControl
 	{
+		public DataSourceSettings()
+		{
+			InitializeComponent();
+		}
 	}
 }

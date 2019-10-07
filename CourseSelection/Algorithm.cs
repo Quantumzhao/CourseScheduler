@@ -156,13 +156,13 @@ namespace CourseSelection
 
 	public class Crawler
 	{
-		public readonly string TermID = "201908";
-		public bool IsExcludeFC = true;
+		public string TermID = "202001";
+		//public bool IsExcludeFC = true;
 
-		public Course GetCourse(string courseName, bool isOpenSectionOnly = false, bool isExcludeFC = true)
+		public Course GetCourse(string courseName)
 		{
 			Course ret;
-			URL url = new URL(courseName, TermID, isOpenSectionOnly);
+			URL url = new URL(courseName, TermID);
 
 			var httpClient = new HttpClient();
 			var html = httpClient.GetStringAsync(url).Result;
@@ -199,7 +199,6 @@ namespace CourseSelection
 					MessageBoxButton.OK,
 					MessageBoxImage.Error
 				);
-				return null;
 			}
 
 			List<Section> sections = new List<Section>();
@@ -210,8 +209,6 @@ namespace CourseSelection
 					.Descendants("input").First()
 					.ChildAttributes("value").First()
 					.Value;
-
-				if (isExcludeFC && name[0] == 'F') break;
 
 				var rows = div
 					.Descendants("div")
@@ -295,16 +292,11 @@ namespace CourseSelection
 
 		private class URL
 		{
-			public URL(string courseID, string termID, bool isOpenSectionOnly = false, string section = "")
+			public URL(string courseID, string termID, string section = "")
 			{
 				CourseID = courseID;
 				TermID = termID;
 				sectionID = section;
-
-				if (isOpenSectionOnly)
-				{
-					OpenSection = "&openSectionsOnly=true";
-				}
 			}
 
 			private string CourseID;
@@ -315,7 +307,7 @@ namespace CourseSelection
 			public static implicit operator string(URL url)
 			{
 				return string.Format(
-					"https://app.testudo.umd.edu/soc/search?courseId={0}&sectionId=&termId={1}{2}&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on", 
+					"https://app.testudo.umd.edu/soc/search?courseId={0}&sectionId=&termId={1}&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on", 
 					url.CourseID, 
 					url.TermID, 
 					url.OpenSection);
@@ -343,7 +335,7 @@ namespace CourseSelection
 		public readonly string Name;
 		public readonly string FullName;
 		public readonly HashSet<Section> Sections;
-		public readonly HashSet<string> Instructors = new HashSet<string>();
+		public readonly HashSet<string>  Instructors = new HashSet<string>();
 	}
 
 	public class Section

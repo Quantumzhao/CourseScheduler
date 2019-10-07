@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MUIWindow
+namespace CourseSelection.Pages
 {
 	/// <summary>
-	/// Interaction logic for DropBox.xaml
+	/// Interaction logic for Advance.xaml
 	/// </summary>
-	public partial class DropBox : UserControl
+	public partial class Advance : UserControl
 	{
-		public DropBox()
+		public Advance()
 		{
 			InitializeComponent();
 		}
