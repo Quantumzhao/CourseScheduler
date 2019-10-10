@@ -154,7 +154,7 @@
 			<StackPanel 
 				Orientation="Horizontal" 
 				Grid.Row="1">
-				<TextBlock Text="0"/>
+				<TextBlock x:Name="Count" Text="0"/>
 				<TextBlock Text=" Results in Total"/>
 			</StackPanel>
 			<DataGrid x:Name="MainGrid" Grid.Row="2" Margin="0,10,0,0"/>

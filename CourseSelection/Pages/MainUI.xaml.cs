@@ -121,7 +121,7 @@ namespace CourseSelection
 				CourseSet_Cache.Add(course);
 			}
 
-			ShowCourse();
+			UpdateView();
 		}
 
 		private void Year_Loaded(object sender, RoutedEventArgs e)
@@ -144,9 +144,30 @@ namespace CourseSelection
 			(sender as ComboBox).ItemsSource = semesterList;
 		}
 
+		private void UpdateView()
+		{
+			ShowCourse();
+		}
+
 		private void ShowCourse()
 		{
+			MainGrid.Columns.Clear();
+			int index = 0;
+			foreach (var course in courseSet)
+			{
+				MainGrid.Columns.Add(
+					new DataGridTextColumn()
+					{
+						Header = course.Name,
+						Binding = new Binding("[" + index.ToString() + "]")
+					}
+				);
 
+				index++;
+			}
+			var combinations = Algorithm.GetPossibleCombinations(courseSet.ToArray());
+			Count.Text = combinations.Count.ToString();
+			MainGrid.ItemsSource = combinations;
 		}
 	}
 }
