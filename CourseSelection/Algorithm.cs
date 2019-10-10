@@ -199,6 +199,8 @@ namespace CourseSelection
 					MessageBoxButton.OK,
 					MessageBoxImage.Error
 				);
+
+				return null;
 			}
 
 			List<Section> sections = new List<Section>();

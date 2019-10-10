@@ -85,7 +85,7 @@ namespace CourseSelection
 		private void MUIB_Add_Click(object sender, RoutedEventArgs e)
 		{
 			string courseName = TB_CourseName.Text.ToUpper();
-			if (!CourseSet_Cache.Has(courseName))
+			if (CourseSet_Cache.Has(courseName))
 			{
 				courseSet.Add(CourseSet_Cache.Get(courseName));
 			}
@@ -120,6 +120,8 @@ namespace CourseSelection
 				courseSet.Add(course);
 				CourseSet_Cache.Add(course);
 			}
+
+			ShowCourse();
 		}
 
 		private void Year_Loaded(object sender, RoutedEventArgs e)
@@ -140,6 +142,11 @@ namespace CourseSelection
 			semesterList.Add("Fall");
 			semesterList.Add("Winter");
 			(sender as ComboBox).ItemsSource = semesterList;
+		}
+
+		private void ShowCourse()
+		{
+
 		}
 	}
 }
