@@ -1,0 +1,368 @@
+﻿<UserControl x:Name="Main" x:Class="CourseSelection.MainUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CourseSelection"
+			 xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+	<Grid Margin="0,0,0,0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="156"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		<ScrollViewer Grid.Row="1" Margin="0,0,10,0">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<TextBlock 
+						Text="New Course" 
+						Style="{StaticResource ResourceKey=Heading1}" 
+						Grid.Column="0" 
+						Grid.ColumnSpan="2" 
+						Grid.Row="0" 
+						Margin="0,0,0,10"/>
+					<StackPanel 
+						Grid.Column="0" 
+						Grid.Row="1" 
+						Orientation="Horizontal" 
+						Margin="0,0,0,10"
+						Grid.ColumnSpan="2">
+						<mui:ModernButton x:Name="MUIB_Add" Margin="0" VerticalAlignment="Center" IconData="{StaticResource ResourceKey=Add}" Click="MUIB_Add_Click"/>
+						<TextBlock 
+							Text="Pick one: " 
+							VerticalAlignment="Center" Margin="5,0,0,0"/>
+						<TextBox
+							x:Name="TB_CourseName"
+							Width="100"
+							Height="Auto" 
+							VerticalAlignment="Center" Margin="5,0,0,0"/>
+					</StackPanel>
+					<TextBlock 
+						Text="OTHER OPTIONS" 
+						Style="{StaticResource ResourceKey=Heading2}" 
+						Grid.Column="0" 
+						Grid.ColumnSpan="2" 
+						Grid.Row="1" 
+						Margin="29,33.5,0,10" Grid.RowSpan="2" VerticalAlignment="Center"/>
+					<mui:ModernButton x:Name="Expander"
+						Grid.Column="0"
+						Grid.Row="2"
+						IconData="{StaticResource ResourceKey=Expand}"
+						EllipseStrokeThickness="1"
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Center" 
+						Margin="0,0,0,10" Click="Expander_Click">
+					</mui:ModernButton>
+					<CheckBox x:Name="CB_OpenSectionOnly" 
+						Content="Open Section Only" 
+						Grid.Column="0" 
+						VerticalAlignment="Top" 
+						HorizontalAlignment="Left" 
+						Margin="5,0,0,10"
+						Checked="UpdateView"
+						Unchecked="UpdateView"
+						Grid.Row="3"/>
+					<CheckBox x:Name="CB_ShowFC" 
+						Content="Show Freshman Connection Program" 
+						Margin="5,0,0,10" 
+						VerticalAlignment="Top" 
+						HorizontalAlignment="Left" 
+						Grid.Column="1" 
+						Checked="UpdateView"
+						Unchecked="UpdateView"
+						Grid.Row="3"/>
+					<mui:ModernToggleButton
+						x:Name="MUIB_NoInstructors" 
+						Grid.Column="0" 
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" 
+						Margin="0" 
+						Grid.Row="4"
+						IconData="{StaticResource ResourceKey=Person}"
+						IsEnabled="True"
+						Content="Exclude These Instructors:" 
+						Checked="MUIB_NoInstructors_Checked" 
+						Unchecked="MUIB_NoInstructors_Unchecked" 
+						IsVisibleChanged="MUIB_NoInstructors_IsVisibleChanged">
+					</mui:ModernToggleButton>
+					<mui:ModernToggleButton x:Name="MUIB_NoTime" 
+						Grid.Row="4" 
+						Grid.Column="1" 
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" 
+						Margin="0"
+						IconData="{StaticResource ResourceKey=Clock}"
+						IsEnabled="True"
+						Content="Exclude These Time Periods:" Unchecked="MUIB_NoTime_Unchecked" Checked="MUIB_NoTime_Checked" IsVisibleChanged="MUIB_NoTime_IsVisibleChanged"/>
+					<StackPanel x:Name="AcademicYearPanel" 
+						Orientation="Horizontal"
+						Grid.Column="0" 
+						Grid.Row="5" 
+						Margin="27, 3, 0, 10">
+						<TextBlock
+							Text="Semester:" VerticalAlignment="Center"/>
+						<ComboBox x:Name="Semester" SelectedIndex="0" Margin="10, 0, 0, 0" VerticalAlignment="Center" Loaded="Semester_Loaded" SelectionChanged="Semester_SelectionChanged">
+						</ComboBox>
+					</StackPanel>
+				</Grid>
+				<StackPanel x:Name="SP_Course" Grid.Row="2" Grid.Column="0">
+					<!--<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition></RowDefinition>
+							<RowDefinition></RowDefinition>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="Test" Style="{StaticResource ResourceKey=Heading2}" Grid.Row="0" Margin="30,0,0,0"/>
+						<TextBlock Text="Instructors: Alice, Bob" Grid.Row="1" Margin="30,0,0,0"/>
+						<mui:ModernButton Grid.Row="0" Grid.Column="1" IconData="{StaticResource ResourceKey=Remove}" HorizontalAlignment="Left"/>
+					</Grid>-->
+				</StackPanel>
+			</Grid>
+		</ScrollViewer>
+		<Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="0,0,0,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<TextBlock 
+				Text="Combinations" 
+				Style="{StaticResource ResourceKey=Heading1}" 
+				Grid.Row="0" Margin="0,0,0,10"/>
+			<StackPanel 
+				Orientation="Horizontal" 
+				Grid.Row="1">
+				<TextBlock x:Name="Count" Text="0"/>
+				<TextBlock Text=" Results in Total"/>
+			</StackPanel>
+			<DataGrid 
+				x:Name="MainGrid" 
+				Grid.Row="2" 
+				Margin="0,10,0,0" 
+				SelectionMode="Single" 
+				CanUserSortColumns="True" 
+				CanUserAddRows="False" 
+				AutoGenerateColumns="False"
+				SelectionChanged="MainGrid_SelectionChanged">
+			</DataGrid>
+		</Grid>
+		<Viewbox Grid.Row="2" 
+				 Grid.Column="0" 
+				 Stretch="Fill">
+			<Grid Height="156">
+				<Grid 
+					Height="130" 
+					VerticalAlignment="Bottom" 
+					MinWidth="626">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="10"/>
+					</Grid.ColumnDefinitions>
+					<Label 
+						Content="M"
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top">
+					</Label>
+					<Label 
+						Content="Tu"  
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" 
+						Margin="0,26,0,0">
+					</Label>
+					<Label 
+						Content="W"  
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top" 
+						Margin="0,52,0,0">
+					</Label>
+					<Label 
+						Content="Th"  
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" 
+						Margin="0,78,0,0">
+					</Label>
+					<Label 
+						Content="F"
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" 
+						Margin="0, 104, 0, 0">
+					</Label>
+					<Label 
+						Content="6" 
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" 
+						Margin="30,-26,0,0" 
+						Grid.ColumnSpan="2" 
+						Grid.Column="0" 
+						Width="20">
+					</Label>
+					<Label 
+						Content="7" 
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top" 
+						Margin="30,-26,0,0" 
+						Grid.ColumnSpan="2" 
+						Grid.Column="1" 
+						Width="20">
+					</Label>
+					<Label 
+						Content="8"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top" 
+						Margin="30,-26,0,0" 
+						Grid.ColumnSpan="2" 
+						Grid.Column="2" 
+						Width="20">
+					</Label>
+					<Label Content="9" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,-26,0,0" Grid.ColumnSpan="2" Grid.Column="3" Width="20"/>
+					<Label Content="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="4" Width="25"/>
+					<Label Content="11" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="5" Width="25"/>
+					<Label Content="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="6" Width="25"/>
+					<Label Content="13" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="7" Width="25"/>
+					<Label Content="14" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="8" Width="25"/>
+					<Label Content="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="9" Width="25"/>
+					<Label Content="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="10" Width="25"/>
+					<Label Content="17" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="11" Width="25"/>
+					<Label Content="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="12" Width="25"/>
+					<Label Content="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="13" Width="25"/>
+					<Label Content="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="14" Width="25"/>
+					<Label Content="21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="15" Width="25"/>
+					<Label Content="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="16" Width="25"/>
+					<Label Content="23" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,-26,0,0" Grid.ColumnSpan="2" Grid.Column="17" Width="25"/>
+
+					<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,13,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,39,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,65,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,91,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+					<Rectangle Fill="#FFE2E2E2" Height="1" Margin="0,117,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="17"/>
+
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="4" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="5" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="6" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="7" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="8" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="9" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="10" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="11" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="12" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="13" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="14" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="15" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="16" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle Width="1" Fill="#FFE2E2E2" Height="130" Grid.Column="17" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+					<Rectangle 
+						Width="1" 
+						Fill="#FFE2E2E2" 
+						Height="130" 
+						Grid.Column="17" 
+						HorizontalAlignment="Right" 
+						Margin="0,0,0,0">
+					</Rectangle>
+
+					<Canvas 
+						x:Name="MainCanvas" 
+						MinWidth="500" 
+						Grid.Column="1" 
+						Grid.ColumnSpan="17">
+					</Canvas>
+				</Grid>
+			</Grid>
+		</Viewbox>
+		<Canvas Grid.RowSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<ListBox 
+				Canvas.Top="172" 
+				HorizontalAlignment="Left" 
+				x:Name="LB_NoInstructors" 
+				BorderThickness="1"
+				Canvas.Left="26"
+				Visibility="Collapsed"
+				Background="White" 
+				MinWidth="150" 
+				SelectionMode="Single">
+			</ListBox>
+			<ListBox 
+				Canvas.Top="172" 
+				Canvas.Left="300"
+				HorizontalAlignment="Left" 
+				x:Name="LB_NoTime" 
+				BorderThickness="1" 
+				MinWidth="150"
+				Visibility="Collapsed" 
+				Background="White"
+				SelectionMode="Single" 
+				MaxHeight="200" 
+				Initialized="LB_NoTime_Initialized">
+				<TextBlock 
+					Text="Early in morning" 
+					Style="{StaticResource ResourceKey=Emphasis}"/>
+				<CheckBox Content="6:00 - 7:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[0], Mode=TwoWay}"/>
+				<CheckBox Content="7:00 - 8:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[1], Mode=TwoWay}"/>
+				<TextBlock Text="Breakfast" Style="{StaticResource ResourceKey=Emphasis}"/>
+				<CheckBox Content="8:00 - 9:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[2], Mode=TwoWay}"/>
+				<CheckBox Content="9:00 - 10:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[3], Mode=TwoWay}"/>
+				<TextBlock Text="Brunch" Style="{StaticResource ResourceKey=Emphasis}"/>
+				<CheckBox Content="10:00 - 11:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[4], Mode=TwoWay}"/>
+				<TextBlock Text="Lunch" Style="{StaticResource ResourceKey=Emphasis}"/>
+				<CheckBox Content="11:00 - 12:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[5], Mode=TwoWay}"/>
+				<CheckBox Content="12:00 - 13:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[6], Mode=TwoWay}"/>
+				<CheckBox Content="13:00 - 14:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[7], Mode=TwoWay}"/>
+				<TextBlock Text="Dinner" Style="{StaticResource ResourceKey=Emphasis}"/>
+				<CheckBox Content="17:00 - 18:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[8], Mode=TwoWay}"/>
+				<CheckBox Content="18:00 - 19:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[9], Mode=TwoWay}"/>
+				<TextBlock Text="Evening" Style="{StaticResource ResourceKey=Emphasis}"/>
+				<CheckBox Content="19:00 - 21:00" Click="UpdateView" IsChecked="{Binding Path=TimePeriod[10], Mode=TwoWay}"/>
+			</ListBox>
+		</Canvas>
+	</Grid>
+</UserControl>

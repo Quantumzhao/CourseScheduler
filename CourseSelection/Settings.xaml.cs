@@ -1,5 +1,4 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +16,13 @@ using System.Windows.Shapes;
 namespace CourseSelection
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for Settings.xaml
 	/// </summary>
-	public partial class MainWindow : ModernWindow
+	public partial class Settings : UserControl
 	{
+		public Settings()
+		{
+			InitializeComponent();
+		}
 	}
 }

@@ -10,16 +10,39 @@ namespace CourseSelection
 {
 	public static class Algorithm
 	{
-		public static List<List<Section>> GetPossibleCombinations(Course[] dataset)
+		public static List<List<Section>> GetPossibleCombinations(Course[] dataset, 
+			bool isOpenSecOnly = false, bool isShowFC = false, 
+			HashSet<string> excludedIns = null, HashSet<string> excludeTime = null)
 		{
 			if (dataset.Length == 0) return new List<List<Section>>();
 
 			List<List<Section>> combinations = new List<List<Section>>();
+			Section.IsShowFC = isShowFC;
+			Section.IsOpenSectionOnly = isOpenSecOnly;
 			foreach (var section in dataset[0].Sections)
 			{
-				combinations.Add(new List<Section>() { section });
+				if (section.isAvailable)
+				{
+					foreach (var @class in section.Classes.Values)
+					{
+						foreach (var weekday in @class.Weekdays)
+						{
+							foreach (var time in weekday.TimePeriod)
+							{
+								foreach (var item in MainUI.TimePeriod.Keys)
+								{
+									if (MainUI.TimePeriod[item] && item.IsOverlap(time))
+									{
+										goto Continue;
+									}
+								}
+							}
+						}
+					}
+					combinations.Add(new List<Section>() { section });
+				}
 			}
-
+		Continue:
 			for (int i = 1; i < dataset.Length; i++)
 			{
 				UpdateCombinations(ref combinations, dataset[i]);
@@ -36,7 +59,7 @@ namespace CourseSelection
 			{
 				for (int i = 0; i < possibilities.Count; i++)
 				{
-					if (!possibilities[i].IsOverlap(newSection))
+					if (newSection.isAvailable && !possibilities[i].IsOverlap(newSection))
 					{
 						List<Section> sections = new List<Section>(possibilities[i]);
 						sections.Add(newSection);
@@ -125,12 +148,6 @@ namespace CourseSelection
 			return stringBuilder.ToString();
 		}
 
-		//public static bool Has(this MainWindow.VMSet<Course> courses, Course newCourse)
-		//{
-		//	if (courses.Where(c => c.Name == newCourse.Name).Count() != 0) return true;
-		//	else return false;
-		//}
-
 		public static bool Has(this HashSet<Course> courses, Course newCourse)
 		{
 			if (courses.Where(c => c.Name == newCourse.Name).Count() != 0) return true;
@@ -156,13 +173,13 @@ namespace CourseSelection
 
 	public class Crawler
 	{
-		public readonly string TermID = "201908";
-		public bool IsExcludeFC = true;
+		public string TermID = "202001";
+		//public bool IsExcludeFC = true;
 
-		public Course GetCourse(string courseName, bool isOpenSectionOnly = false, bool isExcludeFC = true)
+		public Course GetCourse(string courseName)
 		{
 			Course ret;
-			URL url = new URL(courseName, TermID, isOpenSectionOnly);
+			URL url = new URL(courseName, TermID);
 
 			var httpClient = new HttpClient();
 			var html = httpClient.GetStringAsync(url).Result;
@@ -199,6 +216,7 @@ namespace CourseSelection
 					MessageBoxButton.OK,
 					MessageBoxImage.Error
 				);
+
 				return null;
 			}
 
@@ -211,18 +229,25 @@ namespace CourseSelection
 					.ChildAttributes("value").First()
 					.Value;
 
-				if (isExcludeFC && name[0] == 'F') break;
-
 				var rows = div
 					.Descendants("div")
 					.Single(node => node.GetAttributeValue("class", "") == "class-days-container")
 					.Elements("div").ToList();
 
-				var instructors = div
-					.Descendants("span")
+				var span = div.Descendants("span");
+
+				var instructors = span
 					.Where(node => node.GetAttributeValue("class", "") == "section-instructor")
 					.Select(node => node.InnerText)
 					.ToList();
+
+				int openSeats = int.Parse(span
+					.Single(node => node.GetAttributeValue("class", "") == "open-seats-count")
+					.InnerText);
+				int waitlist = int.Parse(span
+					.Single(node => node.GetAttributeValue("class", "") == "waitlist-count")
+					.InnerText);
+
 				string instructor = instructors[0];
 				for (int i = 1; i < instructors.Count(); i++)
 				{
@@ -276,7 +301,7 @@ namespace CourseSelection
 					classes.Add(className, new Class(instructor, location, weekdays.ToArray()));
 				}
 
-				sections.Add(new Section(courseName, name, classes.ToArray()));
+				sections.Add(new Section(courseName, name, openSeats, waitlist, classes.ToArray()));
 			}
 
 			ret = new Course(courseName, fullName, sections.ToArray());
@@ -285,16 +310,11 @@ namespace CourseSelection
 
 		private class URL
 		{
-			public URL(string courseID, string termID, bool isOpenSectionOnly = false, string section = "")
+			public URL(string courseID, string termID, string section = "")
 			{
 				CourseID = courseID;
 				TermID = termID;
 				sectionID = section;
-
-				if (isOpenSectionOnly)
-				{
-					OpenSection = "&openSectionsOnly=true";
-				}
 			}
 
 			private string CourseID;
@@ -305,7 +325,7 @@ namespace CourseSelection
 			public static implicit operator string(URL url)
 			{
 				return string.Format(
-					"https://app.testudo.umd.edu/soc/search?courseId={0}&sectionId=&termId={1}{2}&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on", 
+					"https://app.testudo.umd.edu/soc/search?courseId={0}&sectionId=&termId={1}&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on", 
 					url.CourseID, 
 					url.TermID, 
 					url.OpenSection);
@@ -320,43 +340,95 @@ namespace CourseSelection
 			Name = name;
 			FullName = fullName;
 			Sections = new HashSet<Section>(sections);
-
-			foreach (var section in sections)
-			{
-				foreach (var @class in section.Classes)
-				{
-					Instructors.Add(@class.Value.Instructor);
-				}
-			}
 		}
 
 		public readonly string Name;
 		public readonly string FullName;
 		public readonly HashSet<Section> Sections;
-		public readonly HashSet<string> Instructors = new HashSet<string>();
+		public Dictionary<string, bool> Instructors
+		{
+			get
+			{
+				var dic = new Dictionary<string, bool>();
+				foreach (var section in Sections)
+				{
+					foreach (var ins in section.Instructors)
+					{
+						if (!dic.ContainsKey(ins.Key))
+						{
+							dic.Add(ins.Key, ins.Value);
+						}
+					}
+				}
+				return dic;
+			}
+		}
+
+		public void ExcludeInstructor(string name, bool isExclude)
+		{
+			foreach (var section in Sections)
+			{
+				section.Instructors[name] = !isExclude;
+			}
+		}
 	}
 
 	public class Section
 	{
-		public Section(string course, string name, params KeyValuePair<string, Class>[] classes)
+		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, Class>[] classes)
 		{
 			Course = course;
 			Name = name;
+			OpenSeats = openSeats;
+			WaitList = waitList;
 
 			foreach (var myClass in classes)
 			{
 				Classes.Add(myClass.Key, myClass.Value);
+				if (!Instructors.ContainsKey(myClass.Value.Instructor))
+				{
+					Instructors.Add(myClass.Value.Instructor, true);
+				}
+			}
+		}
+
+		public static bool IsOpenSectionOnly;
+		public static bool IsShowFC;
+
+		public bool isAvailable
+		{
+			get
+			{
+				if (OpenSeats == 0 && IsOpenSectionOnly)
+				{
+					return false;
+				}
+
+				if (Name[0] == 'F' && !IsShowFC)
+				{
+					return false;
+				}
+
+				foreach (var @class in Classes.Values)
+				{
+					if (!Instructors[@class.Instructor])
+					{
+						return false;
+					}
+				}
+
+				return true;
 			}
 		}
 
 		public readonly Dictionary<string, Class> Classes = new Dictionary<string, Class>();
 		public readonly string Course;
 		public readonly string Name;
+		public int OpenSeats { get; set; }
+		public int WaitList { get; set; }
 
-		/* Have not yet been implemented
-		public readonly Location Location;
-		public string Instructor;
-		*/
+		public Dictionary<string, bool> Instructors = new Dictionary<string, bool>();
+
 		public bool IsOverlap(Section another)
 		{
 			foreach (var myClass in Classes.Values)
@@ -431,6 +503,14 @@ namespace CourseSelection
 			{
 				foreach (var anotherSchedule in another.TimePeriod)
 				{
+					foreach (var time in MainUI.TimePeriod.Keys)
+					{
+						if (MainUI.TimePeriod[time] && time.IsOverlap(anotherSchedule))
+						{
+							return true;
+						}
+					}
+
 					if (mySchedule.IsOverlap(anotherSchedule))
 					{
 						return true;
