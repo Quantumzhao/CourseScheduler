@@ -424,8 +424,8 @@ namespace CourseSelection
 		public readonly Dictionary<string, Class> Classes = new Dictionary<string, Class>();
 		public readonly string Course;
 		public readonly string Name;
-		public readonly int OpenSeats;
-		public readonly int WaitList;
+		public int OpenSeats { get; set; }
+		public int WaitList { get; set; }
 
 		public Dictionary<string, bool> Instructors = new Dictionary<string, bool>();
 

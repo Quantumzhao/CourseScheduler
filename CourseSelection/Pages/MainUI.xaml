@@ -17,7 +17,7 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
-		<ScrollViewer Grid.Row="1">
+		<ScrollViewer Grid.Row="1" Margin="0,0,10,0">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -126,17 +126,31 @@
 						Orientation="Horizontal"
 						Grid.Column="0" 
 						Grid.Row="5" 
-						Margin="27, 3, 0, 0">
-						<TextBlock 
+						Margin="27, 3, 0, 10">
+						<TextBlock
 							Text="Semester:" VerticalAlignment="Center"/>
 						<ComboBox x:Name="Semester" SelectedIndex="0" Margin="10, 0, 0, 0" VerticalAlignment="Center" Loaded="Semester_Loaded" SelectionChanged="Semester_SelectionChanged">
 						</ComboBox>
 					</StackPanel>
 				</Grid>
-				<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+				<StackPanel x:Name="SP_Course" Grid.Row="2" Grid.Column="0">
+					<!--<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition></RowDefinition>
+							<RowDefinition></RowDefinition>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="Test" Style="{StaticResource ResourceKey=Heading2}" Grid.Row="0" Margin="30,0,0,0"/>
+						<TextBlock Text="Instructors: Alice, Bob" Grid.Row="1" Margin="30,0,0,0"/>
+						<mui:ModernButton Grid.Row="0" Grid.Column="1" IconData="{StaticResource ResourceKey=Remove}" HorizontalAlignment="Left"/>
+					</Grid>-->
+				</StackPanel>
 			</Grid>
 		</ScrollViewer>
-		<Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="0,0,0,-0.5">
+		<Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="0,0,0,0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
@@ -159,7 +173,8 @@
 				SelectionMode="Single" 
 				CanUserSortColumns="True" 
 				CanUserAddRows="False" 
-				AutoGenerateColumns="False">				
+				AutoGenerateColumns="False"
+				SelectionChanged="MainGrid_SelectionChanged">
 			</DataGrid>
 		</Grid>
 		<Viewbox Grid.Row="2" 

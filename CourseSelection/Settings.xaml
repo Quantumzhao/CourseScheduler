@@ -11,7 +11,8 @@
 		<mui:ModernTab Layout="List" SelectedSource="/Pages/DataSourceSettings.xaml">
 			<mui:ModernTab.Links>
 				<mui:Link DisplayName="data source settings" Source="/Pages/DataSourceSettings.xaml"/>
-				<mui:Link DisplayName="appearance" Source="/Pages/Appearance.xaml" />
+				<mui:Link DisplayName="appearance" Source="/Pages/Appearance.xaml"/>
+				<mui:Link DisplayName="About" Source="/Pages/About.xaml"/>
 			</mui:ModernTab.Links>
 		</mui:ModernTab>
 	</Grid>

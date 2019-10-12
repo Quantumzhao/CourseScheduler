@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -120,6 +120,9 @@
     <Compile Include="Dataset.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Advance.xaml.cs">
       <DependentUpon>Advance.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,10 @@
     </PublishFile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Advance.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
