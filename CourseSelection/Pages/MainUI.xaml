@@ -102,26 +102,26 @@
 					<mui:ModernToggleButton
 						x:Name="MUIB_NoInstructors" 
 						Grid.Column="0" 
-						HorizontalAlignment="Left" 
-						VerticalAlignment="Top" 
-						Margin="0" 
 						Grid.Row="4"
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top"
 						IconData="{StaticResource ResourceKey=Person}"
-						IsEnabled="True"
 						Content="Exclude These Instructors:" 
 						Checked="MUIB_NoInstructors_Checked" 
 						Unchecked="MUIB_NoInstructors_Unchecked" 
 						IsVisibleChanged="MUIB_NoInstructors_IsVisibleChanged">
 					</mui:ModernToggleButton>
-					<mui:ModernToggleButton x:Name="MUIB_NoTime" 
-						Grid.Row="4" 
+					<mui:ModernToggleButton
+						x:Name="MUIB_NoTime" 
 						Grid.Column="1" 
+						Grid.Row="4" 
 						HorizontalAlignment="Left" 
-						VerticalAlignment="Top" 
-						Margin="0"
+						VerticalAlignment="Top"
 						IconData="{StaticResource ResourceKey=Clock}"
-						IsEnabled="True"
-						Content="Exclude These Time Periods:" Unchecked="MUIB_NoTime_Unchecked" Checked="MUIB_NoTime_Checked" IsVisibleChanged="MUIB_NoTime_IsVisibleChanged"/>
+						Content="Exclude These Time Periods:" 
+						Checked="MUIB_NoTime_Checked" 
+						Unchecked="MUIB_NoTime_Unchecked" 
+						IsVisibleChanged="MUIB_NoTime_IsVisibleChanged"/>
 					<StackPanel x:Name="AcademicYearPanel" 
 						Orientation="Horizontal"
 						Grid.Column="0" 

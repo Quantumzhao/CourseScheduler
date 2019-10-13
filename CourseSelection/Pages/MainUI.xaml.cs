@@ -370,7 +370,7 @@ namespace CourseSelection
 		{
 			if (!(bool)e.NewValue)
 			{
-				MUIB_NoTime.Visibility = Visibility.Collapsed;
+				LB_NoTime.Visibility = Visibility.Collapsed;
 			}
 		}
 
