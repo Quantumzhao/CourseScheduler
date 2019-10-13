@@ -3,6 +3,7 @@
 This is an application that made by a terp, and for all terps. 
 
 ## Screenshot:
+![Screenshot](https://github.com/Quantumzhao/CourseSelection/blob/master/screenshot.png)
 
 ## How is it different from the well-known Courseoff?
 
