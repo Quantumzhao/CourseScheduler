@@ -50,6 +50,10 @@ You can download and install the application directly from the webpage.
 
 If the progress bar for installation is moving slowly, it may be downloading some dependencies such as *.NET library*. It is possibly because your computer is running an old version of Windows or you actively rejected many Windows update patches. 
 
+> Note: 
+> 
+> All of the course information is retrieved from Testudo webpage, and therefore it would be temporarily unavailable when Testudo is down or under maintenance. 
+
 **Lastly, **
 
 Since this application uses *ClickOnce* to distribute and deploy, it will automatically check for update every time when it is launched. It is normal for this process to take a few seconds. 
