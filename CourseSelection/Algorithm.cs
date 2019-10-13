@@ -5,6 +5,7 @@ using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Windows;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CourseSelection
 {
@@ -176,50 +177,34 @@ namespace CourseSelection
 		public string TermID = "202001";
 		//public bool IsExcludeFC = true;
 
-		public Course GetCourse(string courseName)
+		public async Task<Course> GetCourse(string courseName)
 		{
 			Course ret;
 			URL url = new URL(courseName, TermID);
 
 			var httpClient = new HttpClient();
-			var html = httpClient.GetStringAsync(url).Result;
+			string html = await httpClient.GetStringAsync(url);
 			var htmlDocument = new HtmlDocument();
 			htmlDocument.LoadHtml(html);
 
 			string fullName;
 
 			List<HtmlNode> divs = null;
-			try
-			{
-				divs = htmlDocument
-					.DocumentNode
-					.Descendants("div")
-					.Where(node => node.GetAttributeValue("id", "") == courseName)
-					.First()
-					.Descendants("div")
-					.Where(node => node.GetAttributeValue("class", "")
-					.Equals("section delivery-f2f")).ToList();
+			divs = htmlDocument
+				.DocumentNode
+				.Descendants("div")
+				.Where(node => node.GetAttributeValue("id", "") == courseName)
+				.First()
+				.Descendants("div")
+				.Where(node => node.GetAttributeValue("class", "")
+				.Equals("section delivery-f2f")).ToList();
 
-				fullName = htmlDocument
-					.DocumentNode
-					.Descendants("span")
-					.Where(node => node.GetAttributeValue("class", "") == "course-title")
-					.First()
-					.InnerText;
-
-			}
-			catch
-			{
-				MessageBox.Show(
-					"Unable to get the course info\nPlease check if there is any typo in course name",
-					"Error",
-					MessageBoxButton.OK,
-					MessageBoxImage.Error
-				);
-
-				return null;
-			}
-
+			fullName = htmlDocument
+				.DocumentNode
+				.Descendants("span")
+				.Where(node => node.GetAttributeValue("class", "") == "course-title")
+				.First()
+				.InnerText;
 			List<Section> sections = new List<Section>();
 			// Enumerate through each section
 			foreach (var div in divs)
