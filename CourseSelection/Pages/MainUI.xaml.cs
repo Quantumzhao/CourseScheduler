@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Collections.Specialized;
 using FirstFloor.ModernUI.Windows.Controls;
+using System.Net.Http;
 
 namespace CourseSelection
 {
@@ -41,7 +42,6 @@ namespace CourseSelection
 		private VMSet<Course> courseSet = new VMSet<Course>();
 		private HashSet<Course> CourseSet_Cache = new HashSet<Course>();
 		private Dictionary<string, string> semesterList = new Dictionary<string, string>();
-		private Dictionary<string, bool> insList = new Dictionary<string, bool>();
 		public Color[] GorgeousColors = new Color[10];
 		public static TimeDictionary TimePeriod { get; set; } = new TimeDictionary();
 
@@ -80,9 +80,14 @@ namespace CourseSelection
 			LB_NoInstructors.Visibility = Visibility.Collapsed;
 		}
 
-		private void MUIB_Add_Click(object sender, RoutedEventArgs e)
+		private async void MUIB_Add_Click(object sender, RoutedEventArgs e)
 		{
-			var course = AddCourse(TB_CourseName.Text);
+			Mask.Visibility = Visibility.Visible;
+			ProgressRing.IsActive = true;
+			var course = await AddCourse(TB_CourseName.Text);
+			ProgressRing.IsActive = false;
+			Mask.Visibility = Visibility.Hidden;
+			if (course == null) return;
 
 			DrawCoursePanel(course);
 
@@ -308,8 +313,13 @@ namespace CourseSelection
 			LB_NoInstructors.ItemsSource = set;
 		}
 
-		private Course AddCourse(string courseName)
+		private async Task<Course> AddCourse(string courseName)
 		{
+			if (courseName == "")
+			{
+				return null;
+			}
+
 			Course ret = null;
 			courseName = courseName.ToUpper();
 
@@ -323,7 +333,18 @@ namespace CourseSelection
 				else
 				{
 					string sem = semesterList[(string)Semester.SelectedItem];
-					Course course = new Crawler() { TermID = sem }.GetCourse(courseName);
+
+					Course course;
+					try
+					{
+						course = await new Crawler() { TermID = sem }.GetCourse(courseName);
+					}
+					catch (Exception e)
+					{
+						showMessage(e);
+						return null;
+					}
+
 					if (course == null) return null;
 					courseSet.Add(course);
 					CourseSet_Cache.Add(course);
@@ -335,6 +356,40 @@ namespace CourseSelection
 			return ret;
 		}
 
+		private void showMessage(Exception exception)
+		{
+			if (exception is HttpRequestException)
+			{
+				ModernDialog.ShowMessage(
+					"Testudo may be under maintenance. \nUnfortunately, there is nothing we can do at this moment.\n\n" + exception.Message,
+					"Connection error",
+					MessageBoxButton.OK
+				);
+
+				//MessageBox.Show(
+				//	"Unable to get the course info\nPlease check if there is any typo in course name",
+				//	"Error",
+				//	MessageBoxButton.OK,
+				//	MessageBoxImage.Error
+				//);
+			}
+			else if (exception is AggregateException)
+			{
+				foreach (var e in (exception as AggregateException).InnerExceptions)
+				{
+					showMessage(e);
+				}
+			}
+			else
+			{
+				ModernDialog.ShowMessage(
+					exception.Message,
+					"Error",
+					MessageBoxButton.OK
+				);
+			}
+		}
+
 		private void MUIB_NoInstructors_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			if (!(bool)e.NewValue)
@@ -343,16 +398,20 @@ namespace CourseSelection
 			}
 		}
 
-		private void Semester_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private async void Semester_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var courseList = courseSet.Select(c => c.Name).ToArray();
 			CourseSet_Cache.Clear();
 			courseSet.Clear();
 			SP_Course.Children.Clear();
+			Mask.Visibility = Visibility.Visible;
+			ProgressRing.IsActive = true;
 			foreach (var name in courseList)
 			{
-				AddCourse(name);
+				await AddCourse(name);
 			}
+			ProgressRing.IsActive = false;
+			Mask.Visibility = Visibility.Hidden;
 			UpdateView();
 		}
 
