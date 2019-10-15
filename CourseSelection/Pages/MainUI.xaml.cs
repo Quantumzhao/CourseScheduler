@@ -196,19 +196,17 @@ namespace CourseSelection
 				semesterList.Add("2019 Fall", "201908");
 				semesterList.Add("2020 Spring", "202001");
 			}
-			catch
-			{
-			}
+			catch { }
 			(sender as ComboBox).ItemsSource = semesterList.Keys;
 		}
 
 		private void UpdateView(object sender = null, RoutedEventArgs e = null)
 		{
-			ShowCourse();
+			UpdateDataGrid();
 			MainCanvas.Children.Clear();
 		}
 
-		private void ShowCourse()
+		private void UpdateDataGrid()
 		{
 			MainGrid.Columns.Clear();
 			int index = 0;
@@ -349,8 +347,8 @@ namespace CourseSelection
 					courseSet.Add(course);
 					CourseSet_Cache.Add(course);
 					ret = course;
-					UpdateInsList();
 				}
+				UpdateInsList();
 			}
 
 			return ret;
@@ -361,17 +359,10 @@ namespace CourseSelection
 			if (exception is HttpRequestException)
 			{
 				ModernDialog.ShowMessage(
-					"Testudo may be under maintenance. \nUnfortunately, there is nothing we can do at this moment.\n\n" + exception.Message,
+					"Testudo may be under maintenance. \nPlease retry later.\n\n" + exception.Message,
 					"Connection error",
 					MessageBoxButton.OK
 				);
-
-				//MessageBox.Show(
-				//	"Unable to get the course info\nPlease check if there is any typo in course name",
-				//	"Error",
-				//	MessageBoxButton.OK,
-				//	MessageBoxImage.Error
-				//);
 			}
 			else if (exception is AggregateException)
 			{
@@ -379,6 +370,14 @@ namespace CourseSelection
 				{
 					showMessage(e);
 				}
+			}
+			else if (exception is InvalidOperationException)
+			{
+				ModernDialog.ShowMessage(
+					"Unable to get the course info\nPlease check if there is any typo in course name. \n\n" + exception.Message,
+					"Invalid input", 
+					MessageBoxButton.OK
+				);
 			}
 			else
 			{
@@ -408,7 +407,8 @@ namespace CourseSelection
 			ProgressRing.IsActive = true;
 			foreach (var name in courseList)
 			{
-				await AddCourse(name);
+				var course = await AddCourse(name);
+				DrawCoursePanel(course);
 			}
 			ProgressRing.IsActive = false;
 			Mask.Visibility = Visibility.Hidden;
@@ -467,7 +467,7 @@ namespace CourseSelection
 		{
 			int i = courseSet.IndexOf(courseSet.Get(course));
 			if (i != -1) return GorgeousColors[i];
-			else return new Color();
+			else return new Color() { R = 128, G = 128, B = 128 };
 		}
 
 		private void ScheduleTimeTable(List<Section> sections)
@@ -492,8 +492,7 @@ namespace CourseSelection
 							 * Settle all of the classes in this table
 							 * And then cut off the time period before 0600 and after 2300 
 							 * (there is no class at this moment)
-							 * And resize the table so that it can fit into display area
-							 * (and also keep a margin of 30 at the left and 10 at the right)*/
+							 * And resize the table so that it can fit into display area*/
 							double absWidth = timePeriod.SpanInMinute();
 							double absLeft = timePeriod.Start.ToMinute();
 							block.Width = MainCanvas.ActualWidth / (17 * 60) * absWidth;
@@ -560,6 +559,12 @@ namespace CourseSelection
 			{
 				return false;
 			}
+		}
+
+		public new void Clear()
+		{
+			indices.Clear();
+			base.Clear();
 		}
 
 		public int IndexOf(T element)
