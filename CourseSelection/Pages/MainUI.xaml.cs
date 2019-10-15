@@ -193,8 +193,9 @@ namespace CourseSelection
 			//}
 			try
 			{
-				semesterList.Add("2019 Fall", "201908");
-				semesterList.Add("2020 Spring", "202001");
+				semesterList.Add("Fall 2019", "201908");
+				semesterList.Add("Winter 2020", "201912");
+				semesterList.Add("Spring 2020", "202001");
 			}
 			catch { }
 			(sender as ComboBox).ItemsSource = semesterList.Keys;
