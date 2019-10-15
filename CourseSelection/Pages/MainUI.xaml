@@ -603,7 +603,8 @@
 				Visibility="Collapsed"
 				Background="White" 
 				MinWidth="150" 
-				SelectionMode="Single">
+				SelectionMode="Single"
+				MaxHeight="200">
 			</ListBox>
 			<ListBox 
 				Canvas.Top="172" 
