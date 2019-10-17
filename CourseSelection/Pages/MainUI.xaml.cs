@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.ComponentModel;
 using System.Collections.Specialized;
 using FirstFloor.ModernUI.Windows.Controls;
 using System.Net.Http;
+using FirstFloor.ModernUI.Presentation;
+using CourseSelection.Pages;
 
 namespace CourseSelection
 {
@@ -37,6 +34,7 @@ namespace CourseSelection
 			GorgeousColors[7] = Color.FromRgb(192, 192, 192);
 			GorgeousColors[8] = Color.FromRgb(160, 160, 160);
 			GorgeousColors[9] = Color.FromRgb(128, 128, 128);
+			AppearanceManager.Current.AccentColor = Properties.Settings.Default.AccentColor.FromColor();
 		}
 
 		private VMSet<Course> courseSet = new VMSet<Course>();
@@ -240,12 +238,14 @@ namespace CourseSelection
 									{
 										openSeats.Text = "Open Seats: ";
 										openSeats.Style = FindResource("Emphasis") as Style;
+										openSeats.VerticalAlignment = VerticalAlignment.Center;
 									}
 									panel_openSeats.Children.Add(openSeats);
 
 									var num = new TextBlock();
 									{
 										num.SetBinding(TextBlock.TextProperty, new Binding("OpenSeats"));
+										num.VerticalAlignment = VerticalAlignment.Center;
 									}
 									panel_openSeats.Children.Add(num);
 
@@ -260,12 +260,14 @@ namespace CourseSelection
 									{
 										waitList.Text = "Wait List: ";
 										waitList.Style = FindResource("Emphasis") as Style;
+										waitList.VerticalAlignment = VerticalAlignment.Center;
 									}
 									panel_waitList.Children.Add(waitList);
 
 									var num = new TextBlock();
 									{
 										num.SetBinding(TextBlock.TextProperty, new Binding("WaitList"));
+										num.VerticalAlignment = VerticalAlignment.Center;
 									}
 									panel_waitList.Children.Add(num);
 								}

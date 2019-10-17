@@ -96,6 +96,7 @@ namespace CourseSelection.Pages
 
 			// and make sure accent color is up-to-date
 			this.SelectedAccentColor = AppearanceManager.Current.AccentColor;
+			//this.SelectedAccentColor = ((System.Drawing.Color)Properties.Settings.Default["AccentColor"]).FromColor();
 		}
 
 		private void OnAppearanceManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -161,10 +162,23 @@ namespace CourseSelection.Pages
 				{
 					this.selectedAccentColor = value;
 					OnPropertyChanged("SelectedAccentColor");
-
+					Properties.Settings.Default["AccentColor"] = value.ToColor();
+					Properties.Settings.Default.Save();
 					AppearanceManager.Current.AccentColor = value;
 				}
 			}
+		}
+	}
+
+	public static class ColorWrapper
+	{
+		public static System.Drawing.Color ToColor(this Color c)
+		{
+			return System.Drawing.Color.FromArgb(c.R, c.G, c.B);
+		}
+		public static Color FromColor(this System.Drawing.Color c)
+		{
+			return Color.FromRgb(c.R, c.G, c.B);
 		}
 	}
 }
