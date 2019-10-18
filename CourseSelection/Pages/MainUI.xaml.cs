@@ -222,6 +222,13 @@ namespace CourseSelection
 					{
 						style.TargetType = typeof(DataGridCell);
 
+						var name = new Setter();
+						name.Property = ContentProperty;
+						var text = new TextBlock();
+						text.SetBinding(TextBlock.TextProperty, new Binding("Nam"));
+						name.Value = "Test";
+						style.Setters.Add(name);
+
 						var setter = new Setter();
 						{
 							setter.Property = ToolTipProperty;
@@ -244,7 +251,7 @@ namespace CourseSelection
 
 									var num = new TextBlock();
 									{
-										num.SetBinding(TextBlock.TextProperty, new Binding("OpenSeats"));
+										num.SetBinding(TextBlock.TextProperty, new Binding("[1].OpenSeats"));
 										num.VerticalAlignment = VerticalAlignment.Center;
 									}
 									panel_openSeats.Children.Add(num);
@@ -436,19 +443,31 @@ namespace CourseSelection
 			}
 		}
 
-		public class TimeDictionary : Dictionary<Schedule, bool>
+		public class TimeDictionary : List<KeyValuePair<Schedule, bool>>
 		{
-			public bool this[int index]
+			public new bool this[int index]
 			{
 				get
 				{
-					return this.ToArray()[index].Value;
+					return base[index].Value;
 				}
 				set
 				{
-					this[this.ToArray()[index].Key] = value;
+					base[index] = new KeyValuePair<Schedule, bool>(base[index].Key, value);
 				}
 			}
+
+			public bool this[Schedule schedule]
+			{
+				get => this.Where(kvp => kvp.Key == schedule).First().Value;
+			}
+
+			public void Add(Schedule schedule, bool isEnabled)
+			{
+				base.Add(new KeyValuePair<Schedule, bool>(schedule, isEnabled));
+			}
+
+			public List<Schedule> Keys => this.Select(kvp => kvp.Key).ToList();
 		}
 
 		private void LB_NoTime_Initialized(object sender, EventArgs e)

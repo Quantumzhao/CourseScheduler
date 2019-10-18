@@ -12,8 +12,7 @@ namespace CourseSelection
 	public static class Algorithm
 	{
 		public static List<List<Section>> GetPossibleCombinations(Course[] dataset, 
-			bool isOpenSecOnly = false, bool isShowFC = false, 
-			HashSet<string> excludedIns = null, HashSet<string> excludeTime = null)
+			bool isOpenSecOnly = false, bool isShowFC = false)
 		{
 			if (dataset.Length == 0) return new List<List<Section>>();
 
@@ -24,26 +23,9 @@ namespace CourseSelection
 			{
 				if (section.isAvailable)
 				{
-					foreach (var @class in section.Classes.Values)
-					{
-						foreach (var weekday in @class.Weekdays)
-						{
-							foreach (var time in weekday.TimePeriod)
-							{
-								foreach (var item in MainUI.TimePeriod.Keys)
-								{
-									if (MainUI.TimePeriod[item] && item.IsOverlap(time))
-									{
-										goto Continue;
-									}
-								}
-							}
-						}
-					}
 					combinations.Add(new List<Section>() { section });
 				}
 			}
-		Continue:
 			for (int i = 1; i < dataset.Length; i++)
 			{
 				UpdateCombinations(ref combinations, dataset[i]);
@@ -402,13 +384,30 @@ namespace CourseSelection
 					}
 				}
 
+				foreach (var @class in Classes.Values)
+				{
+					foreach (var weekday in @class.Weekdays)
+					{
+						foreach (var time in weekday.TimePeriod)
+						{
+							foreach (var item in MainUI.TimePeriod.Keys)
+							{
+								if (MainUI.TimePeriod[item] && item.IsOverlap(time))
+								{
+									return false;
+								}
+							}
+						}
+					}
+				}
+
 				return true;
 			}
 		}
 
 		public readonly Dictionary<string, Class> Classes = new Dictionary<string, Class>();
 		public readonly string Course;
-		public readonly string Name;
+		public string Name { get; set; }
 		public int OpenSeats { get; set; }
 		public int WaitList { get; set; }
 
@@ -525,11 +524,11 @@ namespace CourseSelection
 
 		public bool IsOverlap(Schedule another)
 		{
-			if (another.Start >= Start && another.Start <= End)
+			if (another.Start > Start && another.Start < End)
 			{
 				return true;
 			}
-			else if (another.End >= Start && another.End <= End)
+			else if (another.End > Start && another.End < End)
 			{
 				return true;
 			}
