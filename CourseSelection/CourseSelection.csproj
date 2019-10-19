@@ -33,7 +33,7 @@
     <WebPage>publish.htm</WebPage>
     <TrustUrlParameters>true</TrustUrlParameters>
     <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>2.0.5.3</ApplicationVersion>
+    <ApplicationVersion>2.0.6.3</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
