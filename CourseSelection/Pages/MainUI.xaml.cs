@@ -222,13 +222,6 @@ namespace CourseSelection
 					{
 						style.TargetType = typeof(DataGridCell);
 
-						var name = new Setter();
-						name.Property = ContentProperty;
-						var text = new TextBlock();
-						text.SetBinding(TextBlock.TextProperty, new Binding("Nam"));
-						name.Value = "Test";
-						style.Setters.Add(name);
-
 						var setter = new Setter();
 						{
 							setter.Property = ToolTipProperty;
@@ -251,7 +244,8 @@ namespace CourseSelection
 
 									var num = new TextBlock();
 									{
-										num.SetBinding(TextBlock.TextProperty, new Binding("[1].OpenSeats"));
+										num.SetBinding(TextBlock.TextProperty, 
+											new Binding("[" + courseSet.IndexOf(course) + "].OpenSeats"));
 										num.VerticalAlignment = VerticalAlignment.Center;
 									}
 									panel_openSeats.Children.Add(num);
@@ -273,7 +267,8 @@ namespace CourseSelection
 
 									var num = new TextBlock();
 									{
-										num.SetBinding(TextBlock.TextProperty, new Binding("WaitList"));
+										num.SetBinding(TextBlock.TextProperty, 
+											new Binding("[" + courseSet.IndexOf(course) + "].WaitList"));
 										num.VerticalAlignment = VerticalAlignment.Center;
 									}
 									panel_waitList.Children.Add(num);
