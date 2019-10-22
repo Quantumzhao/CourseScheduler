@@ -54,7 +54,7 @@ If the progress bar for installation is moving slowly, it may be downloading som
 > 
 > All of the course information is retrieved from Testudo webpage, and therefore it would be temporarily unavailable when Testudo is down or under maintenance. 
 
-**Lastly, **
+**Lastly,**
 
 Since this application uses *ClickOnce* to distribute and deploy, it will automatically check for update every time when it is launched. It is normal for this process to take a few seconds. 
 
