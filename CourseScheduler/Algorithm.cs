@@ -7,7 +7,7 @@ using System.Windows;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseSelection
+namespace CourseScheduler
 {
 	public static class Algorithm
 	{

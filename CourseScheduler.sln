@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseSelection", "CourseSelection\CourseSelection.csproj", "{70074DEE-DF94-4CEA-A3FA-474ACFA93074}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schedule.Code", "Schedule.Code\Schedule.Code.csproj", "{3A8E6744-603D-4D02-847F-07C593C4EE71}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F1CBF2A-2033-43AD-B55B-AAA4F74689D1}"
@@ -13,20 +11,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		screenshot.png = screenshot.png
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseScheduler", "CourseScheduler\CourseScheduler.csproj", "{70074DEE-DF94-4CEA-A3FA-474ACFA93074}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A8E6744-603D-4D02-847F-07C593C4EE71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

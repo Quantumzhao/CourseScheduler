@@ -1,4 +1,4 @@
-# Course Selection Software
+# Course Scheduler
 
 This is an application that made by a terp, and for all terps. 
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CourseSelection.Properties {
+namespace CourseScheduler.Properties {
     using System;
     
     

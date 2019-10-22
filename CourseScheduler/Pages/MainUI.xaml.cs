@@ -12,9 +12,9 @@ using System.Collections.Specialized;
 using FirstFloor.ModernUI.Windows.Controls;
 using System.Net.Http;
 using FirstFloor.ModernUI.Presentation;
-using CourseSelection.Pages;
+using CourseScheduler.Pages;
 
-namespace CourseSelection
+namespace CourseScheduler
 {
 	public partial class MainUI : UserControl
 	{

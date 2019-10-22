@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CourseSelection.Pages
+namespace CourseScheduler
 {
 	/// <summary>
-	/// Interaction logic for DataSourceSettings.xaml
+	/// Interaction logic for Settings.xaml
 	/// </summary>
-	public partial class DataSourceSettings : UserControl
+	public partial class Settings : UserControl
 	{
-		public DataSourceSettings()
+		public Settings()
 		{
 			InitializeComponent();
 		}

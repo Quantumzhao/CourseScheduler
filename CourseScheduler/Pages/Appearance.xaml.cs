@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using FirstFloor.ModernUI.Presentation;
 using System.ComponentModel;
 
-namespace CourseSelection.Pages
+namespace CourseScheduler.Pages
 {
 	/// <summary>
 	/// Interaction logic for Settings.xaml
