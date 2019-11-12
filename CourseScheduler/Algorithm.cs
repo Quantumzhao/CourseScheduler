@@ -212,7 +212,8 @@ namespace CourseScheduler
 					.Single(node => node.GetAttributeValue("class", "") == "open-seats-count")
 					.InnerText);
 				int waitlist = int.Parse(span
-					.Single(node => node.GetAttributeValue("class", "") == "waitlist-count")
+					.Where(node => node.GetAttributeValue("class", "") == "waitlist-count")
+					.First()
 					.InnerText);
 
 				string instructor = instructors[0];

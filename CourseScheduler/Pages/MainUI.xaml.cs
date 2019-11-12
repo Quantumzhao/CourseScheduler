@@ -148,6 +148,7 @@ namespace CourseScheduler
 				var remove = new ModernButton();
 				{
 					remove.IconData = FindResource("Remove") as Geometry;
+					remove.HorizontalAlignment = HorizontalAlignment.Left;
 					Grid.SetColumn(remove, 1);
 					Grid.SetRow(remove, 0);
 					remove.Click += (s, be) =>
