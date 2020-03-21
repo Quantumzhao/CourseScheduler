@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CourseScheduler"
 			 xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
-             d:DesignHeight="450">
+             d:DesignHeight="450" Loaded="Main_Loaded">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -23,14 +23,8 @@
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
 				<Grid 
 					Grid.Column="0" 
 					Grid.ColumnSpan="2" 
@@ -167,6 +161,7 @@
 							SelectionChanged="Semester_SelectionChanged">
 						</ComboBox>
 					</StackPanel>
+					<mui:ModernButton Grid.Column="1" Grid.Row="5" Content="Save Query" IconData="{StaticResource ResourceKey=Save}" Click="SaveButton_Click"></mui:ModernButton>
 				</Grid>
 				<StackPanel 
 					x:Name="SP_Course" 

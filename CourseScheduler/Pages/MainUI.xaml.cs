@@ -13,6 +13,9 @@ using FirstFloor.ModernUI.Windows.Controls;
 using System.Net.Http;
 using FirstFloor.ModernUI.Presentation;
 using CourseScheduler.Pages;
+using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace CourseScheduler
 {
@@ -34,7 +37,7 @@ namespace CourseScheduler
 			GorgeousColors[7] = Color.FromRgb(192, 192, 192);
 			GorgeousColors[8] = Color.FromRgb(160, 160, 160);
 			GorgeousColors[9] = Color.FromRgb(128, 128, 128);
-			AppearanceManager.Current.AccentColor = Properties.Settings.Default.AccentColor.FromColor();
+			AppearanceManager.Current.AccentColor = CourseSelection.Properties.Settings.Default.AccentColor.FromColor();
 		}
 
 		private VMSet<Course> courseSet = new VMSet<Course>();
@@ -42,6 +45,7 @@ namespace CourseScheduler
 		private Dictionary<string, string> semesterList = new Dictionary<string, string>();
 		public Color[] GorgeousColors = new Color[10];
 		public static TimeDictionary TimePeriod { get; set; } = new TimeDictionary();
+		public static string[] SelectedRecord = null;
 
 		private bool isOpenSecOnly => CB_OpenSectionOnly.IsChecked ?? false;
 		private bool isShowFC => CB_ShowFC.IsChecked ?? false;
@@ -192,9 +196,9 @@ namespace CourseScheduler
 			//}
 			try
 			{
-				semesterList.Add("Fall 2019", "201908");
-				semesterList.Add("Winter 2020", "201912");
 				semesterList.Add("Spring 2020", "202001");
+				semesterList.Add("Summer 2020", "202005");
+				semesterList.Add("Fall 2020", "202008");
 			}
 			catch { }
 			(sender as ComboBox).ItemsSource = semesterList.Keys;
@@ -528,6 +532,43 @@ namespace CourseScheduler
 			if (MainGrid.SelectedItems.Count != 0)
 			{
 				ScheduleTimeTable(MainGrid.SelectedItems[0] as List<Section>);
+			}
+		}
+
+		private void SaveButton_Click(object sender, RoutedEventArgs e)
+		{
+			List<string[]> records;
+			// read records
+			using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(CourseSelection.Properties.Settings.Default.Records)))
+			{
+				BinaryFormatter bf = new BinaryFormatter();
+				records = bf.Deserialize(ms) as List<string[]>;
+			}
+
+			records.Add(courseSet.Select(c => c.Name).ToArray());
+
+			// write records
+			using (MemoryStream ms = new MemoryStream())
+			{
+				BinaryFormatter bf = new BinaryFormatter();
+				bf.Serialize(ms, records);
+				ms.Position = 0;
+				byte[] buffer = new byte[(int)ms.Length];
+				ms.Read(buffer, 0, buffer.Length);
+				CourseSelection.Properties.Settings.Default.Records = Convert.ToBase64String(buffer);
+				CourseSelection.Properties.Settings.Default.Save();
+			}
+		}
+
+		private void Main_Loaded(object sender, RoutedEventArgs e)
+		{
+			if (SelectedRecord != null)
+			{
+				foreach (var course in SelectedRecord)
+				{
+					TB_CourseName.Text = course;
+					MUIB_Add_Click(null, null);
+				}
 			}
 		}
 	}
