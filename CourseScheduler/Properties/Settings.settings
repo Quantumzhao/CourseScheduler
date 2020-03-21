@@ -5,5 +5,8 @@
     <Setting Name="AccentColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">161, 226, 255</Value>
     </Setting>
+    <Setting Name="Records" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AAEAAAD/////AQAAAAAAAAAEAQAAAIEBU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuTGlzdGAxW1tTeXN0ZW0uU3RyaW5nW10sIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OV1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24DAAARU3lzdGVtLlN0cmluZ1tdW10ICAkCAAAAAAAAAAAAAAAHAgAAAAEBAAAAAAAAAAYL</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
