@@ -6,8 +6,19 @@
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:local="clr-namespace:CourseScheduler.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
-		<TextBlock Text="Nothing Has Yet Been Implemented!" Style="{StaticResource ResourceKey=Heading2}"></TextBlock>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<TextBlock 
+			Text="Saved Query" 
+			Style="{StaticResource ResourceKey=MyHeading1}"
+			Grid.Row="0">
+		</TextBlock>
+		<TextBlock Text="Records: " Grid.Row="1" Style="{StaticResource ResourceKey=Heading2}"></TextBlock>
+		<StackPanel x:Name="RecordsPanel" Orientation="Vertical" Grid.Row="2"></StackPanel>
     </Grid>
 </UserControl>
