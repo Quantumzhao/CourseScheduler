@@ -24,6 +24,8 @@ However, this application offers more customized experience.
 
 - [X] Peek on the number of open seats and wait lists for a given section. 
 
+- [X] Save your course list without the need of logging into any account
+
 And in addition, since all of the data are crawled from Testudo, it gets updated really fast. 
 
 ### Drawbacks
