@@ -161,9 +161,9 @@ namespace CourseScheduler.Pages
 				if (this.selectedAccentColor != value)
 				{
 					this.selectedAccentColor = value;
-					OnPropertyChanged("SelectedAccentColor");
-					Properties.Settings.Default["AccentColor"] = value.ToColor();
-					Properties.Settings.Default.Save();
+					OnPropertyChanged(nameof(SelectedAccentColor));
+					CourseSelection.Properties.Settings.Default["AccentColor"] = value.ToColor();
+					CourseSelection.Properties.Settings.Default.Save();
 					AppearanceManager.Current.AccentColor = value;
 				}
 			}
