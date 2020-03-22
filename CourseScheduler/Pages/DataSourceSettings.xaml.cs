@@ -91,6 +91,17 @@ namespace CourseScheduler.Pages
 						removeButton.Click += (rsender, re) =>
 						{
 							RecordsPanel.Children.Remove(recordItem);
+							records.Remove(recordLiteral);
+							using (MemoryStream ms = new MemoryStream())
+							{
+								BinaryFormatter bf = new BinaryFormatter();
+								bf.Serialize(ms, records);
+								ms.Position = 0;
+								byte[] buffer = new byte[(int)ms.Length];
+								ms.Read(buffer, 0, buffer.Length);
+								CourseSelection.Properties.Settings.Default.Records = Convert.ToBase64String(buffer);
+								CourseSelection.Properties.Settings.Default.Save();
+							}
 						};
 					}
 					recordItem.Children.Add(removeButton);

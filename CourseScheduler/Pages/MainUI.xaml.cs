@@ -545,7 +545,11 @@ namespace CourseScheduler
 				records = bf.Deserialize(ms) as List<string[]>;
 			}
 
-			records.Add(courseSet.Select(c => c.Name).ToArray());
+			var courseArray = courseSet.Select(c => c.Name).ToArray();
+			if (courseArray.Length != 0)
+			{
+				records.Add(courseArray);
+			}
 
 			// write records
 			using (MemoryStream ms = new MemoryStream())
