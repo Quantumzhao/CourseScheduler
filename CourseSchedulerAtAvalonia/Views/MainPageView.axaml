@@ -1,0 +1,607 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CourseSchedulerAtAvalonia.Views.MainPageView">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="156"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <ScrollViewer
+			Grid.Row="1"
+			Margin="0,0,10,0">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Grid.Row="0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <TextBlock
+						Text="New Course"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						Grid.Row="0"
+						Margin="0,0,0,10">
+          </TextBlock>
+          <StackPanel
+						Grid.Column="0"
+						Grid.Row="1"
+						Orientation="Horizontal"
+						Margin="0,0,0,10"
+						Grid.ColumnSpan="2">
+            <Button
+							x:Name="MUIB_Add"
+							Margin="0"
+							VerticalAlignment="Center"
+              IsDefault="True">
+            </Button>
+            <TextBlock
+							Text="Pick one: "
+							VerticalAlignment="Center"
+							Margin="5,0,0,0">
+            </TextBlock>
+            <TextBox
+							x:Name="TB_CourseName"
+							Width="100"
+							VerticalAlignment="Center"
+							Margin="5,0,0,0">
+            </TextBox>
+          </StackPanel>
+          <TextBlock
+						Text="OTHER OPTIONS"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						Grid.Row="1"
+						Margin="29,33.5,0,10"
+						Grid.RowSpan="2"
+						VerticalAlignment="Center">
+          </TextBlock>
+          <Button
+						x:Name="Expander"
+						Grid.Column="0"
+						Grid.Row="2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						Margin="0,0,0,10">
+          </Button>
+          <CheckBox
+						x:Name="CB_OpenSectionOnly"
+						Content="Open Section Only"
+						Grid.Column="0"
+						VerticalAlignment="Top"
+						HorizontalAlignment="Left"
+						Margin="5,0,0,10"
+						Grid.Row="3">
+          </CheckBox>
+          <CheckBox
+						x:Name="CB_ShowFC"
+						Content="Show Freshman Connection Program"
+						Margin="5,0,0,10"
+						VerticalAlignment="Top"
+						HorizontalAlignment="Left"
+						Grid.Column="1"
+						Grid.Row="3">
+          </CheckBox>
+          <ToggleButton
+						x:Name="MUIB_NoInstructors"
+						Grid.Column="0"
+						Grid.Row="4"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Content="Exclude These Instructors:">
+          </ToggleButton>
+          <ToggleButton
+						x:Name="MUIB_NoTime"
+						Grid.Column="1"
+						Grid.Row="4"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Content="Exclude These Time Periods:">
+          </ToggleButton>
+          <StackPanel
+						x:Name="AcademicYearPanel"
+						Orientation="Horizontal"
+						Grid.Column="0"
+						Grid.Row="5"
+						Margin="27, 3, 0, 10">
+            <TextBlock
+							Text="Semester:"
+							VerticalAlignment="Center">
+            </TextBlock>
+            <ComboBox
+							x:Name="Semester"
+							SelectedIndex="2"
+							Margin="10, 0, 0, 0"
+							VerticalAlignment="Center">
+            </ComboBox>
+          </StackPanel>
+          <Button 
+            Grid.Column="1" 
+            Grid.Row="5" 
+            Content="Save Query">
+          </Button>
+        </Grid>
+        <StackPanel
+					x:Name="SP_Course"
+					Grid.Row="2"
+					Grid.Column="0">
+        </StackPanel>
+      </Grid>
+    </ScrollViewer>
+    <Grid
+			Grid.Column="1"
+			Grid.Row="1"
+			Grid.RowSpan="2"
+			Margin="0,0,0,0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <TextBlock
+				Text="Combinations"
+				Grid.Row="0" Margin="0,0,0,10"/>
+      <StackPanel
+				Orientation="Horizontal"
+				Grid.Row="1">
+        <TextBlock
+					x:Name="Count"
+					Text="0"/>
+        <TextBlock
+					Text=" Results in Total"/>
+      </StackPanel>
+      <ItemsControl
+				x:Name="MainGrid"
+				Grid.Row="2"
+				Margin="0,10,0,0">
+      </ItemsControl>
+    </Grid>
+    <Grid
+			Grid.Row="2"
+			Grid.Column="0"
+			Height="156">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="30"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="10"/>
+      </Grid.ColumnDefinitions>
+      <TextBlock
+				Text="6"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Grid.ColumnSpan="2"
+				Grid.Column="1" Margin="-5,0,0,0"/>
+      <TextBlock
+				Text="7"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Grid.ColumnSpan="2"
+				Grid.Column="2" Margin="-5,0,0,0"/>
+      <TextBlock
+				Text="8"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Grid.ColumnSpan="2"
+				Grid.Column="3" Margin="-5,0,0,0"/>
+      <TextBlock
+				Text="9"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Grid.ColumnSpan="2"
+				Grid.Column="4" Margin="-5,0,0,0"/>
+      <TextBlock
+				Text="10"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Grid.ColumnSpan="2"
+				Grid.Column="5" Margin="-5,0,0,0"/>
+      <TextBlock
+				Text="11"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="6"/>
+      <TextBlock
+				Text="12"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="7"/>
+      <TextBlock
+				Text="13"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="8"/>
+      <TextBlock
+				Text="14"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="9"/>
+      <TextBlock
+				Text="15"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="10"/>
+      <TextBlock
+				Text="16"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="11"/>
+      <TextBlock
+				Text="17"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="12"/>
+      <TextBlock
+				Text="18"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="13"/>
+      <TextBlock
+				Text="19"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="14"/>
+      <TextBlock
+				Text="20"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="15"/>
+      <TextBlock
+				Text="21"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="16"/>
+      <TextBlock
+				Text="22"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="17"/>
+      <TextBlock
+				Text="23"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Margin="-5,0,0,0"
+				Grid.ColumnSpan="2"
+				Grid.Column="18"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="1"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="2"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="3"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="4"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="5"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="6"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="7"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="8"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+				Width="1"
+				Fill="#FFE2E2E2"
+				Height="130"
+				Grid.Column="9"
+				HorizontalAlignment="Left"
+				Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="10"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="11"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="12"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="13"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="14"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="15"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="16"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="17"
+						HorizontalAlignment="Left"
+						Margin="0,26,0,0"/>
+      <Rectangle
+						Width="1"
+						Fill="#FFE2E2E2"
+						Height="130"
+						Grid.Column="17"
+						HorizontalAlignment="Right"
+						Margin="0,26,0,0">
+      </Rectangle>
+      <TextBlock
+							Text="M"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top" Margin="0,26,0,0">
+      </TextBlock>
+      <TextBlock
+							Text="Tu"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Margin="0,52,0,0">
+      </TextBlock>
+      <TextBlock
+							Text="W"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Margin="0,78,0,0">
+      </TextBlock>
+      <TextBlock
+							Text="Th"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Margin="0,104,0,0">
+      </TextBlock>
+      <TextBlock
+							Text="F"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Top"
+							Margin="0, 130, 0, 0">
+      </TextBlock>
+      <Rectangle
+						Fill="#FFE2E2E2"
+						Height="1"
+						Margin="0,39,0,0"
+						VerticalAlignment="Top"
+						Grid.Column="1"
+						Grid.ColumnSpan="17"/>
+      <Rectangle
+						Fill="#FFE2E2E2"
+						Height="1"
+						Margin="0,65,0,0"
+						VerticalAlignment="Top"
+						Grid.Column="1"
+						Grid.ColumnSpan="17"/>
+      <Rectangle
+						Fill="#FFE2E2E2"
+						Height="1"
+						Margin="0,91,0,0"
+						VerticalAlignment="Top"
+						Grid.Column="1"
+						Grid.ColumnSpan="17"/>
+      <Rectangle
+						Fill="#FFE2E2E2"
+						Height="1"
+						Margin="0,117,0,0"
+						VerticalAlignment="Top"
+						Grid.Column="1"
+						Grid.ColumnSpan="17"/>
+      <Rectangle
+				Fill="#FFE2E2E2"
+				Height="1"
+				Margin="0,143,0,0"
+				VerticalAlignment="Top"
+				Grid.Column="1"
+				Grid.ColumnSpan="17"/>
+
+      <Viewbox
+				Stretch="Fill"
+				Grid.ColumnSpan="17" Margin="0,26,0,0" Grid.Column="1">
+        <Grid Height="130" MinWidth="600">
+          <Canvas
+						x:Name="MainCanvas" MinWidth="500" MinHeight="130"/>
+        </Grid>
+      </Viewbox>
+    </Grid>
+    <Canvas
+			Grid.RowSpan="3"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top">
+      <ListBox
+				Canvas.Top="172"
+				HorizontalAlignment="Left"
+				x:Name="LB_NoInstructors"
+				BorderThickness="1"
+				Canvas.Left="26"
+				Background="White"
+				MinWidth="150"
+				SelectionMode="Single"
+				MaxHeight="200">
+      </ListBox>
+      <ListBox
+				Canvas.Top="172"
+				Canvas.Left="300"
+				HorizontalAlignment="Left"
+				x:Name="LB_NoTime"
+				BorderThickness="1"
+				MinWidth="150"
+				Background="White"
+				SelectionMode="Single"
+				MaxHeight="200">
+        <TextBlock
+					Text="Early in morning"/>
+        <CheckBox
+					Content="6:00 - 7:00"
+					IsChecked="{Binding Path=TimePeriod[0], Mode=TwoWay}"/>
+        <CheckBox
+					Content="7:00 - 8:00"
+					IsChecked="{Binding Path=TimePeriod[1], Mode=TwoWay}"/>
+        <TextBlock
+					Text="Breakfast"/>
+        <CheckBox
+					Content="8:00 - 9:00"
+					IsChecked="{Binding Path=TimePeriod[2], Mode=TwoWay}"/>
+        <CheckBox
+					Content="9:00 - 10:00"
+					IsChecked="{Binding Path=TimePeriod[3], Mode=TwoWay}"/>
+        <TextBlock
+					Text="Brunch"/>
+        <CheckBox
+					Content="10:00 - 11:00"
+					IsChecked="{Binding Path=TimePeriod[4], Mode=TwoWay}"/>
+        <TextBlock
+					Text="Lunch"/>
+        <CheckBox
+					Content="11:00 - 12:00"
+					IsChecked="{Binding Path=TimePeriod[5], Mode=TwoWay}"/>
+        <CheckBox
+					Content="12:00 - 13:00"
+					IsChecked="{Binding Path=TimePeriod[6], Mode=TwoWay}"/>
+        <CheckBox
+					Content="13:00 - 14:00"
+					IsChecked="{Binding Path=TimePeriod[7], Mode=TwoWay}"/>
+        <TextBlock
+					Text="Dinner"/>
+        <CheckBox
+					Content="17:00 - 18:00"
+					IsChecked="{Binding Path=TimePeriod[8], Mode=TwoWay}"/>
+        <CheckBox
+					Content="18:00 - 19:00"
+					IsChecked="{Binding Path=TimePeriod[9], Mode=TwoWay}"/>
+        <TextBlock
+					Text="Evening"/>
+        <CheckBox
+					Content="19:00 - 21:00"
+					IsChecked="{Binding Path=TimePeriod[10], Mode=TwoWay}"/>
+      </ListBox>
+    </Canvas>
+    <Rectangle
+			x:Name="Mask"
+			Grid.RowSpan="3"
+			Fill="#7FFFFFFF"
+			Grid.ColumnSpan="2">
+    </Rectangle>
+  </Grid>
+</UserControl>
