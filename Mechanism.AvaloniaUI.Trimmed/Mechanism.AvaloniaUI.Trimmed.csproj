@@ -14,7 +14,7 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.10" />
+    <PackageReference Include="Avalonia" Version="0.10.0-preview2" />
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.9.9" />
   </ItemGroup>
 </Project>

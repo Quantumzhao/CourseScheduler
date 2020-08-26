@@ -48,7 +48,14 @@
                 <TextBlock Text="Add"/>
               </StackPanel>
             </Button>
-            <mectrl:FlyoutButton FlyoutContent="FlyoutContent" Content="Test"></mectrl:FlyoutButton>
+            <mectrl:FlyoutButton Content="Test">
+              <mectrl:FlyoutButton.FlyoutContent>
+                <StackPanel>
+                  <CheckBox Content="Item1"/>
+                  <CheckBox Content="Item2"/>
+                </StackPanel>
+              </mectrl:FlyoutButton.FlyoutContent>
+            </mectrl:FlyoutButton>
           </StackPanel>
           <StackPanel Orientation="Horizontal" Spacing="10"
             Grid.Column="0"

@@ -1,14 +1,17 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Input;
 using Avalonia.Styling;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Mechanism.AvaloniaUI.Trimmed.Controls
 {
-	public class FlyoutButton : ToggleButton, IStyleable
+    public class FlyoutButton : ToggleButton, IStyleable
     {
         Type IStyleable.StyleKey => typeof(FlyoutButton);
 
@@ -50,7 +53,7 @@ namespace Mechanism.AvaloniaUI.Trimmed.Controls
 
         static FlyoutButton()
         {
-            IsCheckedProperty.Changed.AddClassHandler(new Action<FlyoutButton, AvaloniaPropertyChangedEventArgs>((sender, e) =>
+            IsCheckedProperty.Changed.AddClassHandler<FlyoutButton>(new Action<FlyoutButton, AvaloniaPropertyChangedEventArgs>((sender, e) =>
             {
                 if (e.NewValue is bool isChecked)
                 {

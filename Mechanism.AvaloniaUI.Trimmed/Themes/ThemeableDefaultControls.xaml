@@ -3,9 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mectrl="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Controls;assembly=Mechanism.AvaloniaUI.Trimmed"
-             xmlns:mewin="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Controls.Windows;assembly=Mechanism.AvaloniaUI.Trimmed"
-             xmlns:metb="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Controls.ToolBar;assembly=Mechanism.AvaloniaUI.Trimmed"
-             xmlns:mecb="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Controls.CommandBar;assembly=Mechanism.AvaloniaUI.Trimmed"
              xmlns:mecore="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Core;assembly=Mechanism.AvaloniaUI.Trimmed"
              xmlns:meconv="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Converters;assembly=Mechanism.AvaloniaUI.Trimmed">
   <Style Selector="mectrl|ThemeControlDecorator:not(.NoAutoBorderThickness)">
