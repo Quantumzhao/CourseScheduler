@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <VersionPrefix>1.3.0-preview</VersionPrefix>
+        <Authors>Artyom Gorchakov and Contributors</Authors>
+        <Copyright>Copyright (c) 2020 Artyom Gorchakov</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/worldbeater/citrus.avalonia</PackageProjectUrl>
+        <PackageDescription>Avalonia-exclusive experimental touch-friendly UI theme</PackageDescription>
+        <Owners>worldbeater</Owners>
+        <PackageTags>avalonia;avaloniaui;citrus;ui;theme</PackageTags>
+        <RepositoryUrl>https://github.com/worldbeater/citrus.avalonia</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="**\*.xaml" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.0-preview2" />
+    </ItemGroup>
+</Project>
