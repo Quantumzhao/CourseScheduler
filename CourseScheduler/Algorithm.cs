@@ -156,7 +156,7 @@ namespace CourseScheduler
 
 	public class Crawler
 	{
-		public string TermID = "202001";
+		public string TermID = "202008";
 		//public bool IsExcludeFC = true;
 
 		public async Task<Course> GetCourse(string courseName)
@@ -178,8 +178,8 @@ namespace CourseScheduler
 				.Where(node => node.GetAttributeValue("id", "") == courseName)
 				.First()
 				.Descendants("div")
-				.Where(node => node.GetAttributeValue("class", "")
-				.Equals("section delivery-f2f")).ToList();
+				.Where(node => node.GetAttributeValue("class", "").Contains("section delivery"))
+				.ToList();
 
 			fullName = htmlDocument
 				.DocumentNode
@@ -227,17 +227,17 @@ namespace CourseScheduler
 				// Enumerate through each class of the section
 				foreach (var row in rows)
 				{
-					HtmlNode dayTimeGroup = row.Descendants("div").First();
+					HtmlNode dayTimeGroup = row.Descendants("div").First(n => n.Attributes["class"].Value.Contains("section-day-time-group"));
 					var enumerator = dayTimeGroup.Descendants("span").GetEnumerator();
 					if (!enumerator.MoveNext()) break;
 
 					var positions = row.Descendants("span");
 					string building = positions
 						.Where(node => node.GetAttributeValue("class", "") == "building-code")
-						.Single().InnerText;
+						.FirstOrDefault()?.InnerText ?? string.Empty;
 					string room = positions
 						.Where(node => node.GetAttributeValue("class", "") == "class-room")
-						.Single().InnerText;
+						.FirstOrDefault()?.InnerText ?? string.Empty;
 					Location location = new Location(building, room);
 
 					List<DayOfWeek> days = enumerator.Current.InnerText.ToDayOfWeek();
