@@ -13,7 +13,6 @@ using FirstFloor.ModernUI.Windows.Controls;
 using System.Net.Http;
 using FirstFloor.ModernUI.Presentation;
 using CourseScheduler.Pages;
-using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -38,6 +37,13 @@ namespace CourseScheduler
 			GorgeousColors[8] = Color.FromRgb(160, 160, 160);
 			GorgeousColors[9] = Color.FromRgb(128, 128, 128);
 			AppearanceManager.Current.AccentColor = CourseSelection.Properties.Settings.Default.AccentColor.FromColor();
+
+			if (CourseSelection.Properties.Settings.Default.ShowNotification)
+			{
+				ModernDialog.ShowMessage("This is the last update, for more information, please check out the \"About\" page", "Version Info", MessageBoxButton.OK);
+				CourseSelection.Properties.Settings.Default.ShowNotification = false;
+				CourseSelection.Properties.Settings.Default.Save();
+			}
 		}
 
 		private VMSet<Course> courseSet = new VMSet<Course>();

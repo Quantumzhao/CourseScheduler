@@ -9,10 +9,20 @@
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
 		<TextBlock Text="About" Style="{StaticResource ResourceKey=Heading1}" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-		<TextBlock Text="Contact Information" Style="{StaticResource ResourceKey=Heading2}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0"/>
-		<mui:BBCodeBlock BBCode="[b]Email: [/b]yishanzh@terpmail.umd.edu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,109,0,0"/>
-		<mui:BBCodeBlock BBCode="[b]Github: [/b][url=https://github.com/Quantumzhao/CourseSelection]Course Selection[/url]" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,130,0,0"/>
-		<mui:BBCodeBlock BBCode="Feel free to give any feedback on GitHub [i]issue[/i] page" Margin="0,151,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-		<mui:BBCodeBlock BBCode="[b]Author:[/b] Quantum" Margin="0,88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+		<StackPanel Margin="0 60 0 0">
+			<StackPanel>
+				<TextBlock Text="Contact Information" Style="{StaticResource ResourceKey=Heading2}"/>
+				<mui:BBCodeBlock BBCode="[b]Author:[/b] Quantum" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+				<mui:BBCodeBlock BBCode="[b]Email: [/b]yishanzh@terpmail.umd.edu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+				<mui:BBCodeBlock BBCode="[b]Github: [/b][url=https://github.com/Quantumzhao/CourseSelection]Course Scheduler[/url]" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+				<mui:BBCodeBlock BBCode="Feel free to give any feedback on GitHub [i]issue[/i] page" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+			</StackPanel>
+
+			<StackPanel Margin="0 60 0 0" Width="500" HorizontalAlignment="Left">
+				<TextBlock Text="Updates" Style="{StaticResource ResourceKey=Heading2}"/>
+				<mui:BBCodeBlock Margin="0 5 0 0" BBCode="This version will cease to update and maintain in the near future, because I am rewriting the application using Avalonia UI which is a cross-platform framework. In short, it finally supports Mac OS. "/>
+				<mui:BBCodeBlock Margin="0 5 0 0" BBCode="The new version will also include advanced search and filtering. If you would like to know more about this, please take a look at my GitHub repository. "/>
+			</StackPanel>
+		</StackPanel>
 	</Grid>
 </UserControl>
