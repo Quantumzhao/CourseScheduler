@@ -5,12 +5,7 @@
         <Setter Property="FontFamily" Value="Ubuntu" />
         <Setter Property="FontSize" Value="14" />
     </Style>
-    <Style Selector="TextBox">
-        <Setter Property="FontFamily" Value="Ubuntu" />
-        <Setter Property="FontSize" Value="14" />
-    </Style>
     <Style Selector="TextBlock.Heading">
-        <Setter Property="Margin" Value="0 10 0 5" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
         <Setter Property="FontSize" Value="15" />
@@ -21,4 +16,9 @@
     <Style Selector="TextBlock.Accent">
         <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
     </Style>
+  <Style Selector="TextBlock.Icon">
+    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+    <Setter Property="VerticalAlignment" Value="Center"/>
+    <Setter Property="Margin" Value="0 2 5 0"/>
+  </Style>
 </Styles>

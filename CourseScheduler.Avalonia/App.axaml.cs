@@ -1,10 +1,10 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using CourseSchedulerAtAvalonia.ViewModels;
-using CourseSchedulerAtAvalonia.Views;
+using CourseScheduler.Avalonia.ViewModels;
+using CourseScheduler.Avalonia.Views;
 
-namespace CourseSchedulerAtAvalonia
+namespace CourseScheduler.Avalonia
 {
 	public class App : Application
 	{

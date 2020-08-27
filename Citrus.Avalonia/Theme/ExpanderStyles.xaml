@@ -26,14 +26,12 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    <Style Selector="Expander">
-        <Setter Property="Margin" Value="0" />
-    </Style>
     <Style Selector="Expander /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ThemeCardBrush}" />
     </Style>
     <Style Selector="Expander /template/ ToggleButton#PART_toggle /template/ Border">
         <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush}" />
+      <Setter Property="CornerRadius" Value="5"/>
     </Style>
     <Style Selector="Expander /template/ ToggleButton#PART_toggle:pointerover /template/ Border">
         <Setter Property="BorderBrush" Value="Transparent" />

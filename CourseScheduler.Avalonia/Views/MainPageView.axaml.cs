@@ -2,7 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace CourseSchedulerAtAvalonia.Views
+namespace CourseScheduler.Avalonia.Views
 {
 	public class MainPageView : UserControl
 	{

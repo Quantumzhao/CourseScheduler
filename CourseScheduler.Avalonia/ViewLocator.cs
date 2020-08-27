@@ -1,9 +1,9 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using CourseSchedulerAtAvalonia.ViewModels;
+using CourseScheduler.Avalonia.ViewModels;
 
-namespace CourseSchedulerAtAvalonia
+namespace CourseScheduler.Avalonia
 {
 	public class ViewLocator : IDataTemplate
 	{
