@@ -8,12 +8,6 @@
   <Style Selector="mectrl|ThemeControlDecorator:not(.NoAutoBorderThickness)">
     <Setter Property="BorderThickness" Value="{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
   </Style>
-  <Style Selector="mectrl|ThemeControlDecorator:not(.NoAutoCornerCurves)">
-    <Setter Property="mecore:CornerCurves.CornerCurves" Value="{Binding Path=(mecore:CornerCurves.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=false}"/>
-  </Style>
-  <Style Selector="mectrl|ThemeControlDecorator:not(.NoAutoBorderPresence)">
-    <Setter Property="mecore:BorderPresence.BorderPresence" Value="{Binding Path=(mecore:BorderPresence.BorderPresence), RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=false}"/>
-  </Style>
   <Style Selector="mectrl|ThemeControlDecorator:not(.NoAutoState)">
     <Setter Property="IsVisuallyPointerOver" Value="{Binding IsPointerOver, RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=False}"/>
     <Setter Property="IsVisuallyPressed" Value="{Binding IsPressed, RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=False}"/>

@@ -6,17 +6,23 @@
              xmlns:meconv="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Converters;assembly=Mechanism.AvaloniaUI.Trimmed"
              xmlns:mecore="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Core;assembly=Mechanism.AvaloniaUI.Trimmed">
   <Style Selector="mectrl|FlyoutButton">
+    <!--
     <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
     <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}"/>
     <Setter Property="BorderThickness" Value="{DynamicResource ThemeBorderThickness}"/>
     <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
     <Setter Property="Padding" Value="4"/>
     <Setter Property="HorizontalContentAlignment" Value="Center"/>
-    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>-->
     <Setter Property="Template">
       <ControlTemplate>
         <Panel x:Name="PART_ButtonArea">
-          <Border x:Name="BackgroundBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+          <Border
+            x:Name="BackgroundBorder" 
+            Background="{TemplateBinding Background}" 
+            BorderBrush="{TemplateBinding BorderBrush}" 
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="5">
             <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
               <Path Data="M 0 0 L 4 4 L 8 0 Z" Margin="4,0" Fill="{TemplateBinding Foreground}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
               <DockPanel x:Name="ContentIconPanel" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}">
@@ -45,6 +51,7 @@
       </ControlTemplate>
     </Setter>
   </Style>
+  <!--
   <Style Selector="mectrl|FlyoutButton /template/ Border#BackgroundBorder">
     <Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
   </Style>
@@ -63,5 +70,5 @@
   </Style>
   <Style Selector="mectrl|FlyoutButton:disabled Border#BackgroundBorder">
     <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}"/>
-  </Style>
+  </Style>-->
 </Styles>

@@ -72,9 +72,9 @@ namespace Ripple
             });
         }
 
-        protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+        protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
         {
-            base.OnApplyTemplate(e);
+            base.OnTemplateApplied(e);
 
             _circle = e.NameScope.Find<Ellipse>("Circle");
 

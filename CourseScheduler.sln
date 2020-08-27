@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ripple", "Ripple\Ripple.csproj", "{3628AA4C-3290-4CD9-94A6-BCABB23591D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Citrus.Avalonia", "Citrus.Avalonia\Citrus.Avalonia.csproj", "{AA86B30D-5F6E-425F-968D-150541472D90}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseScheduler.Avalonia", "CourseScheduler.Avalonia\CourseScheduler.Avalonia.csproj", "{542318B8-ED36-4998-938F-C172A7EC1149}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mechanism.AvaloniaUI.Trimmed", "Mechanism.AvaloniaUI.Trimmed\Mechanism.AvaloniaUI.Trimmed.csproj", "{AC684F2A-72FE-4C2E-97C3-8DE8A491016B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Citrus.Avalonia", "Citrus.Avalonia\Citrus.Avalonia.csproj", "{3D639037-491D-4129-A530-504FD3BE3F87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,6 @@ Global
 		{3628AA4C-3290-4CD9-94A6-BCABB23591D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3628AA4C-3290-4CD9-94A6-BCABB23591D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3628AA4C-3290-4CD9-94A6-BCABB23591D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA86B30D-5F6E-425F-968D-150541472D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA86B30D-5F6E-425F-968D-150541472D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA86B30D-5F6E-425F-968D-150541472D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA86B30D-5F6E-425F-968D-150541472D90}.Release|Any CPU.Build.0 = Release|Any CPU
 		{542318B8-ED36-4998-938F-C172A7EC1149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{542318B8-ED36-4998-938F-C172A7EC1149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{542318B8-ED36-4998-938F-C172A7EC1149}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{AC684F2A-72FE-4C2E-97C3-8DE8A491016B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC684F2A-72FE-4C2E-97C3-8DE8A491016B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC684F2A-72FE-4C2E-97C3-8DE8A491016B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

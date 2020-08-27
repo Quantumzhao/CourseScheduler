@@ -5,16 +5,6 @@
              xmlns:mectrl="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Controls;assembly=Mechanism.AvaloniaUI.Trimmed"
              xmlns:meconv="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Converters;assembly=Mechanism.AvaloniaUI.Trimmed"
              xmlns:mecore="clr-namespace:Mechanism.AvaloniaUI.Trimmed.Core;assembly=Mechanism.AvaloniaUI.Trimmed">
-  <Design.PreviewWith>
-    <HeaderedContentControl Classes="GroupBox"  Header="Header">
-      <StackPanel Orientation="Vertical">
-        <TextBlock Text="Content content content"/>
-        <TextBlock Text="Content content content"/>
-        <TextBlock Text="Content content content"/>
-        <TextBlock Text="Content content content"/>
-      </StackPanel>
-    </HeaderedContentControl>
-  </Design.PreviewWith>
   <Styles.Resources>
     <ControlTemplate x:Key="EmbeddedFlyoutButtonTemplate">
       <Panel x:Name="PART_ButtonArea">

@@ -9,25 +9,9 @@
   <Application.Styles>
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+    <!--
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentLight.xaml"/>
-    <StyleInclude Source="avares://Mechanism.AvaloniaUI.Trimmed/Themes/Generic.xaml"/>
-
-    <Style Selector="TextBlock">
-      <Setter Property="FontFamily" Value="Segoe UI"/>
-    </Style>
-    
-    <Style Selector="TextBlock.H1">
-      <Setter Property="FontWeight" Value="Bold"/>
-      <Setter Property="FontSize" Value="60"/>
-    </Style>
-
-    <Style Selector="TextBlock.Text">
-      <Setter Property="FontSize" Value="15"/>
-    </Style>
-
-    <Style Selector="TextBlock.Icon">
-      <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-      <Setter Property="FontSize" Value="12"/>
-    </Style>
-  </Application.Styles>
+    -->
+    <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/>
+    </Application.Styles>
 </Application>
