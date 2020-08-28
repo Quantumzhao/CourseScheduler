@@ -127,5 +127,7 @@ namespace CourseScheduler.Core.DataStrucures
 		}
 
 		public override int GetHashCode() => HashCode.Combine(Hour, Minute);
+
+		public override string ToString() => $"{Hour}:{string.Format("{0:00}", Minute)}";
 	}
 }

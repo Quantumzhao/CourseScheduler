@@ -39,5 +39,7 @@ namespace CourseScheduler.Core.DataStrucures
 				return false;
 			}
 		}
+
+		public override string ToString() => $"{Start} - {End}";
 	}
 }

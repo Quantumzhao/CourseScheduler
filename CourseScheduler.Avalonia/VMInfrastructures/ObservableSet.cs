@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Text;
 
 namespace CourseScheduler.Avalonia.VMInfrastructures
@@ -28,5 +29,10 @@ namespace CourseScheduler.Avalonia.VMInfrastructures
 				return false;
 			}
 		}
+
+		public void RaiseCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) 
+			=> CollectionChanged?.Invoke(sender, e);
+
+		public T[] ToArray() => _Collection.ToArray();
 	}
 }

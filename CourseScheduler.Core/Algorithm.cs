@@ -12,7 +12,7 @@ namespace CourseScheduler
 	public static class Algorithm
 	{
 		public static List<List<Section>> GetPossibleCombinations(Course[] dataset
-			, IEnumerable<ClassSpan> timeConstrains, bool isOpenSecOnly = false, bool doesShowFC = false)
+			, IEnumerable<ClassSpan> timeConstrains, bool isOpenSecOnly, bool doesShowFC)
 		{
 			if (dataset.Length == 0) return new List<List<Section>>();
 

@@ -1,7 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style Selector="TabControl">
-        <Setter Property="Background" Value="{DynamicResource ThemeCardBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
     </Style>
     <Style Selector="TabControl WrapPanel">
         <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush2}"/>
@@ -13,11 +13,10 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush2}"/>
         <Setter Property="Margin" Value="0 0 0 0"/>
-        <Setter Property="Padding" Value="14 0"/>
-        <Setter Property="BorderThickness" Value="0 0 0 2"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Padding" Value="15 10 15 5"/>
+        <Setter Property="BorderThickness" Value="0 0 0 5"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush2}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Height" Value="54"/>
     </Style>
     <Style Selector="TabItem > TextBlock">
         <Setter Property="Foreground" Value="{DynamicResource HighlightForegroundBrush}"/>
@@ -25,6 +24,7 @@
     
     <Style Selector="TabItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush4}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush4}"/>
     </Style>
     <Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush2}"/>
@@ -34,6 +34,6 @@
     </Style>
     
     <Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="BorderBrush" Value="{DynamicResource HighlightForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}"/>
     </Style>
 </Styles>

@@ -3,8 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="CourseScheduler.Avalonia.Views.MainPageView"
-             Background="{DynamicResource ThemeBackgroundColor}">
+             x:Class="CourseScheduler.Avalonia.Views.MainPageView">
   <Grid RowDefinitions="* Auto" ColumnDefinitions="Auto *">
     <Border Classes="Card" Grid.Row="0">
       <Grid RowDefinitions="Auto *">
@@ -63,7 +62,6 @@
                 Margin="0 10 0 0"/>
               <!-- Sections Filter -->
               <CheckBox
-                x:Name="CB_OpenSectionOnly"
                 Content="Open Section Only"
                 IsChecked="{Binding IsOpenSectionOnly}"
                 Grid.Column="0"
@@ -73,7 +71,6 @@
                 Margin="0 10 0 0">
               </CheckBox>
               <CheckBox
-                x:Name="CB_ShowFC"
                 Content="Show Freshman Connection Program"
                 IsChecked="{Binding DoesShowFC}"
                 VerticalAlignment="Top"
@@ -98,74 +95,78 @@
                 </ListBox>
               </Expander>
               <Expander
-                x:Name="MUIB_NoTime"
                 Grid.Column="1"
                 Grid.Row="3"
                 HorizontalAlignment="Left"
                 Header="Exclude These Time Periods: "
-                Margin="10 10 0 0" IsExpanded="True">
+                Margin="10 10 0 0">
                 <ScrollViewer Margin="10 10 0 0" MaxHeight="200">
                   <StackPanel Spacing="10">
+                    <StackPanel.Styles>
+                      <Style Selector="StackPanel">
+                        <Setter Property="Spacing" Value="5"/>
+                      </Style>
+                    </StackPanel.Styles>
                     <StackPanel>
                       <TextBlock Classes="Caption" Text="Early in morning"/>
                       <CheckBox
-                        Content="6:00 - 7:00"
-                        IsChecked="{Binding Path=TimePeriod[0], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[0].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[0].E1, Mode=TwoWay}"/>
                       <CheckBox
-                        Content="7:00 - 8:00"
-                        IsChecked="{Binding Path=TimePeriod[1], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[1].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[1].E1, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel>
                       <TextBlock
                         Classes="Caption"
                         Text="Breakfast"/>
                       <CheckBox
-                        Content="8:00 - 9:00"
-                        IsChecked="{Binding Path=TimePeriod[2], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[2].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[2].E1, Mode=TwoWay}"/>
                       <CheckBox
-                        Content="9:00 - 10:00"
-                        IsChecked="{Binding Path=TimePeriod[3], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[3].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[3].E1, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel>
                       <TextBlock
                         Classes="Caption"
                         Text="Brunch"/>
                       <CheckBox
-                        Content="10:00 - 11:00"
-                        IsChecked="{Binding Path=TimePeriod[4], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[4].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[4].E1, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel>
                       <TextBlock
                         Classes="Caption"
                         Text="Lunch"/>
                       <CheckBox
-                        Content="11:00 - 12:00"
-                        IsChecked="{Binding Path=TimePeriod[5], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[5].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[5].E1, Mode=TwoWay}"/>
                       <CheckBox
-                        Content="12:00 - 13:00"
-                        IsChecked="{Binding Path=TimePeriod[6], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[6].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[6].E1, Mode=TwoWay}"/>
                       <CheckBox
-                        Content="13:00 - 14:00"
-                        IsChecked="{Binding Path=TimePeriod[7], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[7].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[7].E1, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel>
                       <TextBlock
                         Classes="Caption"
                         Text="Dinner"/>
                       <CheckBox
-                        Content="17:00 - 18:00"
-                        IsChecked="{Binding Path=TimePeriod[8], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[8].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[8].E1, Mode=TwoWay}"/>
                       <CheckBox
-                        Content="18:00 - 19:00"
-                        IsChecked="{Binding Path=TimePeriod[9], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[9].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[9].E1, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel>
                       <TextBlock
                         Classes="Caption"
                         Text="Evening"/>
                       <CheckBox
-                        Content="19:00 - 21:00"
-                        IsChecked="{Binding Path=TimePeriod[10], Mode=TwoWay}"/>
+                        Content="{Binding TimePeriodsFilter[10].E2}"
+                        IsChecked="{Binding Path=TimePeriodsFilter[10].E1, Mode=TwoWay}"/>
                     </StackPanel>
                   </StackPanel>
                 </ScrollViewer>
@@ -184,11 +185,10 @@
                   VerticalAlignment="Center">
                 </TextBlock>
                 <ComboBox
-                  x:Name="Semester"
                   SelectedIndex="2"
-                  Width="100"
-                  Height="30"
-                  VerticalAlignment="Center">
+                  VerticalAlignment="Center"
+                  Items="{Binding SemesterList.Keys}"
+                  SelectedItem="{Binding SelectedSemester, Mode=TwoWay}">
                 </ComboBox>
               </StackPanel>
               <Button
@@ -208,13 +208,8 @@
               x:Name="SP_Course"
               Grid.Row="2"
               Grid.Column="0"
-              Margin="0 10 0 0">
-              <ListBoxItem BorderBrush="Aqua">
-                <StackPanel>
-                  <TextBlock Classes="Heading" Text="test1"/>
-                  <TextBlock Text="test2"/>
-                </StackPanel>
-              </ListBoxItem>
+              Margin="0 10 0 0"
+              Items="{Binding $parent[Window].DataContext.test}">
             </ListBox>
           </Grid>
         </ScrollViewer>

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CourseScheduler.Core
 {
-	public class Crawler
+	public static class Crawler
 	{
 		//public string TermID = "202001";
 		//public bool IsExcludeFC = true;
 
-		public async Task<Course> GetCourse(string courseName, string termID)
+		public static async Task<Course> GetCourse(string courseName, string termID)
 		{
 			Course ret;
 			URL url = new URL(courseName, termID);

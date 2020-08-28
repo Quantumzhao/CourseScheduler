@@ -9,10 +9,19 @@
         MinWidth="1600" MinHeight="900"
         Width="800" Height="600"
         Icon="/Assets/avalonia-logo.ico"
-        Title="CourseScheduler.Avalonia"
-        Content="{Binding Content}">
-
+        Title="CourseScheduler.Avalonia">
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+
+  <TabControl>
+    <TabItem Header="Basics">
+      <Border>
+        <views:MainPageView DataContext="{Binding BasicsVM}"/>
+      </Border>
+    </TabItem>
+    <TabItem Header="Advanced">
+      
+    </TabItem>
+  </TabControl>
 </Window>

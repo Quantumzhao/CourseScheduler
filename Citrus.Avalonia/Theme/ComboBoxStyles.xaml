@@ -3,7 +3,7 @@
     <Style Selector="ComboBox">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="{DynamicResource ThemeBorderLowBrush}" />
-        <Setter Property="Padding" Value="10" />
+        <Setter Property="Padding" Value="10 5 10 5" />
     </Style>
     <Style Selector="ComboBox /template/ Border">
         <Setter Property="CornerRadius" Value="5" />
