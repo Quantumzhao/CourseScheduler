@@ -33,17 +33,22 @@
                   Classes="Label"
                   Text="Pick one: "
                   VerticalAlignment="Center"/>
-                <TextBox
-                  x:Name="TB_CourseName"
-                  Width="100"
+                <TextBox 
+                  Watermark="Course code" 
+                  Text="{Binding CourseName}" 
+                  Width="100" 
                   VerticalAlignment="Center"/>
                 <Button
                   Classes="Primary Icon"
-                  x:Name="AddCourse"
                   IsDefault="True"
-                  VerticalAlignment="Center">
+                  VerticalAlignment="Center"
+                  Command="{Binding AddCourse}">
                   <StackPanel Orientation="Horizontal">
-                    <TextBlock Classes="Icon" Text="&#xE109;" VerticalAlignment="Center" Foreground="{DynamicResource HighlightForegroundBrush}"/>
+                    <TextBlock 
+                      Classes="Icon" 
+                      Text="&#xE109;" 
+                      VerticalAlignment="Center" 
+                      Foreground="{DynamicResource HighlightForegroundBrush}"/>
                     <TextBlock Text="Add" Foreground="{DynamicResource HighlightForegroundBrush}"/>
                   </StackPanel>
                 </Button>
@@ -60,6 +65,7 @@
               <CheckBox
                 x:Name="CB_OpenSectionOnly"
                 Content="Open Section Only"
+                IsChecked="{Binding IsOpenSectionOnly}"
                 Grid.Column="0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
@@ -69,6 +75,7 @@
               <CheckBox
                 x:Name="CB_ShowFC"
                 Content="Show Freshman Connection Program"
+                IsChecked="{Binding DoesShowFC}"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Grid.Column="1"
@@ -196,12 +203,19 @@
                 </StackPanel>
               </Button>
             </Grid>
-            <StackPanel
+            <!-- Data Area -->
+            <ListBox
               x:Name="SP_Course"
               Grid.Row="2"
               Grid.Column="0"
               Margin="0 10 0 0">
-            </StackPanel>
+              <ListBoxItem BorderBrush="Aqua">
+                <StackPanel>
+                  <TextBlock Classes="Heading" Text="test1"/>
+                  <TextBlock Text="test2"/>
+                </StackPanel>
+              </ListBoxItem>
+            </ListBox>
           </Grid>
         </ScrollViewer>
       </Grid>
@@ -230,12 +244,22 @@
             Margin="0"
             Text=" Results in Total"/>
         </StackPanel>
-        <ListBox
+        <ItemsControl
           x:Name="MainGrid"
           Grid.Row="2"
           Margin="0,10,0,0"
           MinWidth="200">
-        </ListBox>
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.DataTemplates>
+            <DataTemplate>
+              <StackPanel></StackPanel>
+            </DataTemplate>
+          </ItemsControl.DataTemplates>
+        </ItemsControl>
       </Grid>
     </Border>
     <Border Classes="Card" Grid.Row="1" Grid.Column="0">

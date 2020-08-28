@@ -4,9 +4,9 @@ using System.Text;
 
 namespace CourseScheduler.Core.DataStrucures
 {
-	public class Schedule
+	public class ClassSpan
 	{
-		public Schedule(Time start, Time end)
+		public ClassSpan(Time start, Time end)
 		{
 			Start = start;
 			End = end;
@@ -20,7 +20,7 @@ namespace CourseScheduler.Core.DataStrucures
 			return End.ToMinute() - Start.ToMinute();
 		}
 
-		public bool IsOverlap(Schedule another)
+		public bool IsOverlap(ClassSpan another)
 		{
 			if (another.Start > Start && another.Start < End)
 			{

@@ -2,9 +2,9 @@
 
 namespace CourseScheduler.Core.DataStrucures
 {
-	public class Class
+	public class ClassSequence
 	{
-		public Class(string instructor, Location location, params Weekday[] weekdays)
+		public ClassSequence(string instructor, Location location, params Weekday[] weekdays)
 		{
 			Instructor = instructor;
 			Location = location;
@@ -15,7 +15,7 @@ namespace CourseScheduler.Core.DataStrucures
 		public readonly Location Location;
 		public readonly string Instructor;
 
-		public bool IsOverlap(Class another)
+		public bool IsOverlap(ClassSequence another)
 		{
 			foreach (var myDay in Weekdays)
 			{

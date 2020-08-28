@@ -6,14 +6,14 @@ namespace CourseScheduler.Core.DataStrucures
 {
 	public class Weekday
 	{
-		public Weekday(DayOfWeek day, params Schedule[] timePeriod)
+		public Weekday(DayOfWeek day, params ClassSpan[] timePeriod)
 		{
 			Day = day;
-			TimePeriod = new HashSet<Schedule>(timePeriod);
+			ClassSpansInSingleDay = new HashSet<ClassSpan>(timePeriod);
 		}
 
 		public readonly DayOfWeek Day;
-		public readonly HashSet<Schedule> TimePeriod;
+		public readonly HashSet<ClassSpan> ClassSpansInSingleDay;
 
 		public bool IsOverlap(Weekday another)
 		{
@@ -22,19 +22,19 @@ namespace CourseScheduler.Core.DataStrucures
 				return false;
 			}
 
-			foreach (var mySchedule in TimePeriod)
+			foreach (var myClassSpan in ClassSpansInSingleDay)
 			{
-				foreach (var anotherSchedule in another.TimePeriod)
+				foreach (var anotherClassSpan in another.ClassSpansInSingleDay)
 				{
-					foreach (var time in MainUI.TimePeriod.Keys)
-					{
-						if (MainUI.TimePeriod[time] && time.IsOverlap(anotherSchedule))
-						{
-							return true;
-						}
-					}
+					//foreach (var time in MainUI.TimePeriod.Keys)
+					//{
+					//	if (MainUI.TimePeriod[time] && time.IsOverlap(anotherClassSpan))
+					//	{
+					//		return true;
+					//	}
+					//}
 
-					if (mySchedule.IsOverlap(anotherSchedule))
+					if (myClassSpan.IsOverlap(anotherClassSpan))
 					{
 						return true;
 					}

@@ -6,7 +6,7 @@ namespace CourseScheduler.Core.DataStrucures
 {
 	public class Section
 	{
-		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, Class>[] classes)
+		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, ClassSequence>[] classes)
 		{
 			Course = course;
 			Name = name;
@@ -15,7 +15,7 @@ namespace CourseScheduler.Core.DataStrucures
 
 			foreach (var myClass in classes)
 			{
-				Classes.Add(myClass.Key, myClass.Value);
+				ClassSequences.Add(myClass.Key, myClass.Value);
 				if (!Instructors.ContainsKey(myClass.Value.Instructor))
 				{
 					Instructors.Add(myClass.Value.Instructor, true);
@@ -23,7 +23,7 @@ namespace CourseScheduler.Core.DataStrucures
 			}
 		}
 
-		public readonly Dictionary<string, Class> Classes = new Dictionary<string, Class>();
+		public readonly Dictionary<string, ClassSequence> ClassSequences = new Dictionary<string, ClassSequence>();
 		public readonly string Course;
 		public string Name { get; set; }
 		public int OpenSeats { get; set; }
@@ -35,9 +35,9 @@ namespace CourseScheduler.Core.DataStrucures
 
 		public bool IsOverlap(Section another)
 		{
-			foreach (var myClass in Classes.Values)
+			foreach (var myClass in ClassSequences.Values)
 			{
-				foreach (var anotherClass in another.Classes.Values)
+				foreach (var anotherClass in another.ClassSequences.Values)
 				{
 					if (myClass.IsOverlap(anotherClass))
 					{
@@ -49,7 +49,7 @@ namespace CourseScheduler.Core.DataStrucures
 			return false;
 		}
 
-		public bool IsAvailable(bool isOpenSectionOnly, bool doesShowFC, IEnumerable<Schedule> allSchedules)
+		public bool IsAvailable(bool isOpenSectionOnly, bool doesShowFC, IEnumerable<ClassSpan> allClassSpanConstrains)
 		{
 			if (OpenSeats == 0 && isOpenSectionOnly)
 			{
@@ -61,7 +61,7 @@ namespace CourseScheduler.Core.DataStrucures
 				return false;
 			}
 
-			foreach (var @class in Classes.Values)
+			foreach (var @class in ClassSequences.Values)
 			{
 				if (!Instructors[@class.Instructor])
 				{
@@ -69,15 +69,15 @@ namespace CourseScheduler.Core.DataStrucures
 				}
 			}
 
-			foreach (var @class in Classes.Values)
+			foreach (var @class in ClassSequences.Values)
 			{
 				foreach (var weekday in @class.Weekdays)
 				{
-					foreach (var time in weekday.TimePeriod)
+					foreach (var classSpan in weekday.ClassSpansInSingleDay)
 					{
-						foreach (var item in allSchedules)
+						foreach (var anotherClassSpan in allClassSpanConstrains)
 						{
-							if (MainUI.TimePeriod[item] && item.IsOverlap(time))
+							if (anotherClassSpan.IsOverlap(classSpan))
 							{
 								return false;
 							}

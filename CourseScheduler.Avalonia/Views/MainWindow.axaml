@@ -6,14 +6,13 @@
         xmlns:views="clr-namespace:CourseScheduler.Avalonia.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="CourseScheduler.Avalonia.Views.MainWindow"
-        MinWidth="800" MinHeight="600"
+        MinWidth="1600" MinHeight="900"
         Width="800" Height="600"
         Icon="/Assets/avalonia-logo.ico"
-        Title="CourseScheduler.Avalonia">
+        Title="CourseScheduler.Avalonia"
+        Content="{Binding Content}">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-  <views:MainPageView/>
 </Window>

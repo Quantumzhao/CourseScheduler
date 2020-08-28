@@ -11,8 +11,8 @@ namespace CourseScheduler
 {
 	public static class Algorithm
 	{
-		public static List<List<Section>> GetPossibleCombinations(Course[] dataset, 
-			bool isOpenSecOnly = false, bool isShowFC = false)
+		public static List<List<Section>> GetPossibleCombinations(Course[] dataset
+			, IEnumerable<ClassSpan> timeConstrains, bool isOpenSecOnly = false, bool doesShowFC = false)
 		{
 			if (dataset.Length == 0) return new List<List<Section>>();
 
@@ -21,20 +21,20 @@ namespace CourseScheduler
 			//Section.IsOpenSectionOnly = isOpenSecOnly;
 			foreach (var section in dataset[0].Sections)
 			{
-				if (section.IsAvailable)
+				if (section.IsAvailable(isOpenSecOnly, doesShowFC, timeConstrains))
 				{
 					combinations.Add(new List<Section>() { section });
 				}
 			}
 			for (int i = 1; i < dataset.Length; i++)
 			{
-				UpdateCombinations(ref combinations, dataset[i]);
+				UpdateCombinations(ref combinations, dataset[i], isOpenSecOnly, doesShowFC, timeConstrains);
 			}
 
 			return combinations;
 		}
 
-		private static void UpdateCombinations(ref List<List<Section>> possibilities, Course newCourse)
+		private static void UpdateCombinations(ref List<List<Section>> possibilities, Course newCourse, bool isOpenSectionOnly, bool doesShowFC, IEnumerable<ClassSpan> timeConstrains)
 		{
 			var newPossibilities = new List<List<Section>>();
 
@@ -42,7 +42,7 @@ namespace CourseScheduler
 			{
 				for (int i = 0; i < possibilities.Count; i++)
 				{
-					if (newSection.IsAvailable && !possibilities[i].IsOverlap(newSection))
+					if (newSection.IsAvailable(isOpenSectionOnly, doesShowFC, timeConstrains) && !possibilities[i].IsOverlap(newSection))
 					{
 						List<Section> sections = new List<Section>(possibilities[i]);
 						sections.Add(newSection);
