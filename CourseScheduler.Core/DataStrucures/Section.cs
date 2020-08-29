@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CourseScheduler.Core.DataStrucures
 {
 	public class Section
 	{
-		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, ClassSequence>[] classes)
+		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, ClassSequence>[] classTypesAndSchedules)
 		{
 			Course = course;
 			Name = name;
 			OpenSeats = openSeats;
 			WaitList = waitList;
 
-			foreach (var myClass in classes)
+			foreach (var myClass in classTypesAndSchedules)
 			{
 				ClassSequences.Add(myClass.Key, myClass.Value);
-				if (!Instructors.ContainsKey(myClass.Value.Instructor))
+				if (!Instructors.Contains(myClass.Value.Instructor))
 				{
-					Instructors.Add(myClass.Value.Instructor, true);
+					Instructors.Add(myClass.Value.Instructor);
 				}
 			}
 		}
@@ -29,7 +30,7 @@ namespace CourseScheduler.Core.DataStrucures
 		public int OpenSeats { get; set; }
 		public int WaitList { get; set; }
 
-		public Dictionary<string, bool> Instructors = new Dictionary<string, bool>();
+		public List<string> Instructors = new List<string>();
 
 		public override string ToString() => Name;
 
@@ -49,7 +50,7 @@ namespace CourseScheduler.Core.DataStrucures
 			return false;
 		}
 
-		public bool IsAvailable(bool isOpenSectionOnly, bool doesShowFC, IEnumerable<ClassSpan> allClassSpanConstrains)
+		public bool IsAvailable(bool isOpenSectionOnly, bool doesShowFC, IEnumerable<ClassSpan> allClassSpanConstrains, IEnumerable<string> allInstructorsConstrains)
 		{
 			if (OpenSeats == 0 && isOpenSectionOnly)
 			{
@@ -61,12 +62,9 @@ namespace CourseScheduler.Core.DataStrucures
 				return false;
 			}
 
-			foreach (var @class in ClassSequences.Values)
+			if (Instructors.Intersect(allInstructorsConstrains).Count() != 0)
 			{
-				if (!Instructors[@class.Instructor])
-				{
-					return false;
-				}
+				return false;
 			}
 
 			foreach (var @class in ClassSequences.Values)

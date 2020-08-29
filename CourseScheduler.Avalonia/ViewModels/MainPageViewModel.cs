@@ -11,6 +11,11 @@ using CourseScheduler.Core.DataStrucures;
 using CourseScheduler.Avalonia.Model;
 using System.Linq;
 using CourseScheduler.Core;
+using System.Collections.Specialized;
+using System.Drawing.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using Avalonia.Media;
 
 namespace CourseScheduler.Avalonia.ViewModels
 {
@@ -18,8 +23,6 @@ namespace CourseScheduler.Avalonia.ViewModels
 	{
 		public MainPageViewModel()
 		{
-			DomainModel.CourseSet.CollectionChanged += 
-				(s, e) => CourseSet.RaiseCollectionChanged(s, e);
 		}
 
 		private string _CourseName;
@@ -50,21 +53,22 @@ namespace CourseScheduler.Avalonia.ViewModels
 			set => this.RaiseAndSetIfChanged(ref _SelectedSemester, value); 
 		}
 
-		public List<(bool, string)> InstructorsFilter { get; } = new List<(bool, string)>();
-		public ObservableCollection<VMTuple<bool, ClassSpan>> TimePeriodsFilter { get; }
-			= new ObservableCollection<VMTuple<bool, ClassSpan>>
+		public ObservableCollection<ObservableTuple<bool, string>> InstructorsFilter { get; } 
+			= new ObservableCollection<ObservableTuple<bool, string>>();
+		public ObservableCollection<ObservableTuple<bool, ClassSpan>> TimePeriodsFilter { get; }
+			= new ObservableCollection<ObservableTuple<bool, ClassSpan>>
 		{
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(6, 0), new Time(7, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(7, 0), new Time(8, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(8, 0), new Time(9, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(9, 0), new Time(10, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(10, 0), new Time(11, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(11, 0), new Time(12, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(12, 0), new Time(13, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(13, 0), new Time(14, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(17, 0), new Time(18, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(18, 0), new Time(19, 0))),
-			new VMTuple<bool, ClassSpan>(false,new ClassSpan(new Time(19, 0), new Time(21, 0)))
+			(false,new ClassSpan(new Time(6, 0), new Time(7, 0))),
+			(false,new ClassSpan(new Time(7, 0), new Time(8, 0))),
+			(false,new ClassSpan(new Time(8, 0), new Time(9, 0))),
+			(false,new ClassSpan(new Time(9, 0), new Time(10, 0))),
+			(false,new ClassSpan(new Time(10, 0), new Time(11, 0))),
+			(false,new ClassSpan(new Time(11, 0), new Time(12, 0))),
+			(false,new ClassSpan(new Time(12, 0), new Time(13, 0))),
+			(false,new ClassSpan(new Time(13, 0), new Time(14, 0))),
+			(false,new ClassSpan(new Time(17, 0), new Time(18, 0))),
+			(false,new ClassSpan(new Time(18, 0), new Time(19, 0))),
+			(false,new ClassSpan(new Time(19, 0), new Time(21, 0)))
 		};
 
 		public Dictionary<string, string> SemesterList { get; } = new Dictionary<string, string>
@@ -78,10 +82,64 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 		public async void AddCourse()
 		{
-			CourseSet.Add(await Crawler.GetCourse(CourseName, SemesterList[SelectedSemester]));
-			var blockedTimePeriods = TimePeriodsFilter.Select(t => t.E2);
+			async Task<Course> AddCourseToCourseSetAndCache()
+			{
+				var courseName = CourseName?.ToUpper();
+				if (string.IsNullOrWhiteSpace(courseName))
+				{
+					return null;
+				}
+
+				Course course;
+
+				if (!CourseSet.Has(courseName))
+				{
+					if (DomainModel.CourseSetCache.Has(courseName))
+					{
+						course = DomainModel.CourseSetCache.Get(courseName);
+					}
+					else
+					{
+						try
+						{
+							course = await Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
+							DomainModel.CourseSetCache.Add(course);
+						}
+						catch (Exception e)
+						{
+							ShowMessage(e);
+							return null;
+						}
+					}
+
+					CourseSet.Add(course);
+					CourseSet.RaiseCollectionChanged(NotifyCollectionChangedAction.Add, course);
+					return course;
+				}
+				else
+				{
+					return null;
+				}
+			}
+
+			void UpdateInstrctorsFilter(Course newCourse)
+			{
+				if (newCourse != null)
+				{
+					foreach (var ins in newCourse.Instructors)
+					{
+						InstructorsFilter.Add((false, ins));
+					}
+				}
+			}
+
+			var newCourse = await AddCourseToCourseSetAndCache();
+			UpdateInstrctorsFilter(newCourse);
+
+			var blockedTimePeriods = TimePeriodsFilter.Where(t => t.E1).Select(t => t.E2);
+			var blockedInstructors = InstructorsFilter.Where(t => t.E1).Select(t => t.E2);
 			var combinations = Algorithm.GetPossibleCombinations
-				(CourseSet.ToArray(), blockedTimePeriods, IsOpenSectionOnly, DoesShowFC);
+				(CourseSet.ToArray(), blockedTimePeriods, blockedInstructors, IsOpenSectionOnly, DoesShowFC);
 		}
 
 		private void ShowMessage(Exception exception)

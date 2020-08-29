@@ -11,30 +11,32 @@ namespace CourseScheduler
 {
 	public static class Algorithm
 	{
-		public static List<List<Section>> GetPossibleCombinations(Course[] dataset
-			, IEnumerable<ClassSpan> timeConstrains, bool isOpenSecOnly, bool doesShowFC)
+		public static List<List<Section>> GetPossibleCombinations(
+			Course[] dataset, IEnumerable<ClassSpan> timeConstrains, 
+			IEnumerable<string> instructorConstrains, bool isOpenSecOnly, bool doesShowFC)
 		{
 			if (dataset.Length == 0) return new List<List<Section>>();
 
 			List<List<Section>> combinations = new List<List<Section>>();
-			//Section.IsShowFC = isShowFC;
-			//Section.IsOpenSectionOnly = isOpenSecOnly;
 			foreach (var section in dataset[0].Sections)
 			{
-				if (section.IsAvailable(isOpenSecOnly, doesShowFC, timeConstrains))
+				if (section.IsAvailable(isOpenSecOnly, doesShowFC, timeConstrains, instructorConstrains))
 				{
 					combinations.Add(new List<Section>() { section });
 				}
 			}
 			for (int i = 1; i < dataset.Length; i++)
 			{
-				UpdateCombinations(ref combinations, dataset[i], isOpenSecOnly, doesShowFC, timeConstrains);
+				UpdateCombinations(ref combinations, dataset[i], isOpenSecOnly, 
+					doesShowFC, timeConstrains, instructorConstrains);
 			}
 
 			return combinations;
 		}
 
-		private static void UpdateCombinations(ref List<List<Section>> possibilities, Course newCourse, bool isOpenSectionOnly, bool doesShowFC, IEnumerable<ClassSpan> timeConstrains)
+		private static void UpdateCombinations(ref List<List<Section>> possibilities, 
+			Course newCourse, bool isOpenSectionOnly, bool doesShowFC, 
+			IEnumerable<ClassSpan> timeConstrains, IEnumerable<string> instructorConstrains)
 		{
 			var newPossibilities = new List<List<Section>>();
 
@@ -42,7 +44,8 @@ namespace CourseScheduler
 			{
 				for (int i = 0; i < possibilities.Count; i++)
 				{
-					if (newSection.IsAvailable(isOpenSectionOnly, doesShowFC, timeConstrains) && !possibilities[i].IsOverlap(newSection))
+					if (newSection.IsAvailable(isOpenSectionOnly, doesShowFC, timeConstrains, 
+						instructorConstrains) && !possibilities[i].IsOverlap(newSection))
 					{
 						List<Section> sections = new List<Section>(possibilities[i]);
 						sections.Add(newSection);

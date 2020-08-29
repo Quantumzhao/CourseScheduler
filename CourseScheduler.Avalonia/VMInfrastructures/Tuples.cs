@@ -5,9 +5,9 @@ using System.Text;
 
 namespace CourseScheduler.Avalonia.VMInfrastructures
 {
-	public class VMTuple<T1, T2> : INotifyPropertyChanged
+	public class ObservableTuple<T1, T2> : INotifyPropertyChanged
 	{
-		public VMTuple(T1 e1, T2 e2)
+		public ObservableTuple(T1 e1, T2 e2)
 		{
 			E1 = e1;
 			E2 = e2;
@@ -43,6 +43,6 @@ namespace CourseScheduler.Avalonia.VMInfrastructures
 			}
 		}
 
-		public static implicit operator VMTuple<T1, T2>(System.Tuple<T1, T2> tuple) => new VMTuple<T1, T2>(tuple.Item1, tuple.Item2);
+		public static implicit operator ObservableTuple<T1, T2>((T1, T2) tuple) => new ObservableTuple<T1, T2>(tuple.Item1, tuple.Item2);
 	}
 }

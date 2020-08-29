@@ -39,7 +39,7 @@
         </Setter>
     </Style>
     
-    <Style Selector="TextBox.Badge">
+    <Style Selector="TextBox.PrimaryBadge">
         <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="Background" Value="{DynamicResource HighlightBadgeBrush}"/>
@@ -51,7 +51,7 @@
         <Setter Property="Opacity" Value="1" />
     </Style>
     
-    <Style Selector="TextBox.PrimaryBadge">
+    <Style Selector="TextBox.Badge">
         <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="Background" Value="{DynamicResource ThemeAccentBadgeBrush}"/>

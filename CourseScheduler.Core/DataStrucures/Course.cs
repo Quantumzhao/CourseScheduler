@@ -13,33 +13,26 @@ namespace CourseScheduler.Core.DataStrucures
 			Sections = new HashSet<Section>(sections);
 		}
 
-		public readonly string Name;
-		public readonly string FullName;
-		public readonly HashSet<Section> Sections;
-		public Dictionary<string, bool> Instructors
+		public string Name { get; }
+		public string FullName { get; }
+		public HashSet<Section> Sections { get; }
+		public string InstructorsString => Instructors.Concatenate();
+		public List<string> Instructors
 		{
 			get
 			{
-				var dic = new Dictionary<string, bool>();
+				var list = new List<string>();
 				foreach (var section in Sections)
 				{
 					foreach (var ins in section.Instructors)
 					{
-						if (!dic.ContainsKey(ins.Key))
+						if (!list.Contains(ins))
 						{
-							dic.Add(ins.Key, ins.Value);
+							list.Add(ins);
 						}
 					}
 				}
-				return dic;
-			}
-		}
-
-		public void ExcludeInstructor(string name, bool isExclude)
-		{
-			foreach (var section in Sections)
-			{
-				section.Instructors[name] = !isExclude;
+				return list;
 			}
 		}
 	}

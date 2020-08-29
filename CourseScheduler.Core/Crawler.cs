@@ -10,9 +10,6 @@ namespace CourseScheduler.Core
 {
 	public static class Crawler
 	{
-		//public string TermID = "202001";
-		//public bool IsExcludeFC = true;
-
 		public static async Task<Course> GetCourse(string courseName, string termID)
 		{
 			Course ret;
@@ -32,8 +29,8 @@ namespace CourseScheduler.Core
 				.Where(node => node.GetAttributeValue("id", "") == courseName)
 				.First()
 				.Descendants("div")
-				.Where(node => node.GetAttributeValue("class", "")
-				.Equals("section delivery-f2f")).ToList();
+				.Where(node => node.GetAttributeValue("class", "").Contains("section delivery"))
+				.ToList();
 
 			fullName = htmlDocument
 				.DocumentNode
@@ -81,17 +78,17 @@ namespace CourseScheduler.Core
 				// Enumerate through each class of the section
 				foreach (var row in rows)
 				{
-					HtmlNode dayTimeGroup = row.Descendants("div").First();
+					HtmlNode dayTimeGroup = row.Descendants("div").First(n => n.Attributes["class"].Value.Contains("section-day-time-group"));
 					var enumerator = dayTimeGroup.Descendants("span").GetEnumerator();
 					if (!enumerator.MoveNext()) break;
 
 					var positions = row.Descendants("span");
 					string building = positions
 						.Where(node => node.GetAttributeValue("class", "") == "building-code")
-						.Single().InnerText;
+						.FirstOrDefault()?.InnerText ?? string.Empty;
 					string room = positions
 						.Where(node => node.GetAttributeValue("class", "") == "class-room")
-						.Single().InnerText;
+						.FirstOrDefault()?.InnerText ?? string.Empty;
 					Location location = new Location(building, room);
 
 					List<DayOfWeek> days = enumerator.Current.InnerText.ToDayOfWeek();
@@ -136,13 +133,10 @@ namespace CourseScheduler.Core
 			{
 				_CourseID = courseID;
 				_TermID = termID;
-				//_SectionID = section;
 			}
 
 			private readonly string _CourseID;
 			private readonly string _TermID;
-			//private readonly string _OpenSection = string.Empty;
-			//private readonly string _SectionID;
 
 			public static implicit operator string(URL url)
 			{
