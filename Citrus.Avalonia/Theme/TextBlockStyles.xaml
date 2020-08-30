@@ -14,7 +14,7 @@
         <Setter Property="Foreground" Value="{DynamicResource ThemeControlHighBrush}" />
     </Style>
     <Style Selector="TextBlock.Accent">
-        <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ThemeAccentBrush}" />
     </Style>
   <Style Selector="TextBlock.Icon">
     <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>

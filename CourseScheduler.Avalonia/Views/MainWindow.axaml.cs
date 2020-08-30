@@ -1,5 +1,10 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Markup.Xaml;
+using Avalonia.ProgressRing;
+using CourseScheduler.Avalonia.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace CourseScheduler.Avalonia.Views
 {

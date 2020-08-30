@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace CourseScheduler.Core.DataStrucures
 {
-	public class Course
+	public class Course : IEquatable<Course>
 	{
 		public Course(string name, string fullName, params Section[] sections)
 		{
@@ -16,7 +17,6 @@ namespace CourseScheduler.Core.DataStrucures
 		public string Name { get; }
 		public string FullName { get; }
 		public HashSet<Section> Sections { get; }
-		public string InstructorsString => Instructors.Concatenate();
 		public List<string> Instructors
 		{
 			get
@@ -34,6 +34,11 @@ namespace CourseScheduler.Core.DataStrucures
 				}
 				return list;
 			}
+		}
+
+		public bool Equals([AllowNull] Course other)
+		{
+			return Name == other.Name;
 		}
 	}
 }

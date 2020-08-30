@@ -73,9 +73,9 @@ namespace CourseScheduler.Core
 			return stringBuilder.ToString();
 		}
 
-		public static bool Has(this IEnumerable<Course> courses, Course newCourse)
+		public static bool Has<T>(this IEnumerable<T> courses, T newCourse) where T : IEquatable<T>
 		{
-			if (courses.Where(c => c.Name == newCourse.Name).Count() != 0) return true;
+			if (courses.Where(c => c.Equals(newCourse)).Count() != 0) return true;
 			else return false;
 		}
 		public static bool Has(this IEnumerable<Course> courses, string newCourse)

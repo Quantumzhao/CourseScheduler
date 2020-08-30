@@ -11,7 +11,11 @@ namespace CourseScheduler.Avalonia.VMInfrastructures
 		{
 			E1 = e1;
 			E2 = e2;
+
+			PropertyChanged += GenericHandler;
 		}
+
+		public static PropertyChangedEventHandler GenericHandler { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

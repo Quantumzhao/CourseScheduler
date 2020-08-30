@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using CourseScheduler.Core;
 
 namespace CourseScheduler.Avalonia.VMInfrastructures
 {
-	public class ObservableSet<T> : INotifyCollectionChanged, IEnumerable<T>, IEnumerable
+	public class ObservableSet<T> : INotifyCollectionChanged, IEnumerable<T>, IEnumerable where T : IEquatable<T>
 	{
 		private readonly HashSet<T> _Collection = new HashSet<T>();
 
@@ -22,8 +23,9 @@ namespace CourseScheduler.Avalonia.VMInfrastructures
 
 		public bool Add(T element)
 		{
-			if (_Collection.Add(element))
+			if (element != null && !_Collection.Has(element))
 			{
+				_Collection.Add(element);
 				RaiseCollectionChanged(NotifyCollectionChangedAction.Add, element);
 				return true;
 			}
@@ -35,8 +37,9 @@ namespace CourseScheduler.Avalonia.VMInfrastructures
 
 		public bool Remove(T element)
 		{
-			if (_Collection.Remove(element))
+			if (_Collection.Has(element))
 			{
+				_Collection.Remove(element);
 				RaiseCollectionChanged(NotifyCollectionChangedAction.Remove, element);
 				return true;
 			}

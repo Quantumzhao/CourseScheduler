@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="CourseScheduler.Avalonia.Views.MainPageView">
-  <Grid RowDefinitions="* Auto" ColumnDefinitions="Auto *">
+  <Grid RowDefinitions="* Auto" ColumnDefinitions="Auto *">    
     <Border Classes="Card" Grid.Row="0">
       <Grid RowDefinitions="Auto *">
         <TextBlock
@@ -35,7 +35,7 @@
                   VerticalAlignment="Center"/>
                 <TextBox 
                   Watermark="Course code" 
-                  Text="{Binding CourseName}" 
+                  Text="{Binding InputCourseName}" 
                   Width="100" 
                   VerticalAlignment="Center"/>
                 <Button
@@ -44,10 +44,10 @@
                   VerticalAlignment="Center"
                   Command="{Binding AddCourse}">
                   <StackPanel Orientation="Horizontal">
-                    <TextBlock 
-                      Classes="Icon" 
-                      Text="&#xE109;" 
-                      VerticalAlignment="Center" 
+                    <TextBlock
+                      Classes="Icon"
+                      Text="&#xE109;"
+                      VerticalAlignment="Center"
                       Foreground="{DynamicResource HighlightForegroundBrush}"/>
                     <TextBlock Text="Add" Foreground="{DynamicResource HighlightForegroundBrush}"/>
                   </StackPanel>
@@ -202,7 +202,8 @@
                 Grid.Row="5"
                 HorizontalAlignment="Left"
                 VerticalContentAlignment="Center"
-                Margin="10 10 0 0">
+                Margin="10 10 0 0"
+                Command="{Binding Save}">
                 <StackPanel Orientation="Horizontal">
                   <TextBlock Classes="Icon" Text="&#xE105;" Foreground="{DynamicResource HighlightForegroundBrush}"/>
                   <TextBlock Text="Save Querry" Foreground="{DynamicResource HighlightForegroundBrush}"/>
@@ -225,7 +226,29 @@
               <ListBox.ItemTemplate>
                 <DataTemplate>
                   <StackPanel Spacing="5">
-                    <TextBlock Classes="Heading" Text="{Binding Name}"/>
+                    <DockPanel>
+                      <TextBlock 
+                        Classes="Heading" 
+                      DockPanel.Dock="Left" 
+                        VerticalAlignment="Center" 
+                        Text="{Binding Name}"/>
+                      <Button 
+                        DockPanel.Dock="Right" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Right"
+                        Command="{Binding $parent[UserControl].DataContext.RemoveCourse}"
+                        CommandParameter="{Binding}">
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock 
+                            Classes="Icon" 
+                            Text="&#xE10A;" 
+                            Foreground="{DynamicResource HighlightForegroundBrush}"/>
+                          <TextBlock 
+                            Text="Remove" 
+                            Foreground="{DynamicResource HighlightForegroundBrush}"/>
+                        </StackPanel>
+                      </Button>
+                    </DockPanel>
                     <TextBlock Classes="Caption" Text="{Binding FullName}"/>
                     <ItemsControl Items="{Binding Instructors}">
                       <ItemsControl.ItemTemplate>
@@ -252,7 +275,7 @@
       Grid.Column="1"
 			Grid.Row="0"
 			Grid.RowSpan="2">
-      <Grid RowDefinitions="Auto Auto *">
+      <Grid RowDefinitions="Auto Auto Auto *">
         <TextBlock
           Classes="Heading"
           Margin="0"
@@ -265,37 +288,93 @@
             Classes="Caption"
             Margin="0"
             x:Name="Count"
-            Text="0"/>
+            Text="{Binding Combinations.Count}"/>
           <TextBlock 
             Classes="Caption"
             Margin="0"
             Text=" Results in Total"/>
         </StackPanel>
-        <ItemsControl
-          x:Name="MainGrid"
-          Grid.Row="2"
-          Margin="0,10,0,0"
-          MinWidth="200">
+        <ItemsControl Items="{Binding CombinationPanelHeader}" Grid.Row="2" Margin="10 10 0 0">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-              <StackPanel/>
+              <StackPanel Orientation="Horizontal"/>
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
-          <ItemsControl.DataTemplates>
+          <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <StackPanel></StackPanel>
+              <TextBlock Text="{Binding}" Width="100"/>
             </DataTemplate>
-          </ItemsControl.DataTemplates>
+          </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <ListBox
+          Grid.Row="3"
+          Margin="0,10,0,0"
+          SelectedItem="{Binding SelectedCombination}"
+          Items="{Binding Combinations}"
+          HorizontalAlignment="Left">
+          <ListBox.Styles>
+            <Style Selector="ListBoxItem">
+              <Setter Property="Margin" Value="0"/>
+            </Style>
+            <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+              <Setter Property="Background" Value="Transparent"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+            </Style>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+              <Setter Property="Background" Value="Transparent"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
+              <Setter Property="BorderThickness" Value="10 1 1 1"/>
+            </Style>
+            <Style Selector="ListBoxItem:selected:focus /template/ ContentPresenter">
+              <Setter Property="Background" Value="Transparent"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
+            </Style>
+            <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter">
+              <Setter Property="Background" Value="Transparent"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
+            </Style>
+            <Style Selector="ListBoxItem:selected:focus:pointerover /template/ ContentPresenter">
+              <Setter Property="Background" Value="Transparent"/>
+              <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+            </Style>
+          </ListBox.Styles>
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <ItemsControl Items="{Binding}" Margin="0 5 0 5">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Classes="Caption" Text="{Binding Name}" Width="100">
+                      <ToolTip.Tip>
+                        <StackPanel Spacing="5">
+                          <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Open Seats: "/>
+                            <TextBlock Classes="Caption" Text="{Binding OpenSeats}"/>
+                          </StackPanel>
+                          <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Waitlist: "/>
+                            <TextBlock Classes="Caption" Text="{Binding WaitList}"/>
+                          </StackPanel>
+                        </StackPanel>
+                      </ToolTip.Tip>
+                    </TextBlock>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
       </Grid>
     </Border>
     <Border Classes="Card" Grid.Row="1" Grid.Column="0">
       <Grid RowDefinitions="Auto Auto">
         <TextBlock Grid.Row="0" Classes="Heading" Text="Schedule"/>
-        <Grid
-          Grid.Row="1"
-          Height="156"
-          Margin="0 10 0 0"
+        <Grid Grid.Row="1"
+          Margin="0 10 0 10"
           ColumnDefinitions="30 * * * * * * * * * * * * * * * * * 10">
           <Grid.Styles>
             <Style Selector="TextBlock.Caption">
@@ -369,14 +448,13 @@
           <Rectangle Classes="Horizontal" Margin="0,91,0,0"/>
           <Rectangle Classes="Horizontal" Margin="0,117,0,0"/>
           <Rectangle Classes="Horizontal" Margin="0,143,0,0"/>
-          <Viewbox
-            Stretch="Fill"
-            Grid.ColumnSpan="17" Margin="0,26,0,0" Grid.Column="1">
-            <Grid Height="130" MinWidth="600">
-              <Canvas
-                x:Name="MainCanvas" MinWidth="500" MinHeight="130"/>
-            </Grid>
-          </Viewbox>
+          <Canvas
+            x:Name="MainCanvas"
+            Width="500"
+            Height="130"
+            Grid.ColumnSpan="17"
+            Margin="0,26,0,0"
+            Grid.Column="1"/>
         </Grid>
       </Grid>
     </Border>

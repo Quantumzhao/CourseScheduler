@@ -6,7 +6,6 @@ using System.Reactive;
 using System.Collections.ObjectModel;
 using CourseScheduler.Avalonia.VMInfrastructures;
 using System.Net.Http;
-using MessageBox.Avalonia;
 using CourseScheduler.Core.DataStrucures;
 using CourseScheduler.Avalonia.Model;
 using System.Linq;
@@ -16,6 +15,7 @@ using System.Drawing.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Avalonia.Media;
+using CourseScheduler.Avalonia.Views;
 
 namespace CourseScheduler.Avalonia.ViewModels
 {
@@ -23,13 +23,30 @@ namespace CourseScheduler.Avalonia.ViewModels
 	{
 		public MainPageViewModel()
 		{
+			CourseSet.CollectionChanged += (s, e) =>
+			{
+				if (e.Action == NotifyCollectionChangedAction.Add)
+				{
+					ExpandInstructorsFilter(e.NewItems[0] as Course);
+				}
+				else
+				{
+					ShrinkInstructorsFilter(e.OldItems[0] as Course);
+				}
+			};
+
+			CourseSet.CollectionChanged += (s, e) => UpdateCombinations();
+
+			this.PropertyChanged += (s, e) => AnyThesePropertiesChanged(e.PropertyName);
+			ObservableTuple<bool, string>.GenericHandler += (s, e) => UpdateCombinations();
+			ObservableTuple<bool, ClassSpan>.GenericHandler += (s, e) => UpdateCombinations();
 		}
 
-		private string _CourseName;
-		public string CourseName
+		private string _InputCourseName;
+		public string InputCourseName
 		{
-			get => _CourseName;
-			set => this.RaiseAndSetIfChanged(ref _CourseName, value);
+			get => _InputCourseName;
+			set => this.RaiseAndSetIfChanged(ref _InputCourseName, value);
 		}
 
 		private bool _IsOpenSectionOnly = false;
@@ -47,13 +64,34 @@ namespace CourseScheduler.Avalonia.ViewModels
 		}
 
 		private string _SelectedSemester = "Fall 2020";
-		public string SelectedSemester 
-		{ 
-			get => _SelectedSemester; 
-			set => this.RaiseAndSetIfChanged(ref _SelectedSemester, value); 
+		public string SelectedSemester
+		{
+			get => _SelectedSemester;
+			set => this.RaiseAndSetIfChanged(ref _SelectedSemester, value);
 		}
 
-		public ObservableCollection<ObservableTuple<bool, string>> InstructorsFilter { get; } 
+		private List<Section> _SelectedCombination;
+		public List<Section> SelectedCombination 
+		{ 
+			get => _SelectedCombination;
+			set => this.RaiseAndSetIfChanged(ref _SelectedCombination, value);
+		}
+
+		private List<List<Section>> _Combinations = new List<List<Section>>();
+		public List<List<Section>> Combinations
+		{
+			get => _Combinations;
+			set => this.RaiseAndSetIfChanged(ref _Combinations, value);
+		}
+
+		private IEnumerable<string> _CombinationPanelHeader = new List<string>();
+		public IEnumerable<string> CombinationPanelHeader
+		{
+			get => _CombinationPanelHeader;
+			set => this.RaiseAndSetIfChanged(ref _CombinationPanelHeader, value);
+		}
+
+		public ObservableCollection<ObservableTuple<bool, string>> InstructorsFilter { get; }
 			= new ObservableCollection<ObservableTuple<bool, string>>();
 		public ObservableCollection<ObservableTuple<bool, ClassSpan>> TimePeriodsFilter { get; }
 			= new ObservableCollection<ObservableTuple<bool, ClassSpan>>
@@ -80,98 +118,134 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 		public ObservableSet<Course> CourseSet => DomainModel.CourseSet;
 
-		public async void AddCourse()
+		public async void AddCourse() => CourseSet.Add(await AddCourseToCourseSetAndCache());
+
+		public void RemoveCourse(Course course) => CourseSet.Remove(course);
+
+		public void UpdateCombinations()
 		{
-			async Task<Course> AddCourseToCourseSetAndCache()
+			var blockedTimePeriods = TimePeriodsFilter.Where(t => t.E1).Select(t => t.E2);
+			var blockedInstructors = InstructorsFilter.Where(t => t.E1).Select(t => t.E2);
+			Combinations = Algorithm.GetPossibleCombinations
+				(CourseSet.ToArray(), blockedTimePeriods, blockedInstructors, IsOpenSectionOnly, DoesShowFC);
+			CombinationPanelHeader = CourseSet.Select(c => c.Name);
+		}
+
+		public void Save() => MainWindowViewModel.Instance
+			.ShowSaveWindow(SelectedCombination.Select(c => (c.Course, c.Name)).ToList());
+
+		private async Task<Course> AddCourseToCourseSetAndCache()
+		{
+			if (string.IsNullOrWhiteSpace(InputCourseName))
 			{
-				var courseName = CourseName?.ToUpper();
-				if (string.IsNullOrWhiteSpace(courseName))
+				return null;
+			}
+			MainWindowViewModel.Instance.SetLoadingState(true);
+			var courseName = InputCourseName.ToUpper();
+			if (string.IsNullOrWhiteSpace(courseName))
+			{
+				return null;
+			}
+
+			Course course = null;
+
+			if (!CourseSet.Has(courseName))
+			{
+				if (DomainModel.CourseSetCache.Has(courseName))
 				{
-					return null;
-				}
-
-				Course course;
-
-				if (!CourseSet.Has(courseName))
-				{
-					if (DomainModel.CourseSetCache.Has(courseName))
-					{
-						course = DomainModel.CourseSetCache.Get(courseName);
-					}
-					else
-					{
-						try
-						{
-							course = await Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
-							DomainModel.CourseSetCache.Add(course);
-						}
-						catch (Exception e)
-						{
-							ShowMessage(e);
-							return null;
-						}
-					}
-
-					CourseSet.Add(course);
-					CourseSet.RaiseCollectionChanged(NotifyCollectionChangedAction.Add, course);
-					return course;
+					course = DomainModel.CourseSetCache.Get(courseName);
 				}
 				else
 				{
-					return null;
-				}
-			}
-
-			void UpdateInstrctorsFilter(Course newCourse)
-			{
-				if (newCourse != null)
-				{
-					foreach (var ins in newCourse.Instructors)
+					try
 					{
-						InstructorsFilter.Add((false, ins));
+						course = await Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
+						DomainModel.CourseSetCache.Add(course);
+					}
+					catch (Exception e)
+					{
+						//ShowMessage(e);
+						MainWindowViewModel.Instance.SetLoadingState(false);
+						return null;
 					}
 				}
+
+				CourseSet.Add(course);
 			}
 
-			var newCourse = await AddCourseToCourseSetAndCache();
-			UpdateInstrctorsFilter(newCourse);
-
-			var blockedTimePeriods = TimePeriodsFilter.Where(t => t.E1).Select(t => t.E2);
-			var blockedInstructors = InstructorsFilter.Where(t => t.E1).Select(t => t.E2);
-			var combinations = Algorithm.GetPossibleCombinations
-				(CourseSet.ToArray(), blockedTimePeriods, blockedInstructors, IsOpenSectionOnly, DoesShowFC);
+			MainWindowViewModel.Instance.SetLoadingState(false);
+			return course;
 		}
 
-		private void ShowMessage(Exception exception)
+		private void AnyThesePropertiesChanged(string propertyName)
 		{
-			if (exception is HttpRequestException)
+			switch (propertyName)
 			{
-				MessageBoxManager.GetMessageBoxStandardWindow(
-					"Connection error",
-					"Testudo may be under maintenance. \nPlease retry later.\n\n" + exception.Message
-				).Show();
+
+				case nameof(DoesShowFC):
+				case nameof(IsOpenSectionOnly):
+					UpdateCombinations();
+					break;
+
+				case nameof(SelectedCombination):
+					MainPageView.ScheduleTimeTable(SelectedCombination);
+					break;
+
+				default:
+					break;
 			}
-			else if (exception is AggregateException)
+		}
+
+		private void ExpandInstructorsFilter(Course newCourse)
+		{
+			if (newCourse != null)
 			{
-				foreach (var e in (exception as AggregateException).InnerExceptions)
+				foreach (var ins in newCourse.Instructors)
 				{
-					ShowMessage(e);
+					InstructorsFilter.Add((false, ins));
 				}
 			}
-			else if (exception is InvalidOperationException)
+		}
+
+		private void ShrinkInstructorsFilter(Course oldCourse)
+		{
+			foreach (var ins in oldCourse.Instructors)
 			{
-				MessageBoxManager.GetMessageBoxStandardWindow(
-					"Invalid input",
-					"Unable to get the course info\nPlease check if there is any typo in course name. \n\n" + exception.Message
-				).Show();
-			}
-			else
-			{
-				MessageBoxManager.GetMessageBoxStandardWindow(
-					"Error",
-					exception.Message
-				).Show();
+				var tup = InstructorsFilter.First(t => t.E2 == ins);
+				InstructorsFilter.Remove(tup);
 			}
 		}
+
+		//private void ShowMessage(Exception exception)
+		//{
+		//	if (exception is HttpRequestException)
+		//	{
+		//		MessageBoxManager.GetMessageBoxStandardWindow(
+		//			"Connection error",
+		//			"Testudo may be under maintenance. \nPlease retry later.\n\n" + exception.Message
+		//		).Show();
+		//	}
+		//	else if (exception is AggregateException)
+		//	{
+		//		foreach (var e in (exception as AggregateException).InnerExceptions)
+		//		{
+		//			ShowMessage(e);
+		//		}
+		//	}
+		//	else if (exception is InvalidOperationException)
+		//	{
+		//		MessageBoxManager.GetMessageBoxStandardWindow(
+		//			"Invalid input",
+		//			"Unable to get the course info\nPlease check if there is any typo in course name. \n\n" + exception.Message
+		//		).Show();
+		//	}
+		//	else
+		//	{
+		//		MessageBoxManager.GetMessageBoxStandardWindow(
+		//			"Error",
+		//			exception.Message
+		//		).Show();
+		//	}
+		//}
 	}
 }

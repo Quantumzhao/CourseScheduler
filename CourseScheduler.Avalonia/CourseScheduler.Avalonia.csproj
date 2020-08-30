@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -13,14 +13,16 @@
     <None Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\SavedCourses.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.12" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
-    <PackageReference Include="MessageBox.Avalonia" Version="0.9.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Avalonia.ProgressRing\Avalonia.ProgressRing.csproj" />
     <ProjectReference Include="..\Citrus.Avalonia\Citrus.Avalonia.csproj" />
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
-    <ProjectReference Include="..\Ripple\Ripple.csproj" />
   </ItemGroup>
 </Project>
