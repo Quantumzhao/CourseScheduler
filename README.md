@@ -1,9 +1,11 @@
-# Course Scheduler
+# Course Scheduler 3.0
 
-This is an application that made by a terp, and for all terps. 
+> This is the latest version of Course Scheduler. For more information on the legacy *Windows* edition, please switch the git branch to *Archive*
+
+This is an application made by a terp, and for all terps. 
 
 ## Screenshot:
-![Screenshot](https://github.com/Quantumzhao/CourseSelection/blob/master/screenshot.png)
+![Screenshot](screenshot.jpg)
 
 ## How is it different from the well-known Courseoff?
 
@@ -14,29 +16,30 @@ However, this application offers more customized experience.
 
 (that courseoff cannot provide)
 
-- [X] Filter out less preferred professors/instructors. 
+> Current version is still in developing, some of the features are reimplementation of the ones from *Course Scheduler 2.0* ,and may have tons of bugs. 
+>
+> More features are incoming. 
 
-- [X] Exclude less favorable time period such as 8 o'clock in a freezing winter morning. 
-
-- [X] Hiding *Freshman Connection Program* related information. 
-
-- [X] Enumerate all possible combinations with the current course configuration. 
-
-- [X] Peek on the number of open seats and wait lists for a given section. 
-
-- [X] Save your course list without the need of logging into any account
+- [x] Filter out less preferred professors/instructors. 
+- [x] Exclude less favorable time period such as 8 o'clock in a freezing winter morning. 
+- [x] Hiding *Freshman Connection Program* related information. 
+- [x] Enumerate all possible combinations with the current course configuration. 
+- [x] Peek on the number of open seats and wait lists for a given section. 
+- [X] Save your course list without the need of logging into any account (Half-completed)
 
 And in addition, since all of the data are crawled from Testudo, it gets updated really fast. 
 
 ### Drawbacks
 
-- Apparently, it is a Windows application so it cannot run on your mobile phone, nor Macbook :(
+- ~~Apparently, it is a Windows application so it cannot run on your mobile phone, nor Macbook~~ **Not any more**
 
 - Also, there is no any *sign in* or *Share* button so you cannot compare the schedule with your friend directly. 
 
 ## Installation
 
-**Download Address:** [Terp Connect](https://terpconnect.umd.edu/~yishanzh/Course%20Selection%20Software/publish.htm)
+> **The following are all about legacy version**
+
+**Download Address:** [Terp Connect](https://terpconnect.umd.edu/~yishanzh/Course%20Selection%20Software/publish.htm) 
 
 You can download and install the application directly from the webpage. 
 
@@ -62,7 +65,7 @@ Since this application uses *ClickOnce* to distribute and deploy, it will automa
 
 ## Some thoughts
 
-This application is developed in my precious leisure time, so it would be too luxurious for me to leave blocks of time on testing and finding potential bugs. As a result, if you find any, please see the section below:
+This application is developed in my leisure time, so I didn't spent much time in debugging. As a result, if you find any, please see the section below:
 
 ## Feedbacks
 

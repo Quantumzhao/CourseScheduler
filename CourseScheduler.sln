@@ -9,7 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		screenshot.png = screenshot.png
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseScheduler", "CourseScheduler\CourseScheduler.csproj", "{70074DEE-DF94-4CEA-A3FA-474ACFA93074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseScheduler.Avalonia", "CourseScheduler.Avalonia\CourseScheduler.Avalonia.csproj", "{542318B8-ED36-4998-938F-C172A7EC1149}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Citrus.Avalonia", "Citrus.Avalonia\Citrus.Avalonia.csproj", "{3D639037-491D-4129-A530-504FD3BE3F87}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseScheduler.Core", "CourseScheduler.Core\CourseScheduler.Core.csproj", "{9808612D-723B-4EA4-8E63-40A6DAF10FE0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.ProgressRing", "Avalonia.ProgressRing\Avalonia.ProgressRing.csproj", "{1D0C5B6F-99E7-4558-B9E0-32ABEB5656B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +23,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70074DEE-DF94-4CEA-A3FA-474ACFA93074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{542318B8-ED36-4998-938F-C172A7EC1149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542318B8-ED36-4998-938F-C172A7EC1149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542318B8-ED36-4998-938F-C172A7EC1149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542318B8-ED36-4998-938F-C172A7EC1149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D639037-491D-4129-A530-504FD3BE3F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9808612D-723B-4EA4-8E63-40A6DAF10FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9808612D-723B-4EA4-8E63-40A6DAF10FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9808612D-723B-4EA4-8E63-40A6DAF10FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9808612D-723B-4EA4-8E63-40A6DAF10FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D0C5B6F-99E7-4558-B9E0-32ABEB5656B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D0C5B6F-99E7-4558-B9E0-32ABEB5656B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D0C5B6F-99E7-4558-B9E0-32ABEB5656B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D0C5B6F-99E7-4558-B9E0-32ABEB5656B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

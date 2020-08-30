@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageVersion>0.9.6.1</PackageVersion>
+        <Title>MessageBox.Avalonia</Title>
+        <Authors>Lary&lt;f98f96.gmail.com&gt;</Authors>
+        <Description>Messagebox for AvaloniaUI</Description>
+        <PackageProjectUrl>https://github.com/CreateLab/MessageBox.Avalonia</PackageProjectUrl>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <RepositoryUrl>messagebox.avalonia</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageTags>Avalonia</PackageTags>
+    </PropertyGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="**\*.xaml">
+            <SubType>Designer</SubType>
+        </AvaloniaResource>
+        <AvaloniaResource Include="Assets\*" />
+    </ItemGroup>
+    <PropertyGroup>
+        <AvaloniaUseExternalMSBuild>true</AvaloniaUseExternalMSBuild>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="Avalonia" Version="0.9.6" />
+      <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.6" />
+    </ItemGroup>
+
+</Project>
