@@ -7,8 +7,8 @@
         xmlns:progRing="clr-namespace:Avalonia.ProgressRing;assembly=Avalonia.ProgressRing"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="CourseScheduler.Avalonia.Views.MainWindow"
-        MinWidth="1000" MinHeight="600"
-        Width="1000" Height="600"
+        MinWidth="900" MinHeight="900"
+        Width="900" Height="900"
         Icon="/Assets/avalonia-logo.ico"
         Title="CourseScheduler.Avalonia"
         WindowStartupLocation="CenterScreen">

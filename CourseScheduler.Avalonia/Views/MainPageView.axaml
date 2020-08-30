@@ -250,15 +250,15 @@
                       </Button>
                     </DockPanel>
                     <TextBlock Classes="Caption" Text="{Binding FullName}"/>
-                    <ItemsControl Items="{Binding Instructors}">
+                    <ItemsControl Items="{Binding Instructors}" Margin="0 -10 0 0">
                       <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                          <TextBox Classes="Badge" Text="{Binding}" Margin="0 0 10 0"/>
+                          <TextBox Classes="Badge" Text="{Binding}" Margin="0 10 10 0"/>
                         </DataTemplate>
                       </ItemsControl.ItemTemplate>
                       <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                          <WrapPanel Orientation="Horizontal" Background="White"/>
+                          <WrapPanel Orientation="Horizontal" Background="Transparent" MaxWidth="500"/>
                         </ItemsPanelTemplate>
                       </ItemsControl.ItemsPanel>
                     </ItemsControl>

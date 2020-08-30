@@ -10,13 +10,13 @@ namespace CourseScheduler.Core
 {
 	public static class Crawler
 	{
-		public static async Task<Course> GetCourse(string courseName, string termID)
+		public static Course GetCourse(string courseName, string termID)
 		{
 			Course ret;
 			URL url = new URL(courseName, termID);
 
 			var httpClient = new HttpClient();
-			string html = await httpClient.GetStringAsync(url);
+			string html = httpClient.GetStringAsync(url).Result;
 			var htmlDocument = new HtmlDocument();
 			htmlDocument.LoadHtml(html);
 
@@ -112,9 +112,13 @@ namespace CourseScheduler.Core
 					{
 						className = possibleName.First().Descendants("span").First().InnerText;
 					}
-					else
+					else if (!classes.ContainsKey("Lecture"))
 					{
 						className = "Lecture";
+					}
+					else
+					{
+						className = "Alt. Lecture";
 					}
 
 					classes.Add(className, new ClassSequence(instructor, location, weekdays.ToArray()));

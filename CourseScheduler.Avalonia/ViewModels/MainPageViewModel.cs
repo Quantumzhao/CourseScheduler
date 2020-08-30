@@ -36,10 +36,24 @@ namespace CourseScheduler.Avalonia.ViewModels
 			};
 
 			CourseSet.CollectionChanged += (s, e) => UpdateCombinations();
-
 			this.PropertyChanged += (s, e) => AnyThesePropertiesChanged(e.PropertyName);
 			ObservableTuple<bool, string>.GenericHandler += (s, e) => UpdateCombinations();
 			ObservableTuple<bool, ClassSpan>.GenericHandler += (s, e) => UpdateCombinations();
+
+			TimePeriodsFilter = new ObservableCollection<ObservableTuple<bool, ClassSpan>>
+			{
+				(false,new ClassSpan(new Time(6, 0), new Time(7, 0))),
+				(false,new ClassSpan(new Time(7, 0), new Time(8, 0))),
+				(false,new ClassSpan(new Time(8, 0), new Time(9, 0))),
+				(false,new ClassSpan(new Time(9, 0), new Time(10, 0))),
+				(false,new ClassSpan(new Time(10, 0), new Time(11, 0))),
+				(false,new ClassSpan(new Time(11, 0), new Time(12, 0))),
+				(false,new ClassSpan(new Time(12, 0), new Time(13, 0))),
+				(false,new ClassSpan(new Time(13, 0), new Time(14, 0))),
+				(false,new ClassSpan(new Time(17, 0), new Time(18, 0))),
+				(false,new ClassSpan(new Time(18, 0), new Time(19, 0))),
+				(false,new ClassSpan(new Time(19, 0), new Time(21, 0)))
+			};
 		}
 
 		private string _InputCourseName;
@@ -94,20 +108,6 @@ namespace CourseScheduler.Avalonia.ViewModels
 		public ObservableCollection<ObservableTuple<bool, string>> InstructorsFilter { get; }
 			= new ObservableCollection<ObservableTuple<bool, string>>();
 		public ObservableCollection<ObservableTuple<bool, ClassSpan>> TimePeriodsFilter { get; }
-			= new ObservableCollection<ObservableTuple<bool, ClassSpan>>
-		{
-			(false,new ClassSpan(new Time(6, 0), new Time(7, 0))),
-			(false,new ClassSpan(new Time(7, 0), new Time(8, 0))),
-			(false,new ClassSpan(new Time(8, 0), new Time(9, 0))),
-			(false,new ClassSpan(new Time(9, 0), new Time(10, 0))),
-			(false,new ClassSpan(new Time(10, 0), new Time(11, 0))),
-			(false,new ClassSpan(new Time(11, 0), new Time(12, 0))),
-			(false,new ClassSpan(new Time(12, 0), new Time(13, 0))),
-			(false,new ClassSpan(new Time(13, 0), new Time(14, 0))),
-			(false,new ClassSpan(new Time(17, 0), new Time(18, 0))),
-			(false,new ClassSpan(new Time(18, 0), new Time(19, 0))),
-			(false,new ClassSpan(new Time(19, 0), new Time(21, 0)))
-		};
 
 		public Dictionary<string, string> SemesterList { get; } = new Dictionary<string, string>
 		{
@@ -118,7 +118,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 		public ObservableSet<Course> CourseSet => DomainModel.CourseSet;
 
-		public async void AddCourse() => CourseSet.Add(await AddCourseToCourseSetAndCache());
+		public void AddCourse() => CourseSet.Add(AddCourseToCourseSetAndCache());
 
 		public void RemoveCourse(Course course) => CourseSet.Remove(course);
 
@@ -134,7 +134,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 		public void Save() => MainWindowViewModel.Instance
 			.ShowSaveWindow(SelectedCombination.Select(c => (c.Course, c.Name)).ToList());
 
-		private async Task<Course> AddCourseToCourseSetAndCache()
+		private Course AddCourseToCourseSetAndCache()
 		{
 			if (string.IsNullOrWhiteSpace(InputCourseName))
 			{
@@ -157,10 +157,10 @@ namespace CourseScheduler.Avalonia.ViewModels
 				}
 				else
 				{
+						course = Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
+						DomainModel.CourseSetCache.Add(course);
 					try
 					{
-						course = await Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
-						DomainModel.CourseSetCache.Add(course);
 					}
 					catch (Exception e)
 					{
