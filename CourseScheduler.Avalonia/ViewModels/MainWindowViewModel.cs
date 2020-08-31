@@ -15,17 +15,23 @@ namespace CourseScheduler.Avalonia.ViewModels
 		public MainWindowViewModel()
 		{
 			Instance = this;
+			_OtherVM = new OtherViewModel(_BasicsVM);
 		}
-
-		private List<(string, string)> _DataToBeSaved;
 
 		public static MainWindowViewModel Instance { get; private set; }
 
-		public ViewModelBase _BasicsVM = new MainPageViewModel();
-		public ViewModelBase BasicsVM
+		public MainPageViewModel _BasicsVM = new MainPageViewModel();
+		public MainPageViewModel BasicsVM
 		{
 			get => _BasicsVM;
 			set => this.RaiseAndSetIfChanged(ref _BasicsVM, value);
+		}
+
+		private OtherViewModel _OtherVM;
+		public OtherViewModel OtherVM
+		{
+			get => _OtherVM;
+			set => this.RaiseAndSetIfChanged(ref _OtherVM, value);
 		}
 
 		private bool _DoesShowProgRing;
@@ -42,32 +48,25 @@ namespace CourseScheduler.Avalonia.ViewModels
 			set => this.RaiseAndSetIfChanged(ref _DoesShowWindowMask, value);
 		}
 
-		private bool _DoesShowPopup;
-		public bool DoesShowPopup
+		private bool _DoesShowMsgBox;
+		public bool DoesShowMsgBox
 		{
-			get => _DoesShowPopup;
-			set => this.RaiseAndSetIfChanged(ref _DoesShowPopup, value);
+			get => _DoesShowMsgBox;
+			set => this.RaiseAndSetIfChanged(ref _DoesShowMsgBox, value);
 		}
 
-		private bool _DoesShowInputBox;
-		public bool DoesShowInputBox
+		private string _MsgBoxTitle;
+		public string MsgBoxTitle
 		{
-			get => _DoesShowInputBox;
-			set => this.RaiseAndSetIfChanged(ref _DoesShowInputBox, value);
+			get => _MsgBoxTitle;
+			set => this.RaiseAndSetIfChanged(ref _MsgBoxTitle, value);
 		}
 
-		private string _InputBoxText;
-		public string InputBoxText
-		{
-			get => _InputBoxText;
-			set => this.RaiseAndSetIfChanged(ref _InputBoxText, value);
-		}
-
-		private string _InputBoxPrompt = "";
-		public string InputBoxPrompt 
+		private string _MsgBoxText;
+		public string MsgBoxText 
 		{ 
-			get => _InputBoxPrompt;
-			set => this.RaiseAndSetIfChanged(ref _InputBoxPrompt, value);
+			get => _MsgBoxText;
+			set => this.RaiseAndSetIfChanged(ref _MsgBoxText, value);
 		}
 
 		public void SetLoadingState(bool b)
@@ -76,36 +75,18 @@ namespace CourseScheduler.Avalonia.ViewModels
 			DoesShowWindowMask = b;
 		}
 
-		public void SetSaveWindowStatus(bool b)
+		public static void ShowMessageBox(string title, string text)
 		{
-			DoesShowWindowMask = b;
-			DoesShowPopup = b;
+			Instance.DoesShowMsgBox = true;
+			Instance.DoesShowWindowMask = true;
+			Instance.MsgBoxTitle = title;
+			Instance.MsgBoxText = text;
 		}
 
-		public void ShowSaveWindow(List<(string, string)> dataToBeSaved)
+		public void Ok()
 		{
-			DoesShowPopup = true;
-			DoesShowInputBox = true;
-			_DataToBeSaved = dataToBeSaved;
-		}
-
-		public void SubmitSaving()
-		{
-			if (DoesShowInputBox)
-			{
-				if (!InputBoxText.Contains(" "))
-				{
-					var pkg = new Package(InputBoxText, _DataToBeSaved);
-					Communicator.SaveToFile(pkg, "/Assets/SavedCourses.txt");
-					InputBoxPrompt = string.Empty;
-				}
-				else
-				{
-					InputBoxPrompt = "Name string cannot contain whitespace";
-				}
-			}
-
-			SetSaveWindowStatus(false);
+			DoesShowMsgBox = false;
+			DoesShowWindowMask = false;
 		}
 	}
 }

@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Avalonia;
+using Avalonia.Controls.Shapes;
+using Avalonia.Platform;
+using CourseScheduler.Avalonia.VMInfrastructures;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace CourseScheduler.Avalonia.IO
@@ -9,20 +14,22 @@ namespace CourseScheduler.Avalonia.IO
 	{
 		public static List<Package> LoadFromFile(string url)
 		{
-			var src = File.ReadAllLines(url);
+			var src = File.ReadAllLines(url).ToList();
+			src.Add("\n");
+
 			var ret = new List<Package>();
 			Package package;
 			string name = string.Empty;
-			List<(string, string)> pairs = new List<(string, string)>();
+			List<ObservableTuple<string, string>> pairs = new List<ObservableTuple<string, string>>();
 
-			for (int i = 0; i < src.Length; i++)
+			for (int i = 0; i < src.Count; i++)
 			{
 				// is the end of package
 				if (string.IsNullOrWhiteSpace(src[i]))
 				{
 					package = new Package(name, pairs);
 					ret.Add(package);
-					pairs = new List<(string, string)>();
+					pairs = new List<ObservableTuple<string, string>>();
 				}
 				// is a name
 				else if (!src[i].Contains(" "))
@@ -40,33 +47,35 @@ namespace CourseScheduler.Avalonia.IO
 			return ret;
 		}
 
-		public static void SaveToFile(Package package, string url)
+		public static void SaveToFile(IEnumerable<Package> packages, string url)
 		{
-			var lines = new List<string>
-			{
-				package.Name
-			};
+			var lines = new List<string>();
 
-			foreach (var pair in package.CourseSectionPairs)
+			foreach (var pkg in packages)
 			{
-				lines.Add($"{pair.Item1} {pair.Item2}");
+				lines.Add(pkg.Name);
+
+				foreach (var pair in pkg.CourseSectionPairs)
+				{
+					lines.Add($"{pair.E1} {pair.E2}");
+				}
+
+				lines.Add("\n");
 			}
+			lines.Remove(lines[^1]);
 
-			lines.Add("\n");
-			File.WriteAllLines(url, lines);
+
+			url = $"{Directory.GetCurrentDirectory()}/{url}";
+			using (var stream = File.Create(url))
+			{
+				using (var writer = new StreamWriter(stream))
+				{
+					for (int i = 0; i < lines.Count; i++)
+					{
+						writer.WriteLine(lines[i]);
+					}
+				}
+			}
 		}
-	}
-
-	public class Package
-	{
-		public Package(string name, List<(string, string)> courseSectionPairs)
-		{
-			Name = name;
-			CourseSectionPairs = courseSectionPairs;
-		}
-
-		public readonly string Name;
-
-		public readonly List<(string, string)> CourseSectionPairs;
 	}
 }

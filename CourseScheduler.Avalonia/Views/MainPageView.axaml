@@ -197,18 +197,6 @@
                   SelectedItem="{Binding SelectedSemester, Mode=TwoWay}">
                 </ComboBox>
               </StackPanel>
-              <Button
-                Grid.Column="1"
-                Grid.Row="5"
-                HorizontalAlignment="Left"
-                VerticalContentAlignment="Center"
-                Margin="10 10 0 0"
-                Command="{Binding Save}">
-                <StackPanel Orientation="Horizontal">
-                  <TextBlock Classes="Icon" Text="&#xE105;" Foreground="{DynamicResource HighlightForegroundBrush}"/>
-                  <TextBlock Text="Save Querry" Foreground="{DynamicResource HighlightForegroundBrush}"/>
-                </StackPanel>
-              </Button>
             </Grid>
             <!-- Data Area -->
             <ListBox
@@ -220,7 +208,7 @@
               <ListBox.Styles>
                 <Style Selector="ListBoxItem">
                   <Setter Property="BorderBrush" Value="{Binding 
-                          Converter={x:Static converters:CourseToColorConverter.Singleton}}"/>
+                    Converter={x:Static converters:CourseToColorConverter.Singleton}}"/>
                 </Style>
               </ListBox.Styles>
               <ListBox.ItemTemplate>
