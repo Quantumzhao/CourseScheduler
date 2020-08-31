@@ -72,3 +72,11 @@ This application is developed in my leisure time, so I didn't spent much time in
 Feel free to give any advise or feedbacks. Although I might (definitely) not have enough time for tracing every bug, I will still try to locate and exterminate critical ones. 
 
 It would be even nicer of you could try to offer me some clues for a specific bug, or even help me to improve the codes!
+
+## Dependencies
+
+Some projects are imported in the form of source codes, and were modified and customized accordingly. They are: 
+
+- [`Avalonia.ProgressRing`](https://github.com/Deadpikle/AvaloniaProgressRing)
+- [`Citrus.Avalonia`](https://github.com/worldbeater/Citrus.Avalonia)
+
