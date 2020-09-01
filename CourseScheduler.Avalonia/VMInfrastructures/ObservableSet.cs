@@ -49,6 +49,12 @@ namespace CourseScheduler.Avalonia.VMInfrastructures
 			}
 		}
 
+		public void Clear()
+		{
+			_Collection.Clear();
+			RaiseCollectionChanged(NotifyCollectionChangedAction.Reset, null);
+		}
+
 		public IEnumerator<T> GetEnumerator() => _Collection.GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator() => _Collection.GetEnumerator();

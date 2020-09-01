@@ -25,7 +25,7 @@ namespace CourseScheduler.Core.DataStrucures
 		}
 
 		public readonly Dictionary<string, ClassSequence> ClassSequences = new Dictionary<string, ClassSequence>();
-		public readonly string Course;
+		public string Course { get; }
 		public string Name { get; set; }
 		public int OpenSeats { get; set; }
 		public int WaitList { get; set; }

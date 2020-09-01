@@ -13,6 +13,11 @@
     <!--<StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentLight.xaml"/>-->
     <StyleInclude Source="avares://Avalonia.ProgressRing/Styles/ProgressRing.xaml"/>
     <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/>
+    <Style Selector="TextBlock.Icon">
+      <Setter Property="FontFamily" Value="resm:CourseScheduler.Avalonia.Assets.Fonts.segmdl2.ttf?assembly=CourseScheduler.Avalonia#Segoe MDL2 Assets"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Margin" Value="0 2 5 0"/>
+    </Style>
   </Application.Styles>
   <Application.Resources>
     <SolidColorBrush x:Key="ColorTag0" Color="#6060b7"/>
@@ -21,8 +26,5 @@
     <SolidColorBrush x:Key="ColorTag3" Color="#FF714D"/>
     <SolidColorBrush x:Key="ColorTag4" Color="#C296D6"/>
     <SolidColorBrush x:Key="ColorTag5" Color="#AEE5EB"/>
-    <SolidColorBrush x:Key="ColorTag6" Color="#e0e0e0"/>
-    <SolidColorBrush x:Key="ColorTag7" Color="#A0A0A0"/>
-    <SolidColorBrush x:Key="ColorTag8" Color="#888888"/>
   </Application.Resources>
 </Application>

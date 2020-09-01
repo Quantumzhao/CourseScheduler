@@ -10,13 +10,15 @@ namespace CourseScheduler.Core
 {
 	public static class Crawler
 	{
-		public static Course GetCourse(string courseName, string termID)
+		public static event Action<string, string> WarningHandler;
+
+		public static async Task<Course> GetCourse(string courseName, string termID)
 		{
 			Course ret;
 			URL url = new URL(courseName, termID);
 
 			var httpClient = new HttpClient();
-			string html = httpClient.GetStringAsync(url).Result;
+			string html = await httpClient.GetStringAsync(url);
 			var htmlDocument = new HtmlDocument();
 			htmlDocument.LoadHtml(html);
 
@@ -81,6 +83,12 @@ namespace CourseScheduler.Core
 					HtmlNode dayTimeGroup = row.Descendants("div").First(n => n.Attributes["class"].Value.Contains("section-day-time-group"));
 					var enumerator = dayTimeGroup.Descendants("span").GetEnumerator();
 					if (!enumerator.MoveNext()) break;
+
+					if (enumerator.Current.GetAttributeValue("class", "") == "elms-class-message")
+					{
+						WarningHandler?.Invoke("Warning", "Part of the class times are only available on ELMS, which are skipped by the scheduler");
+						break;
+					}
 
 					var positions = row.Descendants("span");
 					string building = positions

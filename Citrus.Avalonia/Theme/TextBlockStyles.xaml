@@ -16,9 +16,4 @@
     <Style Selector="TextBlock.Accent">
         <Setter Property="Foreground" Value="{DynamicResource ThemeAccentBrush}" />
     </Style>
-  <Style Selector="TextBlock.Icon">
-    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-    <Setter Property="VerticalAlignment" Value="Center"/>
-    <Setter Property="Margin" Value="0 2 5 0"/>
-  </Style>
 </Styles>

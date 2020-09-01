@@ -9,12 +9,12 @@
         x:Class="CourseScheduler.Avalonia.Views.MainWindow"
         MinWidth="900" MinHeight="900"
         Width="900" Height="900"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Icon.ico"
         Title="CourseScheduler.Avalonia"
         WindowStartupLocation="CenterScreen">
-  <Design.DataContext>
-    <vm:MainWindowViewModel/>
-  </Design.DataContext>
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
 
   <Grid>
     <TabControl Name="MainTab">
@@ -24,54 +24,56 @@
         </Border>
       </TabItem>
       <TabItem Header="Advanced">
-
+      
+      </TabItem>
+      <TabItem Header="Other">
+        <views:OtherView DataContext="{Binding OtherVM}"/>
+      </TabItem>
+      <TabItem Header="About">
+        <views:AboutView/>
       </TabItem>
     </TabControl>
     <Rectangle
-      Name="WindowMask"
-      Grid.RowSpan="2"
-      Grid.ColumnSpan="2"
-      ZIndex="1"
-      Fill="#BB000000"
-      IsVisible="{Binding DoesShowWindowMask}"/>
-    <progRing:ProgressRing
+      Grid.RowSpan="2" 
+      Grid.ColumnSpan="2" 
+      ZIndex="1" 
+      Fill="#BB000000" 
+      IsVisible="{Binding DoesShowProgRing}"/>
+    <progRing:ProgressRing 
       Name="ProgRing"
-      Width="100"
-      Height="100"
-      HorizontalAlignment="Center"
+      Width="100" 
+      Height="100" 
+      HorizontalAlignment="Center" 
       VerticalAlignment="Center"
       IsActive="{Binding DoesShowProgRing}"
       Foreground="{DynamicResource ThemeAccentBrush}"
       ZIndex="2"/>
+    <Rectangle
+      Grid.RowSpan="2"
+      Grid.ColumnSpan="2"
+      ZIndex="1"
+      Fill="#BB000000"
+      IsVisible="{Binding DoesShowMsgBox}"/>
     <Border
-      Name="Popup"
       Classes="Card"
       Width="300"
-      Height="200"
       HorizontalAlignment="Center"
       VerticalAlignment="Center"
       Background="{DynamicResource ThemeBackgroundBrush}"
-      IsVisible="{Binding DoesShowPopup}"
+      IsVisible="{Binding DoesShowMsgBox}"
       ZIndex="2">
       <Grid RowDefinitions="Auto * Auto">
-        <TextBlock Classes="Heading" Grid.Row="0" Text="Error"/>
+        <TextBlock Classes="Heading" Grid.Row="0" Text="{Binding MsgBoxTitle}"/>
         <Grid Grid.Row="1" Margin="0 10 0 10">
-          <TextBlock Text="test"/>
-          <TextBlock Classes="Caption" Text="{Binding InputBoxPrompt}" VerticalAlignment="Bottom"/>
+          <TextBlock TextWrapping="Wrap" Text="{Binding MsgBoxText}"/>
         </Grid>
-        <TextBox
-          IsVisible="{Binding DoesShowInputBox}"
-          Grid.Row="2"
-          Width="200"
-          Text="{Binding InputBoxText}"
-          HorizontalAlignment="Left"/>
-        <Button
-          Classes="Primary"
-          Grid.Row="2"
-          Content="OK"
-          HorizontalAlignment="Right"
+        <Button 
+          Classes="Primary" 
+          Grid.Row="2" 
+          Content="OK" 
+          HorizontalAlignment="Right" 
           IsDefault="True"
-          Command="{Binding SubmitSaving}"/>
+          Command="{Binding Ok}"/>
       </Grid>
     </Border>
   </Grid>

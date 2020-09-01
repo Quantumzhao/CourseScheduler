@@ -2,9 +2,11 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Assets\Fonts\*" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaXaml Remove="Models\**" />
@@ -13,7 +15,11 @@
     <None Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\SavedCourses.txt" />
+    <AvaloniaResource Remove="Assets\Fonts\segmdl2.ttf" />
+    <AvaloniaResource Remove="Assets\segmdl2.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Fonts\segmdl2.ttf" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.12" />

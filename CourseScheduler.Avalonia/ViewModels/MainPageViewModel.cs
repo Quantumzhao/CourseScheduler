@@ -29,9 +29,13 @@ namespace CourseScheduler.Avalonia.ViewModels
 				{
 					ExpandInstructorsFilter(e.NewItems[0] as Course);
 				}
-				else
+				else if (e.Action == NotifyCollectionChangedAction.Remove)
 				{
 					ShrinkInstructorsFilter(e.OldItems[0] as Course);
+				}
+				else if (e.Action == NotifyCollectionChangedAction.Reset)
+				{
+					InstructorsFilter.Clear();
 				}
 			};
 
@@ -118,7 +122,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 		public ObservableSet<Course> CourseSet => DomainModel.CourseSet;
 
-		public void AddCourse() => CourseSet.Add(AddCourseToCourseSetAndCache());
+		public async void AddCourse() => await AddCourseToCourseSetAndCache(InputCourseName);
 
 		public void RemoveCourse(Course course) => CourseSet.Remove(course);
 
@@ -131,42 +135,37 @@ namespace CourseScheduler.Avalonia.ViewModels
 			CombinationPanelHeader = CourseSet.Select(c => c.Name);
 		}
 
-		public void Save() => MainWindowViewModel.Instance
-			.ShowSaveWindow(SelectedCombination.Select(c => (c.Course, c.Name)).ToList());
-
-		private Course AddCourseToCourseSetAndCache()
+		internal async Task AddCourseToCourseSetAndCache(string rawName)
 		{
-			if (string.IsNullOrWhiteSpace(InputCourseName))
+			if (string.IsNullOrWhiteSpace(rawName))
 			{
-				return null;
+				return;
 			}
 			MainWindowViewModel.Instance.SetLoadingState(true);
-			var courseName = InputCourseName.ToUpper();
+			var courseName = rawName.ToUpper();
 			if (string.IsNullOrWhiteSpace(courseName))
 			{
-				return null;
+				return;
 			}
-
-			Course course = null;
 
 			if (!CourseSet.Has(courseName))
 			{
+				Course course = null;
 				if (DomainModel.CourseSetCache.Has(courseName))
 				{
 					course = DomainModel.CourseSetCache.Get(courseName);
 				}
 				else
 				{
-						course = Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
-						DomainModel.CourseSetCache.Add(course);
 					try
 					{
+						course = await Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
+						DomainModel.CourseSetCache.Add(course);
 					}
 					catch (Exception e)
 					{
-						//ShowMessage(e);
 						MainWindowViewModel.Instance.SetLoadingState(false);
-						return null;
+						ShowMessage(e);
 					}
 				}
 
@@ -174,14 +173,13 @@ namespace CourseScheduler.Avalonia.ViewModels
 			}
 
 			MainWindowViewModel.Instance.SetLoadingState(false);
-			return course;
+			return;
 		}
 
 		private void AnyThesePropertiesChanged(string propertyName)
 		{
 			switch (propertyName)
 			{
-
 				case nameof(DoesShowFC):
 				case nameof(IsOpenSectionOnly):
 					UpdateCombinations();
@@ -189,6 +187,11 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 				case nameof(SelectedCombination):
 					MainPageView.ScheduleTimeTable(SelectedCombination);
+					break;
+
+				case nameof(SelectedSemester):
+					CourseSet.Clear();
+					DomainModel.CourseSetCache.Clear();
 					break;
 
 				default:
@@ -216,36 +219,36 @@ namespace CourseScheduler.Avalonia.ViewModels
 			}
 		}
 
-		//private void ShowMessage(Exception exception)
-		//{
-		//	if (exception is HttpRequestException)
-		//	{
-		//		MessageBoxManager.GetMessageBoxStandardWindow(
-		//			"Connection error",
-		//			"Testudo may be under maintenance. \nPlease retry later.\n\n" + exception.Message
-		//		).Show();
-		//	}
-		//	else if (exception is AggregateException)
-		//	{
-		//		foreach (var e in (exception as AggregateException).InnerExceptions)
-		//		{
-		//			ShowMessage(e);
-		//		}
-		//	}
-		//	else if (exception is InvalidOperationException)
-		//	{
-		//		MessageBoxManager.GetMessageBoxStandardWindow(
-		//			"Invalid input",
-		//			"Unable to get the course info\nPlease check if there is any typo in course name. \n\n" + exception.Message
-		//		).Show();
-		//	}
-		//	else
-		//	{
-		//		MessageBoxManager.GetMessageBoxStandardWindow(
-		//			"Error",
-		//			exception.Message
-		//		).Show();
-		//	}
-		//}
+		private void ShowMessage(Exception exception)
+		{
+			if (exception is HttpRequestException)
+			{
+				MainWindowViewModel.ShowMessageBox(
+					"Connection error",
+					"Testudo may be under maintenance. \nPlease retry later.\n\n" + exception.Message
+				);
+			}
+			else if (exception is AggregateException)
+			{
+				foreach (var e in (exception as AggregateException).InnerExceptions)
+				{
+					ShowMessage(e);
+				}
+			}
+			else if (exception is InvalidOperationException)
+			{
+				MainWindowViewModel.ShowMessageBox(
+					"Invalid input",
+					"Unable to get the course info\nPlease check if there is any typo in course name. \n\n" + exception.Message
+				);
+			}
+			else
+			{
+				MainWindowViewModel.ShowMessageBox(
+					"Error",
+					exception.Message
+				);
+			}
+		}
 	}
 }
