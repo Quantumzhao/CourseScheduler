@@ -7,6 +7,7 @@ using CourseScheduler.Avalonia.VMInfrastructures;
 using CourseScheduler.Core.DataStrucures;
 using CourseScheduler.Avalonia.Model;
 using CourseScheduler.Avalonia.IO;
+using CourseScheduler.Core;
 
 namespace CourseScheduler.Avalonia.ViewModels
 {
@@ -16,6 +17,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 		{
 			Instance = this;
 			_OtherVM = new OtherViewModel(_BasicsVM);
+			Crawler.WarningHandler += (title, text) => ShowMessageBox(title, text);
 		}
 
 		public static MainWindowViewModel Instance { get; private set; }
@@ -41,13 +43,6 @@ namespace CourseScheduler.Avalonia.ViewModels
 			set => this.RaiseAndSetIfChanged(ref _DoesShowProgRing, value);
 		}
 
-		private bool _DoesShowWindowMask;
-		public bool DoesShowWindowMask
-		{
-			get => _DoesShowWindowMask;
-			set => this.RaiseAndSetIfChanged(ref _DoesShowWindowMask, value);
-		}
-
 		private bool _DoesShowMsgBox;
 		public bool DoesShowMsgBox
 		{
@@ -69,24 +64,15 @@ namespace CourseScheduler.Avalonia.ViewModels
 			set => this.RaiseAndSetIfChanged(ref _MsgBoxText, value);
 		}
 
-		public void SetLoadingState(bool b)
-		{
-			DoesShowProgRing = b;
-			DoesShowWindowMask = b;
-		}
+		public void SetLoadingState(bool b) => DoesShowProgRing = b;
 
 		public static void ShowMessageBox(string title, string text)
 		{
 			Instance.DoesShowMsgBox = true;
-			Instance.DoesShowWindowMask = true;
 			Instance.MsgBoxTitle = title;
 			Instance.MsgBoxText = text;
 		}
 
-		public void Ok()
-		{
-			DoesShowMsgBox = false;
-			DoesShowWindowMask = false;
-		}
+		public void Ok() => DoesShowMsgBox = false;
 	}
 }

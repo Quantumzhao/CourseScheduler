@@ -33,13 +33,12 @@
         <views:AboutView/>
       </TabItem>
     </TabControl>
-    <Rectangle 
-      Name="WindowMask"
+    <Rectangle
       Grid.RowSpan="2" 
       Grid.ColumnSpan="2" 
       ZIndex="1" 
       Fill="#BB000000" 
-      IsVisible="{Binding DoesShowWindowMask}"/>
+      IsVisible="{Binding DoesShowProgRing}"/>
     <progRing:ProgressRing 
       Name="ProgRing"
       Width="100" 
@@ -49,10 +48,15 @@
       IsActive="{Binding DoesShowProgRing}"
       Foreground="{DynamicResource ThemeAccentBrush}"
       ZIndex="2"/>
+    <Rectangle
+      Grid.RowSpan="2"
+      Grid.ColumnSpan="2"
+      ZIndex="1"
+      Fill="#BB000000"
+      IsVisible="{Binding DoesShowMsgBox}"/>
     <Border
       Classes="Card"
       Width="300"
-      Height="200"
       HorizontalAlignment="Center"
       VerticalAlignment="Center"
       Background="{DynamicResource ThemeBackgroundBrush}"

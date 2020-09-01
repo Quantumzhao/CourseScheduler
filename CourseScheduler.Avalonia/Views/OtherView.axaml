@@ -18,23 +18,26 @@
           <TextBlock Classes="Caption" Text="No Selection"/>
         </Border>
         <!-- Selected Configuration -->
-        <ItemsControl 
-          IsVisible="{Binding DoesShowSelectedConfiguration}" 
-          Items="{Binding SelectedConfiguration}">
-          <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-              <StackPanel Orientation="Horizontal"/>
-            </ItemsPanelTemplate>
-          </ItemsControl.ItemsPanel>
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <StackPanel Width="100">
-                <TextBlock Text="{Binding Course}" HorizontalAlignment="Center"/>
-                <TextBlock Classes="Caption" Text="{Binding Name}" HorizontalAlignment="Center"/>
-              </StackPanel>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ScrollViewer 
+          HorizontalScrollBarVisibility="Auto" 
+          HorizontalContentAlignment="Left" 
+          IsVisible="{Binding DoesShowSelectedConfiguration}">
+          <ItemsControl Items="{Binding SelectedConfiguration}" Margin="0 0 0 10">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Width="100">
+                  <TextBlock Text="{Binding Course}" HorizontalAlignment="Center"/>
+                  <TextBlock Classes="Caption" Text="{Binding Name}" HorizontalAlignment="Center"/>
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
         <TextBlock Text="Name the Configuration: " VerticalAlignment="Center"/>
         <StackPanel Orientation="Horizontal">
           <TextBox 
@@ -43,7 +46,6 @@
             HorizontalAlignment="Left" 
             Text="{Binding ConfigurationName}"/>
           <Button
-            Classes="Primary"
             Grid.Column="1"
             Grid.Row="5"
             HorizontalAlignment="Left"

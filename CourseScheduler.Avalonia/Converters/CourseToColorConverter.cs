@@ -18,9 +18,13 @@ namespace CourseScheduler.Avalonia.Converters
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var course = value as Course;
-			var brush = Application.Current.FindResource($"ColorTag{CourseColorMap.Count}") as SolidColorBrush;
 			if (!CourseColorMap.ContainsKey(course))
 			{
+				if (!(Application.Current.FindResource($"ColorTag{CourseColorMap.Count}") is SolidColorBrush brush))
+				{
+					brush = new SolidColorBrush(GenerateNewColor());
+				}
+
 				CourseColorMap.Add(course, brush);
 				return brush;
 			}
@@ -33,6 +37,11 @@ namespace CourseScheduler.Avalonia.Converters
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			throw new NotImplementedException();
+		}
+
+		private Color GenerateNewColor()
+		{
+			return Color.FromUInt32(0xff000000 | (uint)new Random().Next(0, 0xffffff));
 		}
 	}
 }

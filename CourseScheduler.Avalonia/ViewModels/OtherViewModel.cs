@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.PlatformServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CourseScheduler.Avalonia.ViewModels
 {
@@ -79,12 +80,22 @@ namespace CourseScheduler.Avalonia.ViewModels
 			}
 		}
 
-		public void Load()
+		public async void Load()
 		{
-			_MainPage.CourseSet.Clear();
-			SelectedPackage.CourseSectionPairs.ForEach(t => _MainPage.AddCourseToCourseSetAndCache(t.E1));
+			if (SelectedPackage == null)
+			{
+				MainWindowViewModel.ShowMessageBox("Information", "Please select one entry");
+				return;
+			}
 
-			var combinations = _MainPage.Combinations;
+			_MainPage.CourseSet.Clear();
+			foreach (var tuple in SelectedPackage.CourseSectionPairs)
+			{
+				await _MainPage.AddCourseToCourseSetAndCache(tuple.E1);
+			}
+
+			List<List<Section>> combinations = _MainPage.Combinations;
+			
 			var sections = SelectedPackage.CourseSectionPairs.Select(t => t.E2).ToList();
 			List<Section> query = null;
 
@@ -144,6 +155,6 @@ namespace CourseScheduler.Avalonia.ViewModels
 		}
 
 		private void LoadAllPackages() => LoadedPackages =
-			new ObservableCollection<Package>(Communicator.LoadFromFile("SavedCourses.txt"));
+			new ObservableCollection<Package>(Communicator.LoadFromFile("./SavedCourses.txt"));
 	}
 }

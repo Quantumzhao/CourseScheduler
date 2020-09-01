@@ -92,7 +92,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 		public List<Section> SelectedCombination 
 		{ 
 			get => _SelectedCombination;
-			set => this.RaiseAndSetIfChanged(ref _SelectedCombination, value, nameof(SelectedCombination));
+			set => this.RaiseAndSetIfChanged(ref _SelectedCombination, value);
 		}
 
 		private List<List<Section>> _Combinations = new List<List<Section>>();
@@ -122,7 +122,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 		public ObservableSet<Course> CourseSet => DomainModel.CourseSet;
 
-		public void AddCourse() => AddCourseToCourseSetAndCache(InputCourseName);
+		public async void AddCourse() => await AddCourseToCourseSetAndCache(InputCourseName);
 
 		public void RemoveCourse(Course course) => CourseSet.Remove(course);
 
@@ -135,7 +135,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 			CombinationPanelHeader = CourseSet.Select(c => c.Name);
 		}
 
-		internal void AddCourseToCourseSetAndCache(string rawName)
+		internal async Task AddCourseToCourseSetAndCache(string rawName)
 		{
 			if (string.IsNullOrWhiteSpace(rawName))
 			{
@@ -159,13 +159,13 @@ namespace CourseScheduler.Avalonia.ViewModels
 				{
 					try
 					{
-						course = Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
+						course = await Crawler.GetCourse(courseName, SemesterList[SelectedSemester]);
 						DomainModel.CourseSetCache.Add(course);
 					}
 					catch (Exception e)
 					{
-						ShowMessage(e);
 						MainWindowViewModel.Instance.SetLoadingState(false);
+						ShowMessage(e);
 					}
 				}
 
@@ -173,13 +173,13 @@ namespace CourseScheduler.Avalonia.ViewModels
 			}
 
 			MainWindowViewModel.Instance.SetLoadingState(false);
+			return;
 		}
 
 		private void AnyThesePropertiesChanged(string propertyName)
 		{
 			switch (propertyName)
 			{
-
 				case nameof(DoesShowFC):
 				case nameof(IsOpenSectionOnly):
 					UpdateCombinations();
@@ -187,6 +187,11 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 				case nameof(SelectedCombination):
 					MainPageView.ScheduleTimeTable(SelectedCombination);
+					break;
+
+				case nameof(SelectedSemester):
+					CourseSet.Clear();
+					DomainModel.CourseSetCache.Clear();
 					break;
 
 				default:

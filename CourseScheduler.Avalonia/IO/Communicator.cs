@@ -14,6 +14,10 @@ namespace CourseScheduler.Avalonia.IO
 	{
 		public static List<Package> LoadFromFile(string url)
 		{
+			if (!File.Exists(url))
+			{
+				File.Create(url).Close();
+			}
 			var src = File.ReadAllLines(url).ToList();
 			src.Add("\n");
 
@@ -60,12 +64,11 @@ namespace CourseScheduler.Avalonia.IO
 					lines.Add($"{pair.E1} {pair.E2}");
 				}
 
-				lines.Add("\n");
+				lines.Add(string.Empty);
 			}
-			lines.Remove(lines[^1]);
 
+			lines.RemoveAt(lines.Count - 1);
 
-			url = $"{Directory.GetCurrentDirectory()}/{url}";
 			using (var stream = File.Create(url))
 			{
 				using (var writer = new StreamWriter(stream))
