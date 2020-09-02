@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using CourseScheduler.Core.DataStrucures;
+using UIEngine;
 
 namespace CourseScheduler
 {
 	public static class Algorithm
 	{
+		[Visible(nameof(GetPossibleCombinations))]
 		public static List<List<Section>> GetPossibleCombinations(
 			Course[] dataset, IEnumerable<ClassSpan> timeConstrains, 
 			IEnumerable<string> instructorConstrains, bool isOpenSecOnly, bool doesShowFC)

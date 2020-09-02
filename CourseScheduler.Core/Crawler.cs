@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using UIEngine;
 
 namespace CourseScheduler.Core
 {
@@ -144,6 +145,9 @@ namespace CourseScheduler.Core
 			ret = new Course(courseName, fullName, sections.ToArray());
 			return ret;
 		}
+
+		[Visible(nameof(GetCourseSync))]
+		public static Course GetCourseSync(string courseName, string termID) => GetCourse(courseName, termID).Result;
 
 		private class URL
 		{

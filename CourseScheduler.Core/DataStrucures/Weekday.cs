@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UIEngine;
 
 namespace CourseScheduler.Core.DataStrucures
 {
@@ -12,8 +13,10 @@ namespace CourseScheduler.Core.DataStrucures
 			ClassSpansInSingleDay = new HashSet<ClassSpan>(timePeriod);
 		}
 
-		public readonly DayOfWeek Day;
-		public readonly HashSet<ClassSpan> ClassSpansInSingleDay;
+		[Visible(nameof(Day))]
+		public DayOfWeek Day { get; }
+		[Visible(nameof(ClassSpansInSingleDay))]
+		public HashSet<ClassSpan> ClassSpansInSingleDay { get; }
 
 		public bool IsOverlap(Weekday another)
 		{
