@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using UIEngine;
 
 namespace CourseScheduler.Core
 {
@@ -80,13 +81,19 @@ namespace CourseScheduler.Core
 				// Enumerate through each class of the section
 				foreach (var row in rows)
 				{
-					HtmlNode dayTimeGroup = row.Descendants("div").First(n => n.Attributes["class"].Value.Contains("section-day-time-group"));
+					HtmlNode dayTimeGroup = row.Descendants("div").FirstOrDefault(n => n.Attributes["class"].Value.Contains("section-day-time-group"));
+					if (dayTimeGroup == null)
+					{
+						WarningHandler?.Invoke("Warning", "Some class times are inaccessible, please contact department or instructor for details");
+						break;
+					}
+
 					var enumerator = dayTimeGroup.Descendants("span").GetEnumerator();
 					if (!enumerator.MoveNext()) break;
 
 					if (enumerator.Current.GetAttributeValue("class", "") == "elms-class-message")
 					{
-						WarningHandler?.Invoke("Warning", "Part of the class times are only available on ELMS, which are skipped by the scheduler");
+						WarningHandler?.Invoke("Warning", "Part of the class times are only accessible through ELMS, which are skipped by the scheduler");
 						break;
 					}
 
@@ -138,6 +145,9 @@ namespace CourseScheduler.Core
 			ret = new Course(courseName, fullName, sections.ToArray());
 			return ret;
 		}
+
+		[Visible(nameof(GetCourseSync))]
+		public static Course GetCourseSync(string courseName, string termID) => GetCourse(courseName, termID).Result;
 
 		private class URL
 		{

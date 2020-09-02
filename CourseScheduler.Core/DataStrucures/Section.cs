@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UIEngine;
 
 namespace CourseScheduler.Core.DataStrucures
 {
-	public class Section
+	public class Section : IVisible
 	{
 		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, ClassSequence>[] classTypesAndSchedules)
 		{
@@ -24,13 +25,20 @@ namespace CourseScheduler.Core.DataStrucures
 			}
 		}
 
-		public readonly Dictionary<string, ClassSequence> ClassSequences = new Dictionary<string, ClassSequence>();
+		// like {LEC, class times ...}
+		[Visible(nameof(ClassSequences))]
+		public Dictionary<string, ClassSequence> ClassSequences { get; } = new Dictionary<string, ClassSequence>();
 		public string Course { get; }
 		public string Name { get; set; }
+		[Visible(nameof(OpenSeats))]
 		public int OpenSeats { get; set; }
+		[Visible(nameof(WaitList))]
 		public int WaitList { get; set; }
+		public string Description => string.Empty;
+		public string Header => Name;
 
-		public List<string> Instructors = new List<string>();
+		[Visible(nameof(Instructors))]
+		public List<string> Instructors { get; } = new List<string>();
 
 		public override string ToString() => Name;
 

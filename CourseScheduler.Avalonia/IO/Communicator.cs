@@ -12,8 +12,11 @@ namespace CourseScheduler.Avalonia.IO
 {
 	public static class Communicator
 	{
+		private static string _BaseUrl = AppDomain.CurrentDomain.BaseDirectory;
+
 		public static List<Package> LoadFromFile(string url)
 		{
+			url = _BaseUrl + url;
 			if (!File.Exists(url))
 			{
 				File.Create(url).Close();
@@ -69,7 +72,7 @@ namespace CourseScheduler.Avalonia.IO
 
 			lines.RemoveAt(lines.Count - 1);
 
-			using (var stream = File.Create(url))
+			using (var stream = File.Create(_BaseUrl + url))
 			{
 				using (var writer = new StreamWriter(stream))
 				{

@@ -19,16 +19,37 @@
     <AvaloniaResource Remove="Assets\segmdl2.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="CourseScheduler.icns" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="CourseScheduler.icns" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Assets\Fonts\segmdl2.ttf" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.12" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
+    <PackageReference Include="Dotnet.Bundle" Version="0.9.13" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Avalonia.ProgressRing\Avalonia.ProgressRing.csproj" />
     <ProjectReference Include="..\Citrus.Avalonia\Citrus.Avalonia.csproj" />
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
   </ItemGroup>
+  <PropertyGroup>
+    <CFBundleName>Course Scheduler</CFBundleName>
+    <CFBundleDisplayName>CourseScheduler</CFBundleDisplayName>
+    <CFBundleIdentifier>CourseScheduler.Avalonia</CFBundleIdentifier>
+    <CFBundleVersion>3.0.2.3</CFBundleVersion>
+    <CFBundlePackageType>AAPL</CFBundlePackageType>
+    <CFBundleSignature>????</CFBundleSignature>
+    <CFBundleExecutable>CourseScheduler</CFBundleExecutable>
+    <CFBundleIconFile>CourseScheduler.icns</CFBundleIconFile>
+    <!-- Will be copied from output directory -->
+    <NSPrincipalClass>NSApplication</NSPrincipalClass>
+    <NSHighResolutionCapable>true</NSHighResolutionCapable>
+    <CFBundleShortVersionString>3.0.2</CFBundleShortVersionString>
+  </PropertyGroup>
 </Project>

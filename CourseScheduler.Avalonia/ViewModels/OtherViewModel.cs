@@ -28,6 +28,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 			};
 
 			LoadAllPackages();
+			//LoadedPackages = new ObservableCollection<Package>();
 		}
 
 		private readonly MainPageViewModel _MainPage;
@@ -155,6 +156,6 @@ namespace CourseScheduler.Avalonia.ViewModels
 		}
 
 		private void LoadAllPackages() => LoadedPackages =
-			new ObservableCollection<Package>(Communicator.LoadFromFile("./SavedCourses.txt"));
+			new ObservableCollection<Package>(Communicator.LoadFromFile("SavedCourses.txt"));
 	}
 }

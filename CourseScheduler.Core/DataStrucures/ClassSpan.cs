@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UIEngine;
 
 namespace CourseScheduler.Core.DataStrucures
 {
@@ -12,8 +13,10 @@ namespace CourseScheduler.Core.DataStrucures
 			End = end;
 		}
 
-		public readonly Time Start;
-		public readonly Time End;
+		[Visible(nameof(Start))]
+		public Time Start { get; }
+		[Visible(nameof(End))]
+		public Time End { get; }
 
 		public int SpanInMinute()
 		{

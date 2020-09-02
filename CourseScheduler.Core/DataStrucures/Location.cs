@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using UIEngine;
 
 namespace CourseScheduler.Core.DataStrucures
 {
-	public struct Location
+	public class Location
 	{
 		public Location(string building, string room)
 		{
@@ -13,7 +14,9 @@ namespace CourseScheduler.Core.DataStrucures
 			Room = room;
 		}
 
-		public string Building;
-		public string Room;
+		[Visible(nameof(Building))]
+		public string Building { get; set; }
+		[Visible(nameof(Room))]
+		public string Room { get; set; }
 	}
 }

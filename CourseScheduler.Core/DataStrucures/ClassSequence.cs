@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UIEngine;
 
 namespace CourseScheduler.Core.DataStrucures
 {
@@ -12,9 +13,12 @@ namespace CourseScheduler.Core.DataStrucures
 			Weekdays = new HashSet<Weekday>(weekdays);
 		}
 
-		public readonly HashSet<Weekday> Weekdays;
-		public readonly Location Location;
-		public readonly string Instructor;
+		[Visible(nameof(Weekdays))]
+		public HashSet<Weekday> Weekdays { get; }
+		[Visible(nameof(Location))]
+		public Location Location { get; }
+		[Visible(nameof(Instructor))]
+		public string Instructor { get; }
 
 		public bool IsOverlap(ClassSequence another)
 		{
