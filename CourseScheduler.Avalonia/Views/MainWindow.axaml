@@ -27,7 +27,7 @@
         <views:OtherView DataContext="{Binding OtherVM}"/>
       </TabItem>
       <TabItem Header="Advanced">
-      
+        <views:AdvancedView/>
       </TabItem>
       <TabItem Header="About">
         <views:AboutView/>
