@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Avalonia.UIEngine.ViewModels
 {
-	public class MainWindowViewModel : ViewModelBase
+	public class ObjectBoxViewModel : ViewModelBase
 	{
-		public string Greeting => "Welcome to Avalonia!";
 	}
 }

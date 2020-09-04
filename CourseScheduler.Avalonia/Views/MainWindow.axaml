@@ -23,7 +23,7 @@
           <views:MainPageView DataContext="{Binding BasicsVM}"/>
         </Border>
       </TabItem>
-      <TabItem Header="Load/Save">
+      <TabItem Header="Data">
         <views:OtherView DataContext="{Binding OtherVM}"/>
       </TabItem>
       <TabItem Header="Advanced">

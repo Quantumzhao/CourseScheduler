@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseScheduler.Core", "Cou
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.ProgressRing", "Avalonia.ProgressRing\Avalonia.ProgressRing.csproj", "{1D0C5B6F-99E7-4558-B9E0-32ABEB5656B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.UIEngine", "Avalonia.UIEngine\Avalonia.UIEngine.csproj", "{DF8B440C-DB74-4D2C-B179-16146CA66842}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.UIEngine", "Avalonia.UIEngine\Avalonia.UIEngine.csproj", "{DF8B440C-DB74-4D2C-B179-16146CA66842}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIEngine", "..\UIEngine\UIEngine\UIEngine.csproj", "{2824F83E-9E48-4ED5-B78D-E91FAC811C1E}"
 EndProject

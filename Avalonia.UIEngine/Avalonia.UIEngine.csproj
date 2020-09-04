@@ -1,19 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Core\" />
-    <Folder Include="Models\" />
-    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaXaml Remove="Core\**" />
+    <AvaloniaXaml Remove="Models\**" />
+    <Compile Remove="Core\**" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Core\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
+    <PackageReference Include="Avalonia" Version="0.9.12" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Citrus.Avalonia\Citrus.Avalonia.csproj" />
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
   </ItemGroup>
 </Project>
