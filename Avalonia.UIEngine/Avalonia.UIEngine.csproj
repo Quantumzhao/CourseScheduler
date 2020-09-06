@@ -22,4 +22,12 @@
     <ProjectReference Include="..\Citrus.Avalonia\Citrus.Avalonia.csproj" />
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ObjectBoxView.axaml.cs">
+      <DependentUpon>ObjectBoxView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\UIPanelView.axaml.cs">
+      <DependentUpon>UIPanelView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

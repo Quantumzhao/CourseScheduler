@@ -4,19 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Avalonia.UIEngine.Views"
              xmlns:sys="clr-namespace:System;assembly=netstandard"
-             xmlns:node="clr-namespace:UIEngine;assembly=UIEngine"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Avalonia.UIEngine.Views.ObjectBox">
-  <UserControl.DataTemplates>
-    <DataTemplate DataType="{x:Type sys:String}">
-
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type sys:Int32}">
-
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type sys:Double}">
-
-    </DataTemplate>
-  </UserControl.DataTemplates>
-  <ContentControl Content="{Binding Content}"/>
+             x:Class="Avalonia.UIEngine.Views.ObjectBoxView">
+  <StackPanel Name="MainPanel" Orientation="Horizontal"/>
 </UserControl>
