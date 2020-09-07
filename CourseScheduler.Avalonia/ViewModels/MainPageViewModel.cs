@@ -39,6 +39,10 @@ namespace CourseScheduler.Avalonia.ViewModels
 				}
 			};
 
+			var semesterInfo = SemesterCodeHelper.GetSemesterList();
+			SemesterList = semesterInfo.Item2;
+			SelectedSemester = semesterInfo.Item1;
+
 			CourseSet.CollectionChanged += (s, e) => UpdateCombinations();
 			this.PropertyChanged += (s, e) => AnyThesePropertiesChanged(e.PropertyName);
 			ObservableTuple<bool, string>.GenericHandler += (s, e) => UpdateCombinations();
@@ -113,12 +117,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 			= new ObservableCollection<ObservableTuple<bool, string>>();
 		public ObservableCollection<ObservableTuple<bool, ClassSpan>> TimePeriodsFilter { get; }
 
-		public Dictionary<string, string> SemesterList { get; } = new Dictionary<string, string>
-		{
-			{ "Spring 2020", "202001" },
-			{ "Summer 2020", "202005" },
-			{ "Fall 2020", "202008" }
-		};
+		public Dictionary<string, string> SemesterList { get; }
 
 		public ObservableSet<Course> CourseSet => DomainModel.CourseSet;
 
