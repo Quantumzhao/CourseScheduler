@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace Avalonia.UIEngine.Views
 {
-	public class UIPanelView : UserControl
+	public class LinqBox : UserControl
 	{
-		public UIPanelView()
+		public LinqBox()
 		{
 			this.InitializeComponent();
 		}

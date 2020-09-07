@@ -23,11 +23,11 @@
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ObjectBoxView.axaml.cs">
-      <DependentUpon>ObjectBoxView.axaml</DependentUpon>
+    <Compile Update="Views\ObjectBox.axaml.cs">
+      <DependentUpon>ObjectBox.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UIPanelView.axaml.cs">
-      <DependentUpon>UIPanelView.axaml</DependentUpon>
+    <Compile Update="Views\UIPanel.axaml.cs">
+      <DependentUpon>UIPanel.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

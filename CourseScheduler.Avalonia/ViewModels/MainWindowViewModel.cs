@@ -36,6 +36,13 @@ namespace CourseScheduler.Avalonia.ViewModels
 			set => this.RaiseAndSetIfChanged(ref _OtherVM, value);
 		}
 
+		private AdvancedViewModel _AdvancedVM = new AdvancedViewModel();
+		public AdvancedViewModel AdvancedVM
+		{
+			get => _AdvancedVM;
+			set => this.RaiseAndSetIfChanged(ref _AdvancedVM, value);
+		}
+
 		private bool _DoesShowProgRing;
 		public bool DoesShowProgRing
 		{

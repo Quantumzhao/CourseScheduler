@@ -19,9 +19,13 @@
     <AvaloniaResource Remove="Assets\segmdl2.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaXaml Remove="App.axaml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="CourseScheduler.icns" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Include="App.axaml" />
     <AvaloniaResource Include="CourseScheduler.icns" />
   </ItemGroup>
   <ItemGroup>
