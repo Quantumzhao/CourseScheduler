@@ -3,8 +3,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -49,7 +47,7 @@
     <CFBundleName>Course Scheduler</CFBundleName>
     <CFBundleDisplayName>CourseScheduler</CFBundleDisplayName>
     <CFBundleIdentifier>CourseScheduler.Avalonia</CFBundleIdentifier>
-    <CFBundleVersion>3.0.2.3</CFBundleVersion>
+    <CFBundleVersion>3.0.3.0</CFBundleVersion>
     <CFBundlePackageType>AAPL</CFBundlePackageType>
     <CFBundleSignature>????</CFBundleSignature>
     <CFBundleExecutable>CourseScheduler</CFBundleExecutable>
@@ -57,6 +55,6 @@
     <!-- Will be copied from output directory -->
     <NSPrincipalClass>NSApplication</NSPrincipalClass>
     <NSHighResolutionCapable>true</NSHighResolutionCapable>
-    <CFBundleShortVersionString>3.0.2</CFBundleShortVersionString>
+    <CFBundleShortVersionString>3.0.3</CFBundleShortVersionString>
   </PropertyGroup>
 </Project>
