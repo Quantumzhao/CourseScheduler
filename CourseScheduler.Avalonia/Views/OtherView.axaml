@@ -39,16 +39,14 @@
           </ItemsControl>
         </ScrollViewer>
         <TextBlock Text="Name the Configuration: " VerticalAlignment="Center"/>
-        <StackPanel Orientation="Horizontal">
+        <DockPanel>
           <TextBox 
-            MinWidth="200" 
+            MinWidth="100" 
             MaxWidth="300" 
             HorizontalAlignment="Left" 
             Text="{Binding ConfigurationName}"/>
           <Button
-            Grid.Column="1"
-            Grid.Row="5"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Right"
             VerticalContentAlignment="Center"
             Margin="10 0 0 0"
             Command="{Binding Save}"
@@ -63,7 +61,7 @@
                 Foreground="{DynamicResource HighlightForegroundBrush}"/>
             </StackPanel>
           </Button>
-        </StackPanel>
+        </DockPanel>
         <TextBlock Classes="Caption" Text="The name cannot contain whitespace characters"/>
       </StackPanel>
     </Border>

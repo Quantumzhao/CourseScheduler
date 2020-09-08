@@ -4,14 +4,11 @@ using Avalonia.Markup.Xaml;
 
 namespace Avalonia.UIEngine.Views
 {
-	public class MainWindow : Window
+	public class MethodBox : UserControl
 	{
-		public MainWindow()
+		public MethodBox()
 		{
-			InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
+			this.InitializeComponent();
 		}
 
 		private void InitializeComponent()
