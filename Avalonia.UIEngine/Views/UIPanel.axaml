@@ -7,10 +7,10 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.UIEngine.Views.UIPanel" Name="Me">
   <StackPanel Orientation="Horizontal" Spacing="10">
-    <ContentControl Content="{Binding test}">
+    <ContentControl Content="{Binding ElementName=Me, Path=Start}">
       <ContentControl.DataTemplates>
         <DataTemplate DataType="{x:Type node:CollectionNode}">
-          <TextBlock Text="me"/>
+          <local:CollectionBox Items="{Binding ElementName=Me, Path=Start}"/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type node:ObjectNode}">
           <local:ObjectBox/>

@@ -3,12 +3,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Avalonia.UIEngine.Views;assembly=Avalonia.UIEngine"
+             xmlns:node="clr-namespace:UIEngine;assembly=UIEngine"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Avalonia.UIEngine.Views.CollectionBox">
+             x:Class="Avalonia.UIEngine.Views.CollectionBox"
+             Name="Me">
   <StackPanel>
     <local:ObjectBox/>
-    <ItemsControl Items="{Binding Items}">
-      
+    <ItemsControl Items="{Binding ElementName=Me, Path=Items}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel/>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate DataType="{x:Type node:ObjectNode}">
+          <local:ObjectBox/>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
     </ItemsControl>
   </StackPanel>
 </UserControl>

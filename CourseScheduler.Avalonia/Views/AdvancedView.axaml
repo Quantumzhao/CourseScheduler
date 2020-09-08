@@ -7,7 +7,10 @@
              x:Class="CourseScheduler.Avalonia.Views.AdvancedView">
   <Border Classes="Card">
     <StackPanel>
+      <TextBlock Text="Coming soon ...?"/>
+      <!--
       <node:UIPanel Start="{Binding CourseSetNode}"/>
+      -->
     </StackPanel>
   </Border>
 </UserControl>

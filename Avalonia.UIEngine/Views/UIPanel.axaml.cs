@@ -11,7 +11,7 @@ namespace Avalonia.UIEngine.Views
 		public UIPanel()
 		{
 			this.InitializeComponent();
-			DataContext = this;
+			//DataContext = this;
 		}
 
 		private void InitializeComponent()
@@ -42,7 +42,5 @@ namespace Avalonia.UIEngine.Views
 			get => GetValue(IsExpandedProperty);
 			set => SetValue(IsExpandedProperty, value);
 		}
-
-		public string test => "test";
 	}
 }

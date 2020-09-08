@@ -31,6 +31,12 @@ namespace CourseScheduler.Avalonia.IO
 
 			for (int i = 0; i < src.Count; i++)
 			{
+				// skip the leading new line character
+				if (i == 0 && string.IsNullOrWhiteSpace(src[i]))
+				{
+					continue;
+				}
+
 				// is the end of package
 				if (string.IsNullOrWhiteSpace(src[i]))
 				{
@@ -70,7 +76,10 @@ namespace CourseScheduler.Avalonia.IO
 				lines.Add(string.Empty);
 			}
 
-			lines.RemoveAt(lines.Count - 1);
+			if (lines.Count != 0)
+			{
+				lines.RemoveAt(lines.Count - 1);
+			}
 
 			using (var stream = File.Create(_BaseUrl + url))
 			{
