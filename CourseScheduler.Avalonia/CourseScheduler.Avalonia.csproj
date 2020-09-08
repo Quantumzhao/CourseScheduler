@@ -3,8 +3,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -41,9 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Avalonia.ProgressRing\Avalonia.ProgressRing.csproj" />
-    <ProjectReference Include="..\Avalonia.UIEngine\Avalonia.UIEngine.csproj" />
     <ProjectReference Include="..\Citrus.Avalonia\Citrus.Avalonia.csproj" />
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
+    <ProjectReference Include="..\UIEngine.Avalonia\UIEngine.Avalonia.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <CFBundleName>Course Scheduler</CFBundleName>

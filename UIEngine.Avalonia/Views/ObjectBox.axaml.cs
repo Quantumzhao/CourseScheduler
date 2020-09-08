@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using UIEngine;
 
-namespace Avalonia.UIEngine.Views
+namespace UIEngine.Avalonia.Views
 {
 	public class ObjectBox : UserControl
 	{

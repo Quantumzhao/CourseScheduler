@@ -2,11 +2,11 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Avalonia.UIEngine.Views
+namespace UIEngine.Avalonia.Views
 {
-	public class MethodBox : UserControl
+	public class LinqBox : UserControl
 	{
-		public MethodBox()
+		public LinqBox()
 		{
 			this.InitializeComponent();
 		}

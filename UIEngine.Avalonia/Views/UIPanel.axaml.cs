@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 using System.Collections.Generic;
 using UIEngine;
 
-namespace Avalonia.UIEngine.Views
+namespace UIEngine.Avalonia.Views
 {
 	public class UIPanel : UserControl
 	{
