@@ -18,7 +18,7 @@ namespace CourseScheduler.Core.DataStrucures
 		public string Name { get; }
 		public string FullName { get; }
 
-		[Visible(nameof(Sections))]
+		[Visible(nameof(Sections), name:nameof(Sections))]
 		public HashSet<Section> Sections { get; }
 		[Visible(nameof(Instructors))]
 		public List<string> Instructors

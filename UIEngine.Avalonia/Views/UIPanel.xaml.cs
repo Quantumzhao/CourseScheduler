@@ -11,7 +11,6 @@ namespace UIEngine.Avalonia.Views
 		public UIPanel()
 		{
 			this.InitializeComponent();
-			//DataContext = this;
 		}
 
 		private void InitializeComponent()

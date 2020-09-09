@@ -26,8 +26,9 @@ namespace CourseScheduler.Core.DataStrucures
 		}
 
 		// like {LEC, class times ...}
+		public readonly Dictionary<string, ClassSequence> ClassSequences = new Dictionary<string, ClassSequence>();
 		[Visible(nameof(ClassSequences))]
-		public Dictionary<string, ClassSequence> ClassSequences { get; } = new Dictionary<string, ClassSequence>();
+		public List<ClassSequence> SimplifiedClassSequence => ClassSequences.Select(p => p.Value).ToList();
 		public string Course { get; }
 		public string Name { get; set; }
 		[Visible(nameof(OpenSeats))]

@@ -4,7 +4,7 @@ using UIEngine;
 
 namespace CourseScheduler.Core.DataStrucures
 {
-	public class ClassSequence
+	public class ClassSequence : IVisible
 	{
 		public ClassSequence(string instructor, Location location, params Weekday[] weekdays)
 		{
@@ -19,6 +19,10 @@ namespace CourseScheduler.Core.DataStrucures
 		public Location Location { get; }
 		[Visible(nameof(Instructor))]
 		public string Instructor { get; }
+
+		public string Name => Header;
+		public string Description => string.Empty;
+		public string Header => "Instructors, Location and Weekdays";
 
 		public bool IsOverlap(ClassSequence another)
 		{

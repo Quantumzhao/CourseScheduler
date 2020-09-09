@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -14,20 +14,67 @@
     <None Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Styles\Templates.xaml" />
+    <None Remove="Views\CourseBox.xaml" />
+    <None Remove="Views\SectionBox.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Views\CollectionBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Views\LinqBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Views\MethodBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Views\ObjectBox.xaml" />
+    <AvaloniaResource Include="Views\UIPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Include="Styles\Templates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\CourseBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\SectionBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.12" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\UIEngine\UIEngine\UIEngine.csproj" />
     <ProjectReference Include="..\Citrus.Avalonia\Citrus.Avalonia.csproj" />
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ObjectBox.axaml.cs">
-      <DependentUpon>ObjectBox.axaml</DependentUpon>
+    <Compile Update="Views\CollectionBox.xaml.cs">
+      <DependentUpon>CollectionBox.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UIPanel.axaml.cs">
-      <DependentUpon>UIPanel.axaml</DependentUpon>
+    <Compile Update="Views\CourseBox.xaml.cs">
+      <DependentUpon>CourseBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LinqBox.xaml.cs">
+      <DependentUpon>LinqBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MethodBox.xaml.cs">
+      <DependentUpon>MethodBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ObjectBox.xaml.cs">
+      <DependentUpon>ObjectBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SectionBox.xaml.cs">
+      <DependentUpon>SectionBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\UIPanel.xaml.cs">
+      <DependentUpon>UIPanel.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

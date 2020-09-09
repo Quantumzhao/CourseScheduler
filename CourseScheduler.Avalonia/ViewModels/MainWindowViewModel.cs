@@ -16,13 +16,14 @@ namespace CourseScheduler.Avalonia.ViewModels
 		public MainWindowViewModel()
 		{
 			Instance = this;
+			_BasicsVM = new MainPageViewModel();
 			_OtherVM = new OtherViewModel(_BasicsVM);
 			Crawler.WarningHandler += (title, text) => ShowMessageBox(title, text);
 		}
 
 		public static MainWindowViewModel Instance { get; private set; }
 
-		public MainPageViewModel _BasicsVM = new MainPageViewModel();
+		public MainPageViewModel _BasicsVM;
 		public MainPageViewModel BasicsVM
 		{
 			get => _BasicsVM;

@@ -19,7 +19,6 @@
         </Border>
         <!-- Selected Configuration -->
         <ScrollViewer 
-          HorizontalScrollBarVisibility="Auto" 
           HorizontalContentAlignment="Left" 
           IsVisible="{Binding DoesShowSelectedConfiguration}">
           <ItemsControl Items="{Binding SelectedConfiguration}" Margin="0 0 0 10">

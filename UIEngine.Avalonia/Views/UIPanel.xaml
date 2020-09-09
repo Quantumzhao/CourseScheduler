@@ -5,19 +5,27 @@
              xmlns:local="clr-namespace:UIEngine.Avalonia.Views;assembly=UIEngine.Avalonia"
              xmlns:node="clr-namespace:UIEngine;assembly=UIEngine"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="UIEngine.Avalonia.Views.CollectionBox"
-             Name="Me">
-  <StackPanel>
-    <local:ObjectBox/>
+             x:Class="UIEngine.Avalonia.Views.UIPanel" Name="Me">
+  <StackPanel Orientation="Horizontal" Spacing="10">
+    <ContentControl Content="{Binding ElementName=Me, Path=Start}">
+      <ContentControl.DataTemplates>
+        <DataTemplate DataType="{x:Type node:CollectionNode}">
+          <local:CollectionBox Items="{Binding ElementName=Me, Path=Start}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type node:ObjectNode}">
+          <local:ObjectBox ObjectNode="{Binding ElementName=Me, Path=Start}"/>
+        </DataTemplate>
+      </ContentControl.DataTemplates>
+    </ContentControl>
     <ItemsControl Items="{Binding ElementName=Me, Path=Items}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
-          <StackPanel/>
+          <StackPanel Orientation="Horizontal" Spacing="10"/>
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>
         <DataTemplate DataType="{x:Type node:ObjectNode}">
-          <local:ObjectBox/>
+          <local:ObjectBox ObjectNode="{Binding}"/>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
