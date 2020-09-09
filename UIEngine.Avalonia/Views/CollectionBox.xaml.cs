@@ -46,22 +46,5 @@ namespace UIEngine.Avalonia.Views
 
 			_NextControl.Content = control;
 		}
-
-		private Box ToSpecificBox(ObjectNode nextNode)
-		{
-			Box ret;
-
-			if (nextNode.IsTypeOf<Course>())
-			{
-				ret = new CourseBox();
-				(ret as CourseBox).SetSectionsNode(nextNode);
-			}
-			else
-			{
-				ret = new CollectionBox();
-			}
-
-			return ret;
-		}
 	}
 }

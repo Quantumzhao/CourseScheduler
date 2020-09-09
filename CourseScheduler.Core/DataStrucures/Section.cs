@@ -27,18 +27,18 @@ namespace CourseScheduler.Core.DataStrucures
 
 		// like {LEC, class times ...}
 		public readonly Dictionary<string, ClassSequence> ClassSequences = new Dictionary<string, ClassSequence>();
-		[Visible(nameof(ClassSequences))]
+		[Visible(nameof(ClassSequences), name:nameof(ClassSequences))]
 		public List<ClassSequence> SimplifiedClassSequence => ClassSequences.Select(p => p.Value).ToList();
 		public string Course { get; }
 		public string Name { get; set; }
-		[Visible(nameof(OpenSeats))]
+		[Visible(nameof(OpenSeats), name: nameof(OpenSeats))]
 		public int OpenSeats { get; set; }
-		[Visible(nameof(WaitList))]
+		[Visible(nameof(WaitList), name: nameof(WaitList))]
 		public int WaitList { get; set; }
 		public string Description => string.Empty;
 		public string Header => Name;
 
-		[Visible(nameof(Instructors))]
+		[Visible(nameof(Instructors), name:nameof(Instructors))]
 		public List<string> Instructors { get; } = new List<string>();
 
 		public override string ToString() => Name;

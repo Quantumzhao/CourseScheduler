@@ -4,11 +4,12 @@ using Avalonia.Markup.Xaml;
 
 namespace UIEngine.Avalonia.Views
 {
-	public class SectionBox : ObjectBox
+	public class SectionBox : Box
 	{
 		public SectionBox()
 		{
 			this.InitializeComponent();
+			_NextControl = this.FindControl<ContentControl>("NextControl");
 		}
 
 		private void InitializeComponent()

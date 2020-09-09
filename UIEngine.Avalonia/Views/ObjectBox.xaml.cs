@@ -16,5 +16,13 @@ namespace UIEngine.Avalonia.Views
 		{
 			AvaloniaXamlLoader.Load(this);
 		}
+
+		public void InstantiateNext(Node nextNode)
+		{
+			if (nextNode is ObjectNode objectNode)
+			{
+				_NextControl.Content = ToSpecificBox(objectNode);
+			}
+		}
 	}
 }

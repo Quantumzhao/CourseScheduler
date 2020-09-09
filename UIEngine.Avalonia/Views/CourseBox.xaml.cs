@@ -20,16 +20,20 @@ namespace UIEngine.Avalonia.Views
 			AvaloniaXamlLoader.Load(this);
 		}
 
-		public CollectionNode SectionsNode { get; private set; }
-
-		public void SetSectionsNode(ObjectNode node)
+		public static readonly StyledProperty<ObjectNode> CourseNodeProperty 
+			= AvaloniaProperty.Register<CourseBox, ObjectNode>(nameof(CourseNode));
+		public ObjectNode CourseNode 
 		{
-			SectionsNode = node["Sections"] as CollectionNode;
+			get => GetValue(CourseNodeProperty);
+			set => SetValue(CourseNodeProperty, value);
 		}
 
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-
+			if (e.AddedItems.Count != 0)
+			{
+				_NextControl.Content = new SectionBox() { SectionNode = e.AddedItems[0] as ObjectNode };
+			}
 		}
 	}
 }

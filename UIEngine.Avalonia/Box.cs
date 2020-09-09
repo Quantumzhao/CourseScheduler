@@ -18,5 +18,26 @@ namespace UIEngine.Avalonia
 			get => GetValue(NextNodeProperty);
 			set => SetValue(NextNodeProperty, value);
 		}
+
+		protected static Box ToSpecificBox(ObjectNode nextNode)
+		{
+			Box ret;
+
+			//if (nextNode.IsTypeOf<Course>())
+			//{
+			//	ret = new CourseBox() { CourseNode = nextNode };
+			//}
+			//else 
+			if (nextNode is CollectionNode collectionNode)
+			{
+				ret = new CollectionBox() { Items = collectionNode };
+			}
+			else
+			{
+				ret = new ObjectBox() { ObjectNode = nextNode };
+			}
+
+			return ret;
+		}
 	}
 }

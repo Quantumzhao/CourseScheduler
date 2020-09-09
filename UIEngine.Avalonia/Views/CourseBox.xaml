@@ -6,12 +6,15 @@
              xmlns:node="clr-namespace:UIEngine;assembly=UIEngine"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="UIEngine.Avalonia.Views.CourseBox" Name="Me">
-  <StackPanel Orientation="Horizontal" Spacing="10">
+  <StackPanel Orientation="Horizontal">
     <Border Classes="Card">
-      <StackPanel Spacing="10">
-        <TextBlock Classes="Heading" Text="{Binding ElementName=Me, Path=CourseNodes.Header}"/>
-        <TextBlock Classes="Caption" Text="{Binding ElementName=Me, Path=CourseNodes.Description}"/>
-        <ListBox Name="MainListBox" Items="{Binding ElementName=Me, Path=CourseNodes}">
+      <StackPanel>
+        <TextBlock Classes="Heading" Text="{Binding ElementName=Me, Path=CourseNode.Header}"/>
+        <TextBlock Classes="Caption" Text="{Binding ElementName=Me, Path=CourseNode.Description}"/>
+        <ListBox 
+          Margin="0 10 0 0" 
+          Name="MainListBox" 
+          Items="{Binding ElementName=Me, Path=CourseNode[Sections]}">
           <ListBox.Styles>
             <Style Selector="ListBoxItem">
               <Setter Property="Margin" Value="0"/>
