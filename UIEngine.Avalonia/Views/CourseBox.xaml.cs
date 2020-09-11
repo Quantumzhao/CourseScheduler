@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using CourseScheduler.Core.DataStrucures;
 using System.Collections.ObjectModel;
+using UIEngine.Nodes;
 
 namespace UIEngine.Avalonia.Views
 {

@@ -7,6 +7,7 @@ using CourseScheduler.Core;
 using CourseScheduler.Avalonia.VMInfrastructures;
 using CourseScheduler.Core.DataStrucures;
 using ReactiveUI;
+using UIEngine.Nodes;
 
 namespace CourseScheduler.Avalonia.ViewModels
 {

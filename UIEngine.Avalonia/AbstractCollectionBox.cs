@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UIEngine.Nodes;
 
 namespace UIEngine.Avalonia
 {

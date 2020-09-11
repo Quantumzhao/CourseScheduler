@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UIEngine.Avalonia.Views;
+using UIEngine.Nodes;
 
 namespace UIEngine.Avalonia
 {
