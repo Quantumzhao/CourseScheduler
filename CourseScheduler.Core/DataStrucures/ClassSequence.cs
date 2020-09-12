@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UIEngine;
+using UIEngine.Core;
 
 namespace CourseScheduler.Core.DataStrucures
 {

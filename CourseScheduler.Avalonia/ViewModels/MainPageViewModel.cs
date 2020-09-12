@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using Avalonia.Media;
 using CourseScheduler.Avalonia.Views;
+using UIEngine.Core;
+using UIEngine;
 
 namespace CourseScheduler.Avalonia.ViewModels
 {

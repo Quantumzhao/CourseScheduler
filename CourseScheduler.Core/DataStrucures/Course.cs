@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using UIEngine;
+using UIEngine.Core;
 
 namespace CourseScheduler.Core.DataStrucures
 {

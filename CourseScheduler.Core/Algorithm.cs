@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CourseScheduler.Core.DataStrucures;
 using UIEngine;
+using UIEngine.Core;
 
 namespace CourseScheduler
 {
