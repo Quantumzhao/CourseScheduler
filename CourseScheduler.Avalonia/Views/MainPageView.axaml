@@ -106,7 +106,7 @@
                 HorizontalAlignment="Left"
                 Header="Exclude These Time Periods: "
                 Margin="10 10 0 0">
-                <ScrollViewer Margin="10" MaxHeight="200">
+                <ScrollViewer Margin="10" MaxHeight="200" VerticalAlignment="Top">
                   <StackPanel Spacing="10">
                     <StackPanel.Styles>
                       <Style Selector="StackPanel">

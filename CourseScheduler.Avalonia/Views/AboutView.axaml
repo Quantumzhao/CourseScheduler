@@ -6,18 +6,27 @@
              x:Class="CourseScheduler.Avalonia.Views.AboutView">
   <Border Classes="Card">
     <StackPanel Spacing="10" HorizontalAlignment="Center">
+      <StackPanel.Styles>
+        <Style Selector="TextBox.Info">
+          <Setter Property="Background" Value="Transparent"/>
+          <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+        <Style Selector="TextBlock">
+          <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+      </StackPanel.Styles>
       <TextBlock Classes="Heading" Text="Contact Information"/>
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="Author: "/>
-        <TextBlock Classes="Caption" Text="Quantum"/>
+        <TextBlock Text="Author: " VerticalAlignment="Center"/>
+        <TextBox Classes="Info" Text="Quantum"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Email: "/>
-        <TextBlock Classes="Caption" Text="quantumzhao@protonmail.ch"/>
+        <TextBox Classes="Info" Text="quantumzhao@protonmail.ch"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Github repo: "/>
-        <TextBlock Classes="Caption" Text="https://github.com/Quantumzhao/CourseSelection"/>
+        <TextBox Classes="Info" Text="https://github.com/Quantumzhao/CourseSelection"/>
       </StackPanel>
       <Viewbox Width="200" Height="200" Margin="0 20 0 0">
         <Image Source="/Assets/icon_large.png" />

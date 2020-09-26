@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using UIEngine;
+using UIEngine.Nodes;
 
 namespace Avalonia.UIEngine.Views
 {

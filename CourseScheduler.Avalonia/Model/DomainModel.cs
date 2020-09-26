@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UIEngine;
+using UIEngine.Core;
 
 namespace CourseScheduler.Avalonia.Model
 {
