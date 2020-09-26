@@ -1,7 +1,6 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CourseScheduler.Avalonia"
-             xmlns:ripple="clr-namespace:Ripple;assembly=Ripple"
              x:Class="CourseScheduler.Avalonia.App">
   <Application.DataTemplates>
     <local:ViewLocator/>
@@ -13,6 +12,7 @@
     <!--<StyleInclude Source="avares://Avalonia.Themes.Fluent/Accents/FluentLight.xaml"/>-->
     <StyleInclude Source="avares://Avalonia.ProgressRing/Styles/ProgressRing.xaml"/>
     <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml"/>
+    <StyleInclude Source="avares://UIEngine.Avalonia/Styles/Templates.xaml"/>
     <Style Selector="TextBlock.Icon">
       <Setter Property="FontFamily" Value="resm:CourseScheduler.Avalonia.Assets.Fonts.segmdl2.ttf?assembly=CourseScheduler.Avalonia#Segoe MDL2 Assets"/>
       <Setter Property="VerticalAlignment" Value="Center"/>

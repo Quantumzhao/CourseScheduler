@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using Avalonia.Media;
 using CourseScheduler.Avalonia.Views;
+using UIEngine.Core;
+using UIEngine;
 
 namespace CourseScheduler.Avalonia.ViewModels
 {
@@ -62,6 +64,11 @@ namespace CourseScheduler.Avalonia.ViewModels
 				(false,new ClassSpan(new Time(18, 0), new Time(19, 0))),
 				(false,new ClassSpan(new Time(19, 0), new Time(21, 0)))
 			};
+
+#if DEBUG
+			AddCourseToCourseSetAndCache("cmsc216");
+			AddCourseToCourseSetAndCache("cmsc430");
+#endif
 		}
 
 		private string _InputCourseName;

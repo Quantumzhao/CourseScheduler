@@ -1,0 +1,54 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="UIEngine.Avalonia.Views.SectionBox" Name="Me">
+  <StackPanel Orientation="Horizontal">
+    <Border Classes="Card">
+      <StackPanel>
+        <TextBlock Classes="Heading" Text="{Binding ElementName=Me, Path=SectionNode.Header}"/>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="Instructors: "/>
+          <ItemsControl Margin="0 10 0 0" Items="{Binding ElementName=Me, Path=SectionNode[Instructors]}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Spacing="10"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Classes="Caption" Text="{Binding}"/>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+        <ItemsControl Items="{Binding ElementName=Me, Path=SectionNode[ClassSequences]}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Spacing="10"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Spacing="5">
+                <TextBlock Text="{Binding Header}"/>
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <DockPanel Margin="0 10 0 0">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="OpenSeats: "/>
+            <TextBlock Classes="Caption" Text="{Binding ElementName=Me, Path=SectionNode[OpenSeats]}"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+            <TextBlock Text="Waitlist: "/>
+            <TextBlock Classes="Caption" Text="{Binding ElementName=Me, Path=SectionNode[WaitList]}"/>
+          </StackPanel>
+        </DockPanel>
+      </StackPanel>
+    </Border>
+    <ContentControl Name="NextControl"/>
+  </StackPanel>
+</UserControl>

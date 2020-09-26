@@ -19,14 +19,36 @@
     <AvaloniaResource Remove="Assets\segmdl2.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaXaml Remove="App.axaml" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Remove="App.xaml" />
     <None Remove="CourseScheduler.icns" />
+    <None Remove="Views\AboutView.xaml" />
+    <None Remove="Views\AdvancedView.xaml" />
+    <None Remove="Views\MainPageView.xaml" />
+    <None Remove="Views\MainWindow.xaml" />
+    <None Remove="Views\OtherView.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaResource Include="App.axaml" />
+    <AvaloniaResource Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
     <AvaloniaResource Include="CourseScheduler.icns" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Include="Views\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\AdvancedView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\MainPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\OtherView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Fonts\segmdl2.ttf" />
@@ -39,9 +61,26 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Avalonia.ProgressRing\Avalonia.ProgressRing.csproj" />
-    <ProjectReference Include="..\Avalonia.UIEngine\Avalonia.UIEngine.csproj" />
     <ProjectReference Include="..\Citrus.Avalonia\Citrus.Avalonia.csproj" />
     <ProjectReference Include="..\CourseScheduler.Core\CourseScheduler.Core.csproj" />
+    <ProjectReference Include="..\UIEngine.Avalonia\UIEngine.Avalonia.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AdvancedView.xaml.cs">
+      <DependentUpon>AdvancedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\OtherView.xaml.cs">
+      <DependentUpon>OtherView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <CFBundleName>Course Scheduler</CFBundleName>

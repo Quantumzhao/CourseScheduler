@@ -54,7 +54,7 @@ namespace CourseScheduler.Avalonia.ViewModels
 
 		public void Save()
 		{
-			if (string.IsNullOrWhiteSpace(ConfigurationName) && ConfigurationName.Contains(' '))
+			if (string.IsNullOrWhiteSpace(ConfigurationName) || ConfigurationName.Contains(' '))
 			{
 				MainWindowViewModel.ShowMessageBox("Configuration not saved",
 					"Please make sure the name does not contain whitespaces");
