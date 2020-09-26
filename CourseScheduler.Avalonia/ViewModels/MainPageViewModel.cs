@@ -66,8 +66,8 @@ namespace CourseScheduler.Avalonia.ViewModels
 			};
 
 #if DEBUG
-			AddCourseToCourseSetAndCache("cmsc216");
-			AddCourseToCourseSetAndCache("cmsc430");
+			//AddCourseToCourseSetAndCache("cmsc216");
+			//AddCourseToCourseSetAndCache("cmsc430");
 #endif
 		}
 

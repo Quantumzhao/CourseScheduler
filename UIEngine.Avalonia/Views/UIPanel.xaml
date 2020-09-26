@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:Avalonia.UIEngine.Views;assembly=Avalonia.UIEngine"
+             xmlns:local="clr-namespace:UIEngine.Avalonia.Views;assembly=UIEngine.Avalonia"
              xmlns:node="clr-namespace:UIEngine.Nodes;assembly=UIEngine"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.UIEngine.Views.UIPanel" Name="Me">

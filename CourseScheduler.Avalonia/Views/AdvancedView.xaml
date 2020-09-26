@@ -5,7 +5,19 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:box="clr-namespace:UIEngine.Avalonia.Views;assembly=UIEngine.Avalonia"
              x:Class="CourseScheduler.Avalonia.Views.AdvancedView">
-  <ScrollViewer VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Visible">
-    <box:CollectionBox Items="{Binding CourseSetNode}"/>
-  </ScrollViewer>
+
+  <StackPanel>
+    <ToggleButton 
+      Name="VisibilityButton" 
+      Margin="10" 
+      Content="Show developing features" 
+      HorizontalAlignment="Left"/>
+    <ScrollViewer 
+      IsVisible="{Binding ElementName=VisibilityButton, Path=IsChecked}" 
+      VerticalAlignment="Top" 
+      HorizontalAlignment="Left" 
+      HorizontalScrollBarVisibility="Visible">
+      <box:CollectionBox Items="{Binding CourseSetNode}"/>
+    </ScrollViewer>
+  </StackPanel>
 </UserControl>
