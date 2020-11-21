@@ -78,7 +78,7 @@ namespace CourseScheduler.Core
 					instructor += instructors[i];
 				}
 
-				Dictionary<string, ClassSequence> classes = new Dictionary<string, ClassSequence>();
+				List<ClassSequence> classes = new List<ClassSequence>();
 				// Enumerate through each class of the section
 				foreach (var row in rows)
 				{
@@ -121,23 +121,7 @@ namespace CourseScheduler.Core
 						weekdays.Add(new Weekday(day, new ClassSpan(start, end)));
 					}
 
-					IEnumerable<HtmlNode> possibleName = row.Descendants("div")
-						.Where(node => node.GetAttributeValue("class", "") == "two columns");
-					string className;
-					if (possibleName.Count() != 0)
-					{
-						className = possibleName.First().Descendants("span").First().InnerText;
-					}
-					else if (!classes.ContainsKey("Lecture"))
-					{
-						className = "Lecture";
-					}
-					else
-					{
-						className = "Alt. Lecture";
-					}
-
-					classes.Add(className, new ClassSequence(instructor, location, weekdays.ToArray()));
+					classes.Add(new ClassSequence(instructor, location, weekdays.ToArray()));
 				}
 
 				sections.Add(new Section(courseName, name, openSeats, waitlist, classes.ToArray()));

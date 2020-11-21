@@ -9,7 +9,7 @@ namespace CourseScheduler.Core.DataStrucures
 {
 	public class Section : IVisible
 	{
-		public Section(string course, string name, int openSeats, int waitList, params KeyValuePair<string, ClassSequence>[] classTypesAndSchedules)
+		public Section(string course, string name, int openSeats, int waitList, params ClassSequence[] classTypesAndSchedules)
 		{
 			Course = course;
 			Name = name;
@@ -18,18 +18,17 @@ namespace CourseScheduler.Core.DataStrucures
 
 			foreach (var myClass in classTypesAndSchedules)
 			{
-				ClassSequences.Add(myClass.Key, myClass.Value);
-				if (!Instructors.Contains(myClass.Value.Instructor))
+				ClassSequences.Add(myClass);
+				if (!Instructors.Contains(myClass.Instructor))
 				{
-					Instructors.Add(myClass.Value.Instructor);
+					Instructors.Add(myClass.Instructor);
 				}
 			}
 		}
 
 		// like {LEC, class times ...}
-		public readonly Dictionary<string, ClassSequence> ClassSequences = new Dictionary<string, ClassSequence>();
-		[Visible(nameof(ClassSequences), name:nameof(ClassSequences))]
-		public List<ClassSequence> SimplifiedClassSequence => ClassSequences.Select(p => p.Value).ToList();
+		[Visible(nameof(ClassSequences), name: nameof(ClassSequences))]
+		public List<ClassSequence> ClassSequences { get; } = new List<ClassSequence>();
 		public string Course { get; }
 		public string Name { get; set; }
 		[Visible(nameof(OpenSeats), name: nameof(OpenSeats))]
@@ -46,9 +45,9 @@ namespace CourseScheduler.Core.DataStrucures
 
 		public bool IsOverlap(Section another)
 		{
-			foreach (var myClass in ClassSequences.Values)
+			foreach (var myClass in ClassSequences)
 			{
-				foreach (var anotherClass in another.ClassSequences.Values)
+				foreach (var anotherClass in another.ClassSequences)
 				{
 					if (myClass.IsOverlap(anotherClass))
 					{
@@ -77,7 +76,7 @@ namespace CourseScheduler.Core.DataStrucures
 				return false;
 			}
 
-			foreach (var @class in ClassSequences.Values)
+			foreach (var @class in ClassSequences)
 			{
 				foreach (var weekday in @class.Weekdays)
 				{

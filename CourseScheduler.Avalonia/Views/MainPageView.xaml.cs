@@ -38,7 +38,7 @@ namespace CourseScheduler.Avalonia.Views
 
 			for (int i = 0; i < sections.Count; i++)
 			{
-				foreach (var myClass in sections[i].ClassSequences.Values)
+				foreach (var myClass in sections[i].ClassSequences)
 				{
 					foreach (var weekday in myClass.Weekdays)
 					{
