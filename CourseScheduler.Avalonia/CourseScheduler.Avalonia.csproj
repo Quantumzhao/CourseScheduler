@@ -86,7 +86,7 @@
     <CFBundleName>Course Scheduler</CFBundleName>
     <CFBundleDisplayName>CourseScheduler</CFBundleDisplayName>
     <CFBundleIdentifier>CourseScheduler.Avalonia</CFBundleIdentifier>
-    <CFBundleVersion>3.1.1.0</CFBundleVersion>
+    <CFBundleVersion>3.1.2.0</CFBundleVersion>
     <CFBundlePackageType>AAPL</CFBundlePackageType>
     <CFBundleSignature>????</CFBundleSignature>
     <CFBundleExecutable>CourseScheduler</CFBundleExecutable>
@@ -94,6 +94,6 @@
     <!-- Will be copied from output directory -->
     <NSPrincipalClass>NSApplication</NSPrincipalClass>
     <NSHighResolutionCapable>true</NSHighResolutionCapable>
-    <CFBundleShortVersionString>3.1.1</CFBundleShortVersionString>
+    <CFBundleShortVersionString>3.1.2</CFBundleShortVersionString>
   </PropertyGroup>
 </Project>
